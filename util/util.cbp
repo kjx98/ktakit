@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="util" />
+		<Option pch_mode="2" />
+		<Option compiler="gcc" />
+		<Build>
+			<Target title="Debug">
+				<Option output="Debug/util" prefix_auto="1" extension_auto="1" />
+				<Option working_dir="" />
+				<Option object_output="Debug/" />
+				<Option type="2" />
+				<Option compiler="gcc" />
+				<Option createDefFile="1" />
+				<Compiler>
+					<Add option="-Wall" />
+					<Add option="-g" />
+				</Compiler>
+			</Target>
+			<Target title="Release">
+				<Option output="Release/util" prefix_auto="1" extension_auto="1" />
+				<Option working_dir="" />
+				<Option object_output="Release/" />
+				<Option type="2" />
+				<Option compiler="gcc" />
+				<Option createDefFile="1" />
+				<Compiler>
+					<Add option="-Wall" />
+					<Add option="-O2" />
+				</Compiler>
+				<Linker>
+					<Add option="-s" />
+				</Linker>
+			</Target>
+		</Build>
+		<Compiler>
+			<Add directory="../include" />
+		</Compiler>
+		<Unit filename="../include/foxdat.h" />
+		<Unit filename="../include/foxint.h" />
+		<Unit filename="../include/memwatch.h" />
+		<Unit filename="../include/ktadefs.h" />
+		<Unit filename="../include/ktastd.h" />
+		<Unit filename="../include/ktatypes.h" />
+		<Unit filename="../include/util.h" />
+		<Unit filename="chgext.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="crc.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="cvtdate.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="des.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="filepath.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="foxint.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ini.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="kk_des.h" />
+		<Unit filename="memwatch.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="skw.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="util.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="warn.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Extensions>
+			<code_completion />
+			<envvars />
+			<debugger />
+			<lib_finder disable_auto="1" />
+		</Extensions>
+	</Project>
+</CodeBlocks_project_file>

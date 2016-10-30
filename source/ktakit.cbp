@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="ktakit" />
+		<Option pch_mode="2" />
+		<Option compiler="gcc" />
+		<Build>
+			<Target title="Debug">
+				<Option output="Debug/ktakit" prefix_auto="1" extension_auto="1" />
+				<Option working_dir="Debug" />
+				<Option object_output="Debug/" />
+				<Option type="3" />
+				<Option compiler="gcc" />
+				<Option createDefFile="1" />
+				<Option createStaticLib="1" />
+				<Compiler>
+					<Add option="-Wall" />
+					<Add option="-g" />
+					<Add option="-DBUILD_DLL" />
+				</Compiler>
+				<Linker>
+					<Add library="../openbgi/Debug/libopenBGI.a" />
+					<Add library="user32" />
+					<Add library="gdi32" />
+				</Linker>
+			</Target>
+			<Target title="Release">
+				<Option output="Release/ktakit" prefix_auto="1" extension_auto="1" />
+				<Option object_output="Release/" />
+				<Option type="3" />
+				<Option compiler="gcc" />
+				<Option createDefFile="1" />
+				<Option createStaticLib="1" />
+				<Compiler>
+					<Add option="-O2" />
+					<Add option="-Wall" />
+					<Add option="-DBUILD_DLL" />
+				</Compiler>
+				<Linker>
+					<Add option="-s" />
+					<Add library="../openbgi/Release/libopenBGI.a" />
+					<Add library="user32" />
+					<Add library="gdi32" />
+				</Linker>
+			</Target>
+		</Build>
+		<Compiler>
+			<Add directory="../include" />
+		</Compiler>
+		<Unit filename="../include/ktakit.h" />
+		<Unit filename="ktakit32.def" />
+		<Unit filename="taarray.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="tacalc.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="tacandle.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="tachart.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="tacsi.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="tacsi.h" />
+		<Unit filename="tact.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="tact.h" />
+		<Unit filename="tadate.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="tadj.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="tadj.h" />
+		<Unit filename="tafile.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="tafin.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="tafs.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="tafs.h" />
+		<Unit filename="taio.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="tastr.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="tatc.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="tatc.h" />
+		<Unit filename="tatrade.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="tatt.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="tatt.h" />
+		<Unit filename="tatxt.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Extensions>
+			<code_completion>
+				<search_path add="..\include" />
+			</code_completion>
+			<envvars />
+			<debugger />
+		</Extensions>
+	</Project>
+</CodeBlocks_project_file>

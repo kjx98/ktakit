@@ -1,0 +1,25 @@
+#! /bin/sh
+
+[ -d build/$1 ] || mkdir build/$1
+[ -f $1/$2 ] && cp $1/$2 build/$1
+cd build/$1
+for aa in ../../$1/*
+do
+    if [ -d $aa ]; then
+	ln -s $aa .
+    fi
+done
+#ln -sf ../../$1/*.*c* .
+for aa in ../../$1/*.*c*
+do
+    if [ -f $aa ]; then
+	ln -sf $aa .
+    fi
+done
+#ln -sf ../../$1/*.h .
+for aa in ../../$1/*.h
+do
+    if [ -f $aa ]; then
+	ln -sf $aa .
+    fi
+done

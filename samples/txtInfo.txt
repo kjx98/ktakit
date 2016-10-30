@@ -1,0 +1,12 @@
+delimit  = _
+skip     = 1
+dt       = 1
+ti       = 0
+op       = 2
+hi       = 3
+lo       = 4
+cl       = 5
+vol      = 6
+oi       = 0
+dtformat = YY_MM_DD
+tiformat = HH_MM_SS
