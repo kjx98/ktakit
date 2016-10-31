@@ -14,9 +14,9 @@ ifeq	($(DEBUGS),)
 DEBUGS= -g
 endif
 
-CFLAGS=$(DEBUGS) $(OPTIMIZE) -Wall -fpic -I../include
+CFLAGS=$(DEBUGS) $(OPTIMIZE) -Wall -I../include
 
-LIB = libSDL_bgi.so
+LIB = libSDL_bgi.a
 objs =	SDL_bgi.o
 srcs =	SDL_bgi.c
 
@@ -25,9 +25,9 @@ all:	$(LIB)
 clean:
 	rm -f *.o *.a *.so
 
-libSDL_bgi.so: $(OBJ)
-	$(CC) -shared -o $(LIB) $(OBJ)
-	cp $(LIB) ../lib
+libSDL_bgi.a: $(objs)
+	ar ru libSDL_bgi.a $(objs)
+	cp libSDL_bgi.a ../lib
 
 depend:
 	sed "/^# Automatically/q" GNUmakefile >Makefile.1

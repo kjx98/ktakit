@@ -17,11 +17,13 @@ endif
 CFLAGS=$(DEBUGS) $(OPTIMIZE) -I../include
 
 objs =	advdec.o calc1.o candles.o dumpfxt.o dumpmt4.o formatn.o optimize.o \
-	study.o tick2m1.o trade.o study.o chart.o optimize.o
+	study.o tick2m1.o trade.o study.o chart.o optimize.o formatn.o \
+	finance.o moving.o
 srcs =	advdec.c calc1.c candles.c dumpfxt.c dumpmt4.c formatn.c optimize.c \
-	study.c tick2m1.c trade.c study.c chart.c optimize.c
+	study.c tick2m1.c trade.c study.c chart.c optimize.c formatn.c \
+	finance.c moving.c
 
-all:	advdec calc1 candles trade study chart optimize
+all:	advdec calc1 candles trade study chart optimize formatn moving finance
 
 clean:
 	rm -f *.o *.a
@@ -43,6 +45,15 @@ candles: candles.o
 
 optimize: optimize.o
 	$(CC) -L../lib -o optimize $? -lktakit -lutil -lm
+
+formatn: formatn.o
+	$(CC) -L../lib -o formatn $? -lktakit -lutil -lm
+
+moving:	moving.o
+	$(CC) -L../lib -o moving $? -lktakit -lutil -lm
+
+finance: finance.o
+	$(CC) -L../lib -o finance $? -lktakit -lutil -lm
 
 chart:	chart.o
 	$(CC) -L../lib -o chart $? -lktakit -lutil -lSDL_bgi -lSDL2 -lm
