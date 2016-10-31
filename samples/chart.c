@@ -5,13 +5,15 @@
 #include <stdlib.h>
 #include <string.h>
 #include <math.h>
+#ifndef	unix
 #include <conio.h>
+#endif
 #include "graphics.h"
 #include "ktakit.h"
 
 
 void     tradingsystem(taBars b1, taArray ma1, taArray ma2, taArray trades);
-#ifndef _WINDOWS
+#if	!defined(_WINDOWS) && !defined(unix)
 char *taChartPath = ".";
 taArray  taNOARRAY = {NULL,0,0,0};
 taArray *taNULLARRAY = &taNOARRAY;
@@ -38,8 +40,8 @@ int      main(int argc, char *argv[])
   fputs("Technical Analysis Programmer's Toolkit, Copyright (c) 1997 KTA\n", stderr);
   fputs("Sample Charting Program\n\n", stderr);
   fputs("PARAMETERS: type path name [start [count]]\n", stderr);
-  fputs("   Example (CompuTrac): CHART CT          C:\\KTAKIT IBM\n", stderr);
-  fputs("   Example (Text file): CHART TXTINFO.TXT C:\\KTAKIT IBM.TXT\n", stderr);
+  fputs("   Example (CompuTrac): chart CT          C:\\KTAKIT IBM\n", stderr);
+  fputs("   Example (Text file): chart txtInfo.txt C:\\KTAKIT IBM.txt\n", stderr);
   exit(-1);
  }
  type = argv[1];
@@ -50,7 +52,7 @@ int      main(int argc, char *argv[])
  if (argc > 5)
   barcount = atol(argv[5]);
 #else
- type = "txtinfo.txt";
+ type = "txtInfo.txt";
  path = ".";
  name = "IBM.txt";
 #endif

@@ -11,8 +11,8 @@
 # Borland C++ tools
 #
 WITH_MATCH=
-SUBDIRS=source util samples
-REALSUBDIRS=source util samples
+SUBDIRS=source util SDL_bgi samples
+REALSUBDIRS=source util SDL_bgi samples
 SYMSUBDIRS=include
 CC=gcc
 OPTIMIZE=-O2

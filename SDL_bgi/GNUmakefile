@@ -14,21 +14,20 @@ ifeq	($(DEBUGS),)
 DEBUGS= -g
 endif
 
-CFLAGS=$(DEBUGS) $(OPTIMIZE) -I../include
+CFLAGS=$(DEBUGS) $(OPTIMIZE) -Wall -fpic -I../include
 
-objs =	taarray.o tacalc.o tacandle.o tacsi.o tact.o tadate.o tadj.o tafile.o \
-	tafin.o tafs.o taio.o tastr.o  tatc.o tatrade.o tatt.o tatxt.o tachart.o
-srcs =	taarray.c tacalc.c tacandle.c tacsi.c tact.c tadate.c tadj.c tafile.c \
-	tafin.c tafs.c taio.c tastr.c  tatc.c tatrade.c tatt.c tatxt.c tachart.c
+LIB = libSDL_bgi.so
+objs =	SDL_bgi.o
+srcs =	SDL_bgi.c
 
-all:	libktakit.a
+all:	$(LIB)
 
 clean:
-	rm -f *.o *.a
+	rm -f *.o *.a *.so
 
-libktakit.a:	$(objs)
-	ar ru libktakit.a $(objs)
-	cp libktakit.a ../lib
+libSDL_bgi.so: $(OBJ)
+	$(CC) -shared -o $(LIB) $(OBJ)
+	cp $(LIB) ../lib
 
 depend:
 	sed "/^# Automatically/q" GNUmakefile >Makefile.1

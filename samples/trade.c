@@ -16,8 +16,8 @@ int      main(int argc, char *argv[])
  long     barstart = 0;
  char     systemname[81];
  char     path[71] = ".";
- char     name[21] = "IBM.TXT";
- char     infoname[21]= "TXTINFO.TXT";
+ char     name[21] = "IBM.txt";
+ char     infoname[21]= "txtInfo.txt";
  char     buffer[40];
  taBars   b1;
  taArray  ma1, ma2;
@@ -65,7 +65,7 @@ int      main(int argc, char *argv[])
   taFreeArray(&ma2);
   exit(err);
  }
- strcpy(taOS.OrderParms.ttreport, "TRADErpt.TXT");
+ strcpy(taOS.OrderParms.ttreport, "TradeRpt.txt");
 
  /* Loop through the bars and process orders */
  while (taProcessOrders(&taOS))
@@ -98,7 +98,7 @@ int      main(int argc, char *argv[])
  taProfitRpt1(&taOS, "STDOUT", 0, "", "nAT lAT sAT nPR lPR sPR");
 
  /* Print profit report to a file (append to trade-by-trade report) */
- taProfitRpt(&taOS, "TRADErpt.TXT", 1);
+ taProfitRpt(&taOS, "TradeRpt.txt", 1);
 
  /* Close Order System */
  taOrderSystemClose(&taOS);

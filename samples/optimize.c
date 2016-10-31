@@ -16,8 +16,8 @@ int      main(int argc, char *argv[])
  long     barstart = 0;
  char     systemname[81];
  char     path[71] = ".";
- char     name[21] = "IBM.TXT";
- char     infoname[21]= "TXTINFO.TXT";
+ char     name[21] = "IBM.txt";
+ char     infoname[21]= "txtInfo.txt";
  char     buffer[40];
  taBars   b1;
  taArray  ma1, ma2;
@@ -70,7 +70,7 @@ int      main(int argc, char *argv[])
  taOS.OrderParms.ttreport[0] = '\0';
 
  /* Delete output file since it will be opened for append */
- remove("OPTIMIZE.TXT");
+ remove("Optimize.txt");
 
  /* set variable ranges */
  vars[0].from = 3;
@@ -125,7 +125,7 @@ int      main(int argc, char *argv[])
   /* Construct heading for profit report */
   sprintf(heading, "%4li %3.0f %3.0f", iteration, vars[0].value, vars[1].value);
   /* Print one line profit report to a file */
-  taProfitRpt1(&taOS, "OPTIMIZE.TXT", 1, heading, "nNT nAS nAT lAT sAT nPR lPR sPR");
+  taProfitRpt1(&taOS, "Optimize.txt", 1, heading, "nNT nAS nAT lAT sAT nPR lPR sPR");
  }
  printf("Done                \n");
 

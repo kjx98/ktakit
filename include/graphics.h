@@ -20,6 +20,10 @@
 #ifndef __BGI_GRAPHICS_H__
 #define __BGI_GRAPHICS_H__
 
+#ifdef	unix
+#include "../SDL_bgi/SDL_bgi.h"
+#else
+
 #ifdef _MSC_VER
   #pragma comment(lib, "kernel32")
   #pragma comment(lib, "user32")
@@ -344,4 +348,5 @@ extern int _getabsolutecolor(int colorid);
 }
 #endif
 
+#endif	/* endif unix */
 #endif

@@ -27,8 +27,8 @@ int      main(int argc, char *argv[])
   fputs("      type: CSI, CT, DJ, FS, TC, TT or text info file name\n", stderr);
   fputs("      name: name, symbol or ? for a list\n", stderr);
   fputs("     count: negative means count from end, ignore date/time\n\n", stderr);
-  fputs("   Example (CompuTrac): DATAREAD CT          C:\\KTAKIT IBM     -10\n", stderr);
-  fputs("   Example (Text file): DATAREAD TXTINFO.TXT C:\\KTAKIT IBM.TXT -10\n", stderr);
+  fputs("   Example (CompuTrac): dataread CT          C:\\KTAKIT IBM     -10\n", stderr);
+  fputs("   Example (Text file): dataread txtInfo.txt C:\\KTAKIT IBM.txt -10\n", stderr);
   exit(-1);
  }
  type = argv[1];

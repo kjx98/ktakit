@@ -16,8 +16,8 @@ int      main()
  long     barstart = 0;
  float    envpct = .1;
  char     path[71] = ".";
- char     name[21] = "IBM.TXT";
- char     infoname[21]= "TXTINFO.TXT";
+ char     name[21] = "IBM.txt";
+ char     infoname[21]= "txtInfo.txt";
  char     buffer[40];
  taBars   b1;
  taArray  simplema, mahi, malo;
@@ -52,7 +52,7 @@ int      main()
  stop = min(b1.size - 1, 20);
  taArrayPrintf("stdout", append, start, stop,
 	       "NUM.     DATE    CLOSE       MA    MA-HI    MA-LO\n",
-	       "%04r %ymd/i %8.3f %8.3f %8.3f %8.3f\n",
+	       "%04r %YMD/i %8.3f %8.3f %8.3f %8.3f\n",
 	       b1.dt, b1.cl, simplema, mahi, malo);
 
  /* free bar and array memory */

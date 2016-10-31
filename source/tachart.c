@@ -4,7 +4,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <math.h>
-#ifdef  WINDOWS
+#ifndef	unix
 #include <conio.h>
 #endif
 #include "graphics.h"
@@ -289,7 +289,11 @@ int  DLL_EXPORT  taChartScreenInit(struct taChartScreen *screen, int linemax, in
     detectgraph(&gd, &gm);
     // for use openbgi
     gd = VGA;
+#ifdef	unix
+    gm = SDL_1024x768;
+#else
     gm = GM_1024x768;
+#endif
     initgraph(&gd, &gm, "SHOW_INVISIBLE_PAGE");
  }
  memset(screen, 0, sizeof(struct taChartScreen));
@@ -843,7 +847,11 @@ int DLL_EXPORT   taChartDraw(struct taChartScreen *screen)
    clearviewport();
    taChartPaint(screen, &info);
   }
+#ifdef	unix
+  key = toupper(getch());
+#else
   key = toupper(readkey() /*getch()*/);
+#endif
   switch (key)
   {
   case 'Q':

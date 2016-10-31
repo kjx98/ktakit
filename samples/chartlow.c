@@ -24,8 +24,8 @@ int      main()
  int      barcount = -1, allocate = 1;
  long     barstart = 0;
  char     path[71] = ".";
- char     name[21] = "IBM.TXT";
- char     infoname[21]= "TXTINFO.TXT";
+ char     name[21] = "IBM.txt";
+ char     infoname[21]= "txtInfo.txt";
  char     buffer[40];
  struct videoconfig video;
  taBars   b1;
