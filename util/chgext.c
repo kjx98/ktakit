@@ -34,10 +34,10 @@ int	len;
     /* Convert to Unix-style path name */
 
     if (path == newpath) {
-	for (p = path,len=0; *p; ++p,len++)
+	for (p = (char *)path,len=0; *p; ++p,len++)
 		if ('\\' == *p) newpath[len] = '/';
     } else {
-	for (p = path,len=0; *p; ++p,len++)
+	for (p = (char *)path,len=0; *p; ++p,len++)
 		if ('\\' == *p) newpath[len] = '/'; else newpath[len] = *p;
     }
 

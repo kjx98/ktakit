@@ -89,7 +89,7 @@ LPSTR ret;
 
     if (ret != (ptr + num_chars)) *++ret = '\000';
 //    *++ret = '\000';
-    for(;(int)ptr<(int)ret;ptr++)
+    for(;ptr<ret;ptr++)
 	if (*ptr != ' ' && *ptr != '\t') break;
     return ptr;
 }

@@ -5,6 +5,7 @@
 #include <string.h>
 #include <math.h>
 #include <float.h>
+#include <ctype.h>
 #include "ktakit.h"
 
 /* Internal Functions & Macros - called only within TATRADE.C */
