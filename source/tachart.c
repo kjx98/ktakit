@@ -287,11 +287,11 @@ int  DLL_EXPORT  taChartScreenInit(struct taChartScreen *screen, int linemax, in
  {
     int gd, gm;
     detectgraph(&gd, &gm);
-    // for use openbgi
-    gd = VGA;
 #ifdef	unix
     gm = SDL_1024x768;
 #else
+    // for use openbgi
+    gd = VGA;
     gm = GM_1024x768;
 #endif
     initgraph(&gd, &gm, "SHOW_INVISIBLE_PAGE");

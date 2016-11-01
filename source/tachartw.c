@@ -46,10 +46,10 @@ int DLL_EXPORT taChart(HDC hdc, taArray *pa1, taBars *pb1,
  if (ystop == ystart || xstop == xstart)
   return (taErrInvalidParm);
  xstop = min(xstop, xstart + xwidth - 1);
- xscale = (short) floor((x2 - x1 + 1) / xwidth);
+ xscale = floor((x2 - x1 + 1) / xwidth);
  yscale = (y2 - y1) / (ystop - ystart);
- x1 += ((x2 - x1 + 1) - xwidth * (short)xscale) / 2;
- halfxscale = (short) floor((xscale - 2) / 2);
+ x1 += ((x2 - x1 + 1) - xwidth * xscale) / 2;
+ halfxscale = floor((xscale - 2) / 2);
 
  GetClipBox(hdc, &rcClip);
  hrgnClip = CreateRectRgn(x1, y1, x2, y2);
@@ -59,7 +59,7 @@ int DLL_EXPORT taChart(HDC hdc, taArray *pa1, taBars *pb1,
  y2 -= y1;
 
  if (type == taCHART_LINE)
-  hpen = CreatePen((short)style, (short)color2, color1);
+  hpen = CreatePen(style, color2, color1);
  else  if (type == taCHART_FILL)
   hpen = CreatePen(PS_NULL, 1, color1);
  else
@@ -73,12 +73,12 @@ int DLL_EXPORT taChart(HDC hdc, taArray *pa1, taBars *pb1,
  }
  if (type == taCHART_HIST || type == taCHART_FILL)
  {
-  if (style != 0 && (short)style != 0xffff)
+  if (style != 0 && style != 0xffff)
   {
-   fill[0] = (short)(style & 0xF000) >> 12;
-   fill[1] = (short)(style & 0x0F00) >> 8;
-   fill[2] = (short)(style & 0x00F0) >> 4;
-   fill[3] = (short)(style & 0x000F);
+   fill[0] = (style & 0xF000) >> 12;
+   fill[1] = (style & 0x0F00) >> 8;
+   fill[2] = (style & 0x00F0) >> 4;
+   fill[3] = (style & 0x000F);
    for (i1 = 0; i1 < 4; i1++)
     fill[i1] += (fill[i1] << 4);
    for (i1 = 4; i1 < 8; i1++)
@@ -110,14 +110,14 @@ int DLL_EXPORT taChart(HDC hdc, taArray *pa1, taBars *pb1,
   for (pos = xstart; pos <= xstop && pos < b1.size; pos++)
   {
    x3 = (pos - xstart) * xscale + halfxscale + 1;
-   MoveToEx(hdc, x3, y2 - (short) ((taArrayItem(b1.hi, pos) - ystart) * yscale), NULL);
-   LineTo(hdc, x3, y2 - (short) ((taArrayItem(b1.lo, pos) - ystart) * yscale) + 1);
-   MoveToEx(hdc, x3 + 1, y2 - (short) ((taArrayItem(b1.cl, pos) - ystart) * yscale), NULL);
-   LineTo(hdc, x3 + halfxscale + 1, y2 - (short) ((taArrayItem(b1.cl, pos) - ystart) * yscale));
+   MoveToEx(hdc, x3, y2 - ((taArrayItem(b1.hi, pos) - ystart) * yscale), NULL);
+   LineTo(hdc, x3, y2 - ((taArrayItem(b1.lo, pos) - ystart) * yscale) + 1);
+   MoveToEx(hdc, x3 + 1, y2 -  ((taArrayItem(b1.cl, pos) - ystart) * yscale), NULL);
+   LineTo(hdc, x3 + halfxscale + 1, y2 - ((taArrayItem(b1.cl, pos) - ystart) * yscale));
    if (type == taCHART_OPHILOCL && taArrayItem(b1.op, pos))
    {
-    MoveToEx(hdc, x3 - 1, y2 - (short) ((taArrayItem(b1.op, pos) - ystart) * yscale), NULL);
-    LineTo(hdc, x3 - halfxscale + 1, y2 - (short) ((taArrayItem(b1.op, pos) - ystart) * yscale));
+    MoveToEx(hdc, x3 - 1, y2 - ((taArrayItem(b1.op, pos) - ystart) * yscale), NULL);
+    LineTo(hdc, x3 - halfxscale + 1, y2 - ((taArrayItem(b1.op, pos) - ystart) * yscale));
    }
   }
   break;
@@ -130,33 +130,33 @@ int DLL_EXPORT taChart(HDC hdc, taArray *pa1, taBars *pb1,
   for (pos = xstart; pos <= xstop && pos < b1.size; pos++)
   {
    x3 = (pos - xstart) * xscale + 1;
-   MoveToEx(hdc, x3 + halfxscale, y2 - (short) ((taArrayItem(b1.hi, pos) - ystart) * yscale), NULL);
-   LineTo(hdc, x3 + halfxscale, y2 - (short) ((taArrayItem(b1.lo, pos) - ystart) * yscale) + 1);
+   MoveToEx(hdc, x3 + halfxscale, y2 - ((taArrayItem(b1.hi, pos) - ystart) * yscale), NULL);
+   LineTo(hdc, x3 + halfxscale, y2 - ((taArrayItem(b1.lo, pos) - ystart) * yscale) + 1);
    if (taArrayItem(b1.op, pos) == 0 || taArrayItem(b1.op, pos) == taArrayItem(b1.cl, pos))
    {
-    MoveToEx(hdc, x3, y2 - (short) ((taArrayItem(b1.cl, pos) - ystart) * yscale), NULL);
-    LineTo(hdc, x3 + xscale - i1 + 1, y2 - (short) ((taArrayItem(b1.cl, pos) - ystart) * yscale));
+    MoveToEx(hdc, x3, y2 - ((taArrayItem(b1.cl, pos) - ystart) * yscale), NULL);
+    LineTo(hdc, x3 + xscale - i1 + 1, y2 - ((taArrayItem(b1.cl, pos) - ystart) * yscale));
    }
    else
    {
     if (taArrayItem(b1.op, pos) > taArrayItem(b1.cl, pos)) /* down */
     {
      SelectObject(hdc, hbrush2);
-     Rectangle(hdc, x3, y2 - (short) ((taArrayItem(b1.op, pos) - ystart) * yscale),
-               x3 + xscale - i1 + 1, y2 - (short) ((taArrayItem(b1.cl, pos) - ystart) * yscale) + 1);
+     Rectangle(hdc, x3, y2 - ((taArrayItem(b1.op, pos) - ystart) * yscale),
+               x3 + xscale - i1 + 1, y2 - ((taArrayItem(b1.cl, pos) - ystart) * yscale) + 1);
     }
     else                                                   /*  up  */
     {
      SelectObject(hdc, hbrush);
-     Rectangle(hdc, x3, y2 - (short) ((taArrayItem(b1.cl, pos) - ystart) * yscale),
-               x3 + xscale - i1 + 1, y2 - (short) ((taArrayItem(b1.op, pos) - ystart) * yscale) + 1);
+     Rectangle(hdc, x3, y2 - ((taArrayItem(b1.cl, pos) - ystart) * yscale),
+               x3 + xscale - i1 + 1, y2 - ((taArrayItem(b1.op, pos) - ystart) * yscale) + 1);
     }
    }
   }
   break;
 
  case taCHART_HIST:
-  y3 = (short) (y2 + ystart * yscale);
+  y3 = (y2 + ystart * yscale);
   if (xscale == 1)
    i1 = 0;
   else
@@ -164,7 +164,7 @@ int DLL_EXPORT taChart(HDC hdc, taArray *pa1, taBars *pb1,
   for (pos = xstart; pos <= xstop && pos < a1.size; pos++)
   {
    x3 = (pos - xstart) * xscale + 1;
-   Rectangle(hdc, x3, y3, x3 + xscale - i1, y2 - (short)((taArrayItem(a1, pos) - ystart) * yscale) + 1);
+   Rectangle(hdc, x3, y3, x3 + xscale - i1, y2 - ((taArrayItem(a1, pos) - ystart) * yscale) + 1);
   }
   break;
 
@@ -172,11 +172,11 @@ int DLL_EXPORT taChart(HDC hdc, taArray *pa1, taBars *pb1,
   for (pos = xstart + 1; pos <= xstop && pos < a1.size && !taArrayItem(a1, pos - 1); pos++);
   if (pos > xstop || pos == a1.size)
    break;
-  MoveToEx(hdc, (pos - xstart - 1) * xscale + 1, y2 - (short) ((taArrayItem(a1, pos - 1) - ystart) * yscale), NULL);
+  MoveToEx(hdc, (pos - xstart - 1) * xscale + 1, y2 - ((taArrayItem(a1, pos - 1) - ystart) * yscale), NULL);
   for (; pos <= xstop && pos < a1.size; pos++)
   {
    x3 = (pos - xstart) * xscale + halfxscale;
-   LineTo(hdc, x3, y2 - (short) ((taArrayItem(a1, pos) - ystart) * yscale));
+   LineTo(hdc, x3, y2 - ((taArrayItem(a1, pos) - ystart) * yscale));
   }
   break;
 
@@ -185,7 +185,7 @@ int DLL_EXPORT taChart(HDC hdc, taArray *pa1, taBars *pb1,
   for (; pos <= xstop && pos < a1.size; pos++)
   {
    x3 = (pos - xstart) * xscale + halfxscale + 1;
-   y3 = y2 - (short) ((taArrayItem(a1, pos) - ystart) * yscale);
+   y3 = y2 - ((taArrayItem(a1, pos) - ystart) * yscale);
    MoveToEx(hdc, x3, y3, NULL);
    LineTo(hdc, x3, y3 + 1);
   }
@@ -196,14 +196,14 @@ int DLL_EXPORT taChart(HDC hdc, taArray *pa1, taBars *pb1,
   if (pos > xstop || pos == a1.size)
    break;
   points[0].x = (pos - xstart - 1) * xscale + 1;
-  points[0].y = y2 - (short) ((taArrayItem(a1, pos - 1) - ystart) * yscale);
+  points[0].y = y2 - ((taArrayItem(a1, pos - 1) - ystart) * yscale);
   points[1].x = points[0].x;
   points[1].y = y2;
   points[2].y = y2;
   for (; pos <= xstop && pos < a1.size; pos++)
   {
    points[3].x = (pos - xstart) * xscale + halfxscale;
-   points[3].y = y2 - (short) ((taArrayItem(a1, pos) - ystart) * yscale);
+   points[3].y = y2 - ((taArrayItem(a1, pos) - ystart) * yscale);
    points[2].x = points[3].x;
    Polygon(hdc, points, 4);
    points[0] = points[3];
@@ -214,12 +214,12 @@ int DLL_EXPORT taChart(HDC hdc, taArray *pa1, taBars *pb1,
  case taCHART_TRADES:
   for (pos = xstart; pos <= xstop && pos < a1.size; pos++)
   {
-   i1 = (short)taArrayItem(a1, pos);
+   i1 = taArrayItem(a1, pos);
    if (i1 == 0)
     continue;
    x3 = (pos - xstart) * xscale + halfxscale + 1;
-   y3 = y2 - (short)((taArrayItem(b1.hi, pos) - ystart) * yscale + 2);
-   y4 = y2 - (short)((taArrayItem(b1.lo, pos) - ystart) * yscale - 2);
+   y3 = y2 - ((taArrayItem(b1.hi, pos) - ystart) * yscale + 2);
+   y4 = y2 - ((taArrayItem(b1.lo, pos) - ystart) * yscale - 2);
    if (i1 & taBO)
    {
     SelectObject(hdc, hpen);
@@ -286,7 +286,7 @@ int DLL_EXPORT taChart(HDC hdc, taArray *pa1, taBars *pb1,
  {
   SelectObject(hdc, hbrushOld);
   DeleteObject(hbrush);
-  if (style != 0 && (short)style != 0xffff)
+  if (style != 0 && style != 0xffff)
   {
    DeleteObject(hbmp);
    SetTextColor(hdc, textcolorOld);
@@ -312,10 +312,10 @@ int DLL_EXPORT taChartGrid(HDC hdc, double level, double ystart, double ystop,
  y3 = y2 - (level - ystart) * yscale;
  if (y3 > y2 || y3 < y1)
   return (0);
- hpen = CreatePen((short)style, 1, color);
+ hpen = CreatePen(style, 1, color);
  hpenOld = SelectObject(hdc, hpen);
- MoveToEx(hdc, x1, (short) y3, NULL);
- LineTo(hdc, x2, (short) y3);
+ MoveToEx(hdc, x1, y3, NULL);
+ LineTo(hdc, x2, y3);
  SelectObject(hdc, hpenOld);
  DeleteObject(hpen);
  return (0);
@@ -643,8 +643,8 @@ int DLL_EXPORT taChartPaint(HDC hdc, struct taChartScreen *screen, struct taChar
  Rectangle(hdc, info->left, info->top, info->right + 2, info->bottom + 2);
 
  i1 = info->right - info->left + 1;
- info->xscale = (short) floor(i1 / screen->xwidth);
- info->dateleft = info->left + (i1 - screen->xwidth * (short) info->xscale) / 2;
+ info->xscale = floor(i1 / screen->xwidth);
+ info->dateleft = info->left + (i1 - screen->xwidth * info->xscale) / 2;
  if (screen->datestyle && !taIsNoBars(info->masterbars) && (taArrayItem(info->masterbars.dt, screen->xstop) - taArrayItem(info->masterbars.dt, screen->xstart)) >= 1)
  {
   if (screen->datestyle == 1)
