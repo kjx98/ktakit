@@ -22,41 +22,41 @@ objs =	advdec.o calc1.o candles.o dumpfxt.o dumpmt4.o formatn.o optimize.o \
 srcs =	advdec.c calc1.c candles.c dumpfxt.c dumpmt4.c formatn.c optimize.c \
 	study.c tick2m1.c trade.c study.c chart.c optimize.c formatn.c \
 	finance.c moving.c
-
+libs =  ../lib/libktakit.a # ../lib/libmyutils.a
 all:	advdec calc1 candles trade study chart optimize formatn moving finance
 
 clean:
 	rm -f *.o *.a
 
-advdec:	advdec.o
-	$(CC) -L../lib -o advdec $? -lktakit -lutil -lm
+advdec:	advdec.o $(libs)
+	$(CC) -L../lib -o advdec $@.o -lktakit -lm
 
-calc1:	calc1.o
-	$(CC) -L../lib -o calc1 $? -lktakit -lutil -lm
+calc1:	calc1.o $(libs)
+	$(CC) -L../lib -o calc1 $@.o -lktakit -lm
 
-trade:	trade.o
-	$(CC) -L../lib -o trade $? -lktakit -lutil -lm
+trade:	trade.o $(libs)
+	$(CC) -L../lib -o trade $@.o -lktakit -lm
 
-study:	study.o
-	$(CC) -L../lib -o study $? -lktakit -lutil -lm
+study:	study.o $(libs)
+	$(CC) -L../lib -o study $@.o -lktakit -lm
 
-candles: candles.o
-	$(CC) -L../lib -o candles $? -lktakit -lutil -lm
+candles: candles.o $(libs)
+	$(CC) -L../lib -o candles $@.o -lktakit -lm
 
-optimize: optimize.o
-	$(CC) -L../lib -o optimize $? -lktakit -lutil -lm
+optimize: optimize.o $(libs)
+	$(CC) -L../lib -o optimize $@.o -lktakit -lm
 
-formatn: formatn.o
-	$(CC) -L../lib -o formatn $? -lktakit -lutil -lm
+formatn: formatn.o $(libs)
+	$(CC) -L../lib -o formatn $@.o -lktakit -lm
 
-moving:	moving.o
-	$(CC) -L../lib -o moving $? -lktakit -lutil -lm
+moving:	moving.o $(libs)
+	$(CC) -L../lib -o moving $@.o -lktakit -lm
 
-finance: finance.o
-	$(CC) -L../lib -o finance $? -lktakit -lutil -lm
+finance: finance.o $(libs)
+	$(CC) -L../lib -o finance $@.o -lktakit -lm
 
-chart:	chart.o
-	$(CC) -L../lib -o chart $? -lktakit -lutil -lSDL_bgi -lSDL2 -lm
+chart:	chart.o $(libs)
+	$(CC) -L../lib -o chart $@.o -lktakit -lSDL_bgi -lSDL2 -lm
 
 depend:
 	sed "/^# Automatically/q" GNUmakefile >Makefile.1
