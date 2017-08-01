@@ -12,16 +12,16 @@
 
 char *taChartPath = ".";
 
-int    taChartCoord(double level, double ystart, double ystop, int y1, int y2);
-double    taChartRoundMinMax(int y1, int y2, double ymin, double ymax, double *ystart, double *ystop, int fontheight);
+int    taChartCoord(KFloat level, KFloat ystart, KFloat ystop, int y1, int y2);
+KFloat    taChartRoundMinMax(int y1, int y2, KFloat ymin, KFloat ymax, KFloat *ystart, KFloat *ystop, int fontheight);
 
 
 int DLL_EXPORT   taChart(taArray *pa1, taBars *pb1, int xstart, int xstop, int xwidth,
-           double ystart, double ystop, int x1, int y1, int x2, int y2,
+           KFloat ystart, KFloat ystop, int x1, int y1, int x2, int y2,
            int type, long color1, long color2, long style)
 {
  int    err = 0, i1 = 0, pos, x3, y3, y4;
- double    yscale, xscale, halfxscale;
+ KFloat    yscale, xscale, halfxscale;
  unsigned char fill[8];
  taArray    a1;
  taBars     b1;
@@ -51,8 +51,8 @@ int DLL_EXPORT   taChart(taArray *pa1, taBars *pb1, int xstart, int xstop, int x
  if (ystop == ystart || xstop == xstart)
   return (taErrInvalidParm);
  xstop = min(xstop, xstart + xwidth - 1);
- xscale = (double)(x2 - x1 + 1) / xwidth;
- yscale = (double)(y2 - y1) / (ystop - ystart);
+ xscale = (KFloat)(x2 - x1 + 1) / xwidth;
+ yscale = (KFloat)(y2 - y1) / (ystop - ystart);
  x1 += ((x2 - x1 + 1) - (int)(xwidth * xscale)) / 2;
  halfxscale = (xscale - 2) / 2;
  setcolor((int)color1);
@@ -264,10 +264,10 @@ int DLL_EXPORT   taChart(taArray *pa1, taBars *pb1, int xstart, int xstop, int x
 }
 
 
-int DLL_EXPORT   taChartGrid(double level, double ystart, double ystop,
+int DLL_EXPORT   taChartGrid(KFloat level, KFloat ystart, KFloat ystop,
 	     int x1, int y1, int x2, int y2, long color, long style)
 {
- double    y3, yscale;
+ KFloat    y3, yscale;
 
  yscale = (y2 - y1) / (ystop - ystart);
  y3 = y2 - (level - ystart) * yscale;
@@ -332,7 +332,7 @@ void DLL_EXPORT    taChartScreenClose(struct taChartScreen *screen)
 
 
 int DLL_EXPORT taChartLineDef(struct taChartScreen *screen, int chartnum,
-	    taArray *a1, taBars *b1, double ystart, double ystop,
+	    taArray *a1, taBars *b1, KFloat ystart, KFloat ystop,
 	    int type, long color1, long color2, long style)
 {
  if (screen->defined != taCHART_DEFINED)
@@ -355,7 +355,7 @@ int DLL_EXPORT taChartLineDef(struct taChartScreen *screen, int chartnum,
 
 
 int DLL_EXPORT taChartGridDef(struct taChartScreen *screen,
-	    int chartnum, double value, double ystart, double ystop,
+	    int chartnum, KFloat value, KFloat ystart, KFloat ystop,
 	    long color, long style)
 {
  if (screen->defined != taCHART_DEFINED)
@@ -549,7 +549,7 @@ int  DLL_EXPORT  taChartPaint(struct taChartScreen *screen, struct taChartInfo *
 {
  int    i1, i2, i3, i4;
  int    yr, mo, da;
- double    f1, f2;
+ KFloat    f1, f2;
  char     buffer[81];
  char    *months[3][12] = {
   {"J", "F", "M", "A", "M", "J", "J", "A", "S", "O", "N", "D"},
@@ -728,9 +728,9 @@ int  DLL_EXPORT  taChartPaint(struct taChartScreen *screen, struct taChartInfo *
 }
 
 
-int    taChartCoord(double level, double ystart, double ystop, int y1, int y2)
+int    taChartCoord(KFloat level, KFloat ystart, KFloat ystop, int y1, int y2)
 {
- double    y3, yscale;
+ KFloat    y3, yscale;
 
  yscale = (y2 - y1) / (ystop - ystart);
  y3 = y2 - (level - ystart) * yscale;
@@ -738,10 +738,10 @@ int    taChartCoord(double level, double ystart, double ystop, int y1, int y2)
 }
 
 
-double    taChartRoundMinMax(int y1, int y2, double ymin, double ymax, double *ystart, double *ystop, int fontheight)
+KFloat    taChartRoundMinMax(int y1, int y2, KFloat ymin, KFloat ymax, KFloat *ystart, KFloat *ystop, int fontheight)
 {
  int    i1;
- double    f1, factor = 1;
+ KFloat    f1, factor = 1;
 
  i1 = (y2 - y1) / (3 * fontheight);
  if (i1 == 0)
@@ -939,7 +939,7 @@ int DLL_EXPORT   taChartDraw(struct taChartScreen *screen)
 
 
 int DLL_EXPORT   taChartPosition(struct taChartScreen *screen, struct taChartInfo *info,
-			  int x1, int y1, int *barnum, int *barpos, int *subchart, double *yvalue)
+			  int x1, int y1, int *barnum, int *barpos, int *subchart, KFloat *yvalue)
 {
  int    i1;
 

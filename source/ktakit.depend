@@ -1,0 +1,192 @@
+# depslib dependency file v1.0
+1487137295 source:/home/kjx/work/ktakit/source/taarray.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<math.h>
+	<conio.h>
+	<stdarg.h>
+	"ktakit.h"
+
+1501580721 /home/kjx/work/ktakit/include/ktakit.h
+	"ktadefs.h"
+
+1487137295 /home/kjx/work/ktakit/include/ktadefs.h
+	"ktatypes.h"
+	"ktastd.h"
+
+1501578124 /home/kjx/work/ktakit/include/ktatypes.h
+	<windows.h>
+	<sys/types.h>
+	<limits.h>
+
+1501578259 /home/kjx/work/ktakit/include/ktastd.h
+	<string.h>
+	<memory.h>
+	<stdio.h>
+	<time.h>
+	<fcntl.h>
+	<math.h>
+	<stdlib.h>
+	<sys/stat.h>
+	<sys/time.h>
+	<unistd.h>
+	<sys/ioctl.h>
+	<time.h>
+	<errno.h>
+	<pthread.h>
+	<io.h>
+	<share.h>
+	"memwatch.h"
+
+1487137295 /home/kjx/work/ktakit/include/memwatch.h
+	<stdlib.h>
+
+1501579575 source:/home/kjx/work/ktakit/source/tacalc.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<math.h>
+	<ctype.h>
+	"ktakit.h"
+
+1501579459 source:/home/kjx/work/ktakit/source/tacandle.c
+	<stdio.h>
+	<stdlib.h>
+	<math.h>
+	"ktakit.h"
+
+1501579426 source:/home/kjx/work/ktakit/source/tachart.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<math.h>
+	<conio.h>
+	"graphics.h"
+	"ktakit.h"
+
+1487137295 /home/kjx/work/ktakit/include/graphics.h
+	"../SDL_bgi/SDL_bgi.h"
+
+1487137295 /home/kjx/work/ktakit/SDL_bgi/SDL_bgi.h
+	<SDL2/SDL.h>
+
+1501579380 source:/home/kjx/work/ktakit/source/tacsi.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<math.h>
+	<ctype.h>
+	"ktakit.h"
+	"tacsi.h"
+
+1487137295 /home/kjx/work/ktakit/source/tacsi.h
+
+1487137295 source:/home/kjx/work/ktakit/source/tact.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<math.h>
+	<ctype.h>
+	"ktakit.h"
+	"tact.h"
+
+1487137295 /home/kjx/work/ktakit/source/tact.h
+
+1487137295 source:/home/kjx/work/ktakit/source/tadate.c
+	<stdio.h>
+	<stdlib.h>
+	<math.h>
+	"ktakit.h"
+
+1487137295 source:/home/kjx/work/ktakit/source/tadj.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<math.h>
+	<ctype.h>
+	"ktakit.h"
+	"tadj.h"
+
+1487137295 /home/kjx/work/ktakit/source/tadj.h
+
+1487137295 source:/home/kjx/work/ktakit/source/tafile.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<math.h>
+	<ctype.h>
+	"ktakit.h"
+
+1501579279 source:/home/kjx/work/ktakit/source/tafin.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<math.h>
+	"ktakit.h"
+
+1501579197 source:/home/kjx/work/ktakit/source/tafs.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<math.h>
+	<ctype.h>
+	"ktakit.h"
+	"tafs.h"
+
+1487137295 /home/kjx/work/ktakit/source/tafs.h
+
+1501579147 source:/home/kjx/work/ktakit/source/taio.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<math.h>
+	<ctype.h>
+	<stdarg.h>
+	"ktakit.h"
+
+1487137295 source:/home/kjx/work/ktakit/source/tastr.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"ktakit.h"
+
+1487137295 source:/home/kjx/work/ktakit/source/tatc.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<math.h>
+	<ctype.h>
+	"ktakit.h"
+	"tatc.h"
+
+1487137295 /home/kjx/work/ktakit/source/tatc.h
+
+1501580052 source:/home/kjx/work/ktakit/source/tatrade.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<math.h>
+	<float.h>
+	<ctype.h>
+	"ktakit.h"
+
+1501580217 source:/home/kjx/work/ktakit/source/tatt.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<math.h>
+	<ctype.h>
+	"ktakit.h"
+	"tatt.h"
+
+1487137295 /home/kjx/work/ktakit/source/tatt.h
+
+1487137295 source:/home/kjx/work/ktakit/source/tatxt.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<math.h>
+	<ctype.h>
+	"ktakit.h"
+

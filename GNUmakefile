@@ -16,6 +16,7 @@ REALSUBDIRS=source util SDL_bgi samples
 SYMSUBDIRS=include
 CC=gcc
 OPTIMIZE=-O2
+OPTIMIZE +=-Wpedantic
 # _REENTRANT for thread (no need for FreeBSD/Linux)
 # AIX (RS6000) use -mthreads for pthread
 USE_THREAD=

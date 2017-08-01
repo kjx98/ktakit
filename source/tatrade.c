@@ -16,11 +16,11 @@
 #define RNDDNPLUS(num,to) (ROUNDDN(num,to)-to)
 
 void    taInitCurrentParms(struct taOrderSystem *taOS);
-int     taCreateInExec(struct taOrderSystem *taOS, int ordnum, char buysell, double price);
-int     taCloseInExec(struct taOrderSystem *taOS, int ordnum, char buysell, double price);
-int     taMatchInExec(struct taOrderSystem *taOS, int ordnum, char buysell, double price);
-int     taCreateOutExec(struct taOrderSystem *taOS, int ordnum, char buysell, double price, long inexecnum, long volume);
-double  taCalcProfit(struct taOrderSystem *taOS, long in, struct taExecution OutExec);
+int     taCreateInExec(struct taOrderSystem *taOS, int ordnum, char buysell, KFloat price);
+int     taCloseInExec(struct taOrderSystem *taOS, int ordnum, char buysell, KFloat price);
+int     taMatchInExec(struct taOrderSystem *taOS, int ordnum, char buysell, KFloat price);
+int     taCreateOutExec(struct taOrderSystem *taOS, int ordnum, char buysell, KFloat price, long inexecnum, long volume);
+KFloat  taCalcProfit(struct taOrderSystem *taOS, long in, struct taExecution OutExec);
 int     taUpdateCurrent(struct taOrderSystem *taOS);
 int     taSortOrders(const void *elem1v, const void *elem2v);
 
@@ -413,7 +413,7 @@ int DLL_EXPORT taProcessOrders(struct taOrderSystem *taOS)
 }
 
 
-int DLL_EXPORT taBuyToOpen(struct taOrderSystem *taOS, char *name, long volume, double price, int atind, int timeinforce)
+int DLL_EXPORT taBuyToOpen(struct taOrderSystem *taOS, char *name, long volume, KFloat price, int atind, int timeinforce)
 {
  if (taOS->OrderCnt >= taOS->OrderSize)
   return (taErrMalloc);
@@ -437,7 +437,7 @@ int DLL_EXPORT taBuyToOpen(struct taOrderSystem *taOS, char *name, long volume, 
 }
 
 
-int DLL_EXPORT taSellToOpen(struct taOrderSystem *taOS, char *name, long volume, double price, int atind, int timeinforce)
+int DLL_EXPORT taSellToOpen(struct taOrderSystem *taOS, char *name, long volume, KFloat price, int atind, int timeinforce)
 {
  if (taOS->OrderCnt >= taOS->OrderSize)
   return (taErrMalloc);
@@ -461,7 +461,7 @@ int DLL_EXPORT taSellToOpen(struct taOrderSystem *taOS, char *name, long volume,
 }
 
 
-int DLL_EXPORT taSellToClose(struct taOrderSystem *taOS, char *name, char *fromname, long volume, double price, int atind, int timeinforce)
+int DLL_EXPORT taSellToClose(struct taOrderSystem *taOS, char *name, char *fromname, long volume, KFloat price, int atind, int timeinforce)
 {
  if (taOS->OrderCnt >= taOS->OrderSize)
   return (taErrMalloc);
@@ -487,7 +487,7 @@ int DLL_EXPORT taSellToClose(struct taOrderSystem *taOS, char *name, char *fromn
 }
 
 
-int DLL_EXPORT taBuyToClose(struct taOrderSystem *taOS, char *name, char *fromname, long volume, double price, int atind, int timeinforce)       /* TS ExitShort */
+int DLL_EXPORT taBuyToClose(struct taOrderSystem *taOS, char *name, char *fromname, long volume, KFloat price, int atind, int timeinforce)       /* TS ExitShort */
 {
  if (taOS->OrderCnt >= taOS->OrderSize)
   return (taErrMalloc);
@@ -528,7 +528,7 @@ int DLL_EXPORT taCancelOrder(struct taOrderSystem *taOS, char *name)
 int DLL_EXPORT taPrintOrders(struct taOrderSystem *taOS, char *outfile, int append)
 {
  int    i1 = 0;
- double   f1;
+ KFloat   f1;
  char     dt[9];
  char     ti[9];
  FILE    *outptr = NULL;
@@ -888,7 +888,7 @@ void     taInitCurrentParms(struct taOrderSystem *taOS)
 }
 
 
-int      taCreateInExec(struct taOrderSystem *taOS, int ordnum, char buysell, double price)
+int      taCreateInExec(struct taOrderSystem *taOS, int ordnum, char buysell, KFloat price)
 {
  if (taOS->InExecCnt >= taOS->InExecSize)
   return (taErrMalloc);
@@ -910,7 +910,7 @@ int      taCreateInExec(struct taOrderSystem *taOS, int ordnum, char buysell, do
 }
 
 
-int      taCloseInExec(struct taOrderSystem *taOS, int ordnum, char buysell, double price)
+int      taCloseInExec(struct taOrderSystem *taOS, int ordnum, char buysell, KFloat price)
 {
 
  int      i1 = 0;
@@ -930,7 +930,7 @@ int      taCloseInExec(struct taOrderSystem *taOS, int ordnum, char buysell, dou
 }
 
 
-int      taMatchInExec(struct taOrderSystem *taOS, int ordnum, char buysell, double price)
+int      taMatchInExec(struct taOrderSystem *taOS, int ordnum, char buysell, KFloat price)
 {
  int      i1 = 0;
  long     ordervolume;
@@ -959,11 +959,11 @@ int      taMatchInExec(struct taOrderSystem *taOS, int ordnum, char buysell, dou
  return (0);
 }
 
-int      taCreateOutExec(struct taOrderSystem *taOS, int ordnum, char buysell, double price,
+int      taCreateOutExec(struct taOrderSystem *taOS, int ordnum, char buysell, KFloat price,
               long inexecnum, long volume)
 {
  int    i1;
- double   profit = 0;
+ KFloat   profit = 0;
  char     buffer[16], buffer2[16];
  FILE    *outptr = NULL;
  struct taExecution OutExec;
@@ -1042,11 +1042,11 @@ int      taCreateOutExec(struct taOrderSystem *taOS, int ordnum, char buysell, d
 }
 
 
-double   taCalcProfit(struct taOrderSystem *taOS, long in, struct taExecution OutExec)
+KFloat   taCalcProfit(struct taOrderSystem *taOS, long in, struct taExecution OutExec)
 {
- double profit = 0, price = 0, shortmaxdrawdown = 0, longmaxdrawdown = 0;
- double f1 = 0, f2 = 0;
- double high = 1, low = 1;
+ KFloat profit = 0, price = 0, shortmaxdrawdown = 0, longmaxdrawdown = 0;
+ KFloat f1 = 0, f2 = 0;
+ KFloat high = 1, low = 1;
 
  taArrayStats(&taOS->bars.cl, &low, &high, NULL, NULL,
           taOS->InExec[in].barnum, OutExec.barnum, 0);
@@ -1054,7 +1054,7 @@ double   taCalcProfit(struct taOrderSystem *taOS, long in, struct taExecution Ou
  switch (taOS->InExec[in].buysell)
  {
  case taSELL:
-  profit = (double) OutExec.volume * (taOS->OrderParms.valueoftick *
+  profit = (KFloat) OutExec.volume * (taOS->OrderParms.valueoftick *
        (taOS->InExec[in].price - OutExec.price) /
        taOS->OrderParms.ticksize - taOS->OrderParms.slippage) -
        2 * taOS->OrderParms.commission;
@@ -1102,7 +1102,7 @@ double   taCalcProfit(struct taOrderSystem *taOS, long in, struct taExecution Ou
   break;
 
  case taBUY:
-  profit = (double) OutExec.volume * (taOS->OrderParms.valueoftick *
+  profit = (KFloat) OutExec.volume * (taOS->OrderParms.valueoftick *
        (OutExec.price - taOS->InExec[in].price) /
        taOS->OrderParms.ticksize - taOS->OrderParms.slippage) -
        2 * taOS->OrderParms.commission;
@@ -1160,7 +1160,7 @@ double   taCalcProfit(struct taOrderSystem *taOS, long in, struct taExecution Ou
  }
  if (taOS->Long.trades)
  {
-  taOS->Long.pctprofitable = ((double) taOS->Long.win / (double) taOS->Long.trades) * 100;
+  taOS->Long.pctprofitable = ((KFloat) taOS->Long.win / (KFloat) taOS->Long.trades) * 100;
   taOS->Long.avgtrade = taOS->Long.netprofit / taOS->Long.trades;
  }
  if (taOS->Long.avgloss)
@@ -1177,7 +1177,7 @@ double   taCalcProfit(struct taOrderSystem *taOS, long in, struct taExecution Ou
  }
  if (taOS->Short.trades)
  {
-  taOS->Short.pctprofitable = ((double) taOS->Short.win / (double) taOS->Short.trades) * 100;
+  taOS->Short.pctprofitable = ((KFloat) taOS->Short.win / (KFloat) taOS->Short.trades) * 100;
   taOS->Short.avgtrade = taOS->Short.netprofit / taOS->Short.trades;
  }
  if (taOS->Short.avgloss)
@@ -1203,7 +1203,7 @@ double   taCalcProfit(struct taOrderSystem *taOS, long in, struct taExecution Ou
                    (taOS->OrderParms.margin / 100));
  taOS->Net.grossloss = taOS->Long.grossloss + taOS->Short.grossloss;
  if (taOS->Net.trades)
-  taOS->Net.pctprofitable = ((double) taOS->Net.win / (double) taOS->Net.trades) * 100;
+  taOS->Net.pctprofitable = ((KFloat) taOS->Net.win / (KFloat) taOS->Net.trades) * 100;
 
  taOS->Net.loss = taOS->Long.loss + taOS->Short.loss;
  taOS->Net.largestloss = min(taOS->Long.largestloss, taOS->Short.largestloss);
@@ -1266,8 +1266,8 @@ int      taUpdateCurrent(struct taOrderSystem *taOS)
 {
  int      i1 = 0;
  long     longvol = 0, shortvol = 0, totalvolume = 0;
- double   avgentryprice = 0;
- double   totpricebuy = 0, totpricesell = 0;
+ KFloat   avgentryprice = 0;
+ KFloat   totpricebuy = 0, totpricesell = 0;
 
  taOS->Long.openpospl = 0;
  taOS->Short.openpospl = 0;
@@ -1288,7 +1288,7 @@ int      taUpdateCurrent(struct taOrderSystem *taOS)
     totpricebuy += taOS->InExec[i1].remvolume * taOS->InExec[i1].price;
     if (!taOS->Current.longduration)
      taOS->Current.longduration = taOS->Current.barnum - taOS->InExec[i1].barnum + 1;
-    taOS->Long.openpospl += (double) taOS->InExec[i1].remvolume * (taOS->OrderParms.valueoftick *
+    taOS->Long.openpospl += (KFloat) taOS->InExec[i1].remvolume * (taOS->OrderParms.valueoftick *
        (taArrayItem(taOS->bars.cl, taOS->Current.barnum) - taOS->InExec[i1].price) / taOS->OrderParms.ticksize);
     break;
 
@@ -1297,7 +1297,7 @@ int      taUpdateCurrent(struct taOrderSystem *taOS)
     totpricesell += taOS->InExec[i1].remvolume * taOS->InExec[i1].price;
     if (!taOS->Current.shortduration)
      taOS->Current.shortduration = taOS->Current.barnum - taOS->InExec[i1].barnum + 1;
-    taOS->Short.openpospl += (double) taOS->InExec[i1].remvolume * (taOS->OrderParms.valueoftick *
+    taOS->Short.openpospl += (KFloat) taOS->InExec[i1].remvolume * (taOS->OrderParms.valueoftick *
        (taOS->InExec[i1].price - taArrayItem(taOS->bars.cl, taOS->Current.barnum)) / taOS->OrderParms.ticksize);
     break;
    }

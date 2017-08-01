@@ -9,8 +9,8 @@
 #include "tatt.h"
 
 
-double   taTT3bytetodouble(unsigned char *threebyter);
-double   taTTcvt(double price, short conversion, short meat);
+KFloat   taTT3bytetofloat(unsigned char *threebyter);
+KFloat   taTTcvt(KFloat price, short conversion, short meat);
 
 
 long DLL_EXPORT taTTfindrec(char *path, char *name, unsigned int date, unsigned int *actualdate)
@@ -163,8 +163,8 @@ int DLL_EXPORT taTTread(taBars *b1, char *path, char *name, long start, int cnt,
   taArrayItem(b1->hi, i1) = taTTcvt(rec.hi, conversion, meat);
   taArrayItem(b1->lo, i1) = taTTcvt(rec.lo, conversion, meat);
   taArrayItem(b1->cl, i1) = taTTcvt(rec.cl, conversion, meat);
-  taArrayItem(b1->vol, i1) = taTT3bytetodouble(rec.vol);
-  taArrayItem(b1->oi, i1) = taTT3bytetodouble(rec.oi);
+  taArrayItem(b1->vol, i1) = taTT3bytetofloat(rec.vol);
+  taArrayItem(b1->oi, i1) = taTT3bytetofloat(rec.oi);
  }
  fclose(fp1);
  taReSizeBars(b1, i1);
@@ -172,15 +172,15 @@ int DLL_EXPORT taTTread(taBars *b1, char *path, char *name, long start, int cnt,
 }
 
 
-double   taTT3bytetodouble(unsigned char *threebyter)
+KFloat   taTT3bytetofloat(unsigned char *threebyter)
 {
  return ((long) threebyter[0] + ((long) threebyter[1] << 8) + ((long) threebyter[2] << 16));
 }
 
 
-double   taTTcvt(double price, short conversion, short meat)
+KFloat   taTTcvt(KFloat price, short conversion, short meat)
 {
- double   newprice, whole, fraction;
+ KFloat   newprice, whole, fraction;
 
  switch (conversion)
  {

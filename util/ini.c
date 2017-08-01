@@ -1610,7 +1610,7 @@ register char  *s;
 *	set up CharASCII
 */
 
-s = (unsigned char *)sub;
+s = (char *)sub;
 while (*s)
     CharASCII[*s++] = Null;
 
@@ -1618,7 +1618,7 @@ while (*s)
 *	truncate
 */
 
-s = (unsigned char *)str;
+s = (char *)str;
 while (*s)
     s++;
 while (!(*s = CharASCII[*s]) && s-- > str)
@@ -1628,7 +1628,7 @@ while (!(*s = CharASCII[*s]) && s-- > str)
 *	re-set CharASCII
 */
 
-s = (unsigned char *)sub;
+s = (char *)sub;
 while (CharASCII[*s] = *s)
     s++;
 

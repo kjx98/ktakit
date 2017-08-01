@@ -10,8 +10,8 @@
 
 int    taCSIfindfile(char *path, char *name, struct taCSImrec *mrec1);
 void     taCSIsymbol(struct taCSImrec mrec, char *symbol);
-double   taCSIexpand(double number, unsigned int ex1, unsigned int ex2);
-double   taCSIcvt(double number, int  cfac);
+KFloat   taCSIexpand(KFloat number, unsigned int ex1, unsigned int ex2);
+KFloat   taCSIcvt(KFloat number, int  cfac);
 unsigned int taCSIdatetojulian(float date);
 
 
@@ -98,20 +98,21 @@ void     taCSIsymbol(struct taCSImrec mrec, char *symbol)
 }
 
 
-double   taCSIexpand(double number, unsigned int ex1, unsigned int ex2)
+KFloat   taCSIexpand(KFloat number, unsigned int ex1, unsigned int ex2)
 {
- return (number + (double)(ex1 + ex2 * 4) * 65536);
+ return (number + (KFloat)(ex1 + ex2 * 4) * 65536);
 }
 
 
-double   taCSIcvt(double number, int cfac)
+KFloat   taCSIcvt(KFloat number, int cfac)
 {
- double   div, num, rem;
+ KFloat   div, rem;
+ double   num;
 
  if (cfac == 0)
   return (number);
  if (cfac > 0 && cfac < 100)
-  return (number / pow(10, (double) cfac));
+  return (number / pow(10, (KFloat) cfac));
  cfac = abs(cfac);
  if (cfac == 1)
   div = 10;
@@ -123,7 +124,7 @@ double   taCSIcvt(double number, int cfac)
  rem = modf(number, &num);
  if (rem == 0)
   return (num);
- number = num + (div * rem) / (8 * pow(2, (double) cfac - 1));
+ number = num + (div * rem) / (8 * pow(2, (KFloat) cfac - 1));
  return (number);
 }
 

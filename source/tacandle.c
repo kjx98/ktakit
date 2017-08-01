@@ -9,8 +9,8 @@
 int DLL_EXPORT taCandleConstruct(taBars *b1, struct taCandleInfo *info)
 {
  int    pos;
- double    len, realbodytop, realbodybot;
- double   acr = 0; /* AverageCandleRange */
+ KFloat    len, realbodytop, realbodybot;
+ KFloat   acr = 0; /* AverageCandleRange */
 
  if((info->candle = (struct taCandles *)taMalloc(b1->size * sizeof(struct taCandles))) == NULL)
   return(taErrMalloc);
@@ -289,12 +289,12 @@ int DLL_EXPORT taCandleFill(taBars *b1, struct taCandleInfo *info, taArray *a2,
  return (cnt);
 }
 
-int DLL_EXPORT taApproxEqual(double f1, double f2, double pct)
+int DLL_EXPORT taApproxEqual(KFloat f1, KFloat f2, KFloat pct)
 {
  return (fabs(f1 - f2) < f1 * pct);
 }
 
-double DLL_EXPORT taBodyMidpoint(taBars *b1, int pos)
+KFloat DLL_EXPORT taBodyMidpoint(taBars *b1, int pos)
 {
  return ((taArrayItem(b1->op, pos) + taArrayItem(b1->cl, pos)) / 2);
 }
@@ -358,7 +358,7 @@ int DLL_EXPORT taAbandonedBabyTop(taBars *b1, struct taCandleInfo *info, int pos
 
 int DLL_EXPORT taAdvanceBlock(taBars *b1, struct taCandleInfo *info, int pos)
 {
- double    len0, len1, len2;
+ KFloat    len0, len1, len2;
 
  if (pos < 2)
   return (taFALSE);

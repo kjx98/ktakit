@@ -9,7 +9,7 @@
 #include "tafs.h"
 
 short    taFSfracrec(struct taFSfracs *fracs, short record, char *path);
-double   taFSfixprice(struct taFSfracs fracs, unsigned long price);
+KFloat   taFSfixprice(struct taFSfracs fracs, unsigned long price);
 
 
 long DLL_EXPORT taFSfindrec(char *path, char *name, unsigned int date, unsigned int time,
@@ -341,12 +341,12 @@ short    taFSfracrec(struct taFSfracs *fracs, short record, char *path)
 }
 
 
-double   taFSfixprice(struct taFSfracs fracs, unsigned long price)
+KFloat   taFSfixprice(struct taFSfracs fracs, unsigned long price)
 {
- double   f1;
+ KFloat   f1;
  ldiv_t   num;
 
  num = ldiv(price, (long)fracs.xmitpower);
- f1 = (double)num.quot + (double)num.rem / fracs.xmitdenom;
+ f1 = (KFloat)num.quot + (KFloat)num.rem / fracs.xmitdenom;
  return (f1);
 }

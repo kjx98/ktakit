@@ -26,8 +26,8 @@ int      main(int argc, char *argv[])
  int    err, width = 52, barcount = 500, allocate = 1;
  int    mterm1 = 5, mterm2 = 20, sterm1 = 7, sterm2 = 3, start = 0;
  long   barstart = -1;
- double volmax = 0;
- double ystart, ystop, f1;
+ KFloat volmax = 0;
+ KFloat ystart, ystop, f1;
  char   *type, *path, *name;
  char   buffer[40];
  taBars   b1;

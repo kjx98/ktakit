@@ -78,13 +78,9 @@ typedef unsigned char	byte;
 typedef unsigned short  word;
 typedef unsigned long	dword;
 typedef UInt64          qword;
-typedef unsigned char	uch;
-typedef unsigned short	ush;
 #define ulg				dword
 typedef short			int16;
 typedef long			int32;
-//#define u_long	  ulg
-typedef unsigned char	tsh[3];
 typedef void			*lpvoid;
 #ifndef __cplusplus
 typedef int				bool;

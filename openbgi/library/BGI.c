@@ -17,13 +17,13 @@
   Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-#include "BGI.H"
+#include "BGI.h"
 #include "IPC.h"
 #include <stdio.h>
 #include <Windows.h>
 
 RGBQUAD * BGI_palette = NULL;
-RGBQUAD BGI_default_palette[16] = 
+RGBQUAD BGI_default_palette[16] =
 {
   {0,0,0},
   {128,0,0},
@@ -90,7 +90,7 @@ HINSTANCE BGI_getInstance()
 void * BGI_malloc(int size)
 {
   static int first = 1;
-  if(first) 
+  if(first)
   {
     first = 0;
     HeapCreate(0, 1000, 10000000);

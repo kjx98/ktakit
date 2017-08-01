@@ -48,7 +48,11 @@
 		<Compiler>
 			<Add directory="../include" />
 		</Compiler>
+		<Unit filename="../include/ktadefs.h" />
 		<Unit filename="../include/ktakit.h" />
+		<Unit filename="../include/ktastd.h" />
+		<Unit filename="../include/ktatypes.h" />
+		<Unit filename="../include/util.h" />
 		<Unit filename="ktakit32.def" />
 		<Unit filename="taarray.c">
 			<Option compilerVar="CC" />

@@ -21,7 +21,7 @@ int DLL_EXPORT taAllocArray(taArray *a1, size_t size)
  a1->width = 1;
  a1->element = 0;
  a1->type = 0;
- if ((a1->data = (double *)calloc(size, sizeof(double))) == NULL)
+ if ((a1->data = (KFloat *)calloc(size, sizeof(KFloat))) == NULL)
   return (taErrMalloc);
  return (0);
 }
@@ -32,7 +32,7 @@ int DLL_EXPORT taAllocArrayI(taArrayI *a1, size_t size)
  a1->width = 1;
  a1->element = 0;
  a1->type = 1;
- if ((a1->data = (unsigned int *)calloc(size, sizeof(int))) == NULL)
+ if ((a1->data = (int *)calloc(size, sizeof(int))) == NULL)
   return (taErrMalloc);
  return (0);
 }
@@ -43,7 +43,7 @@ int DLL_EXPORT taAllocArrayM(taArray *a1, int width, size_t size)
  a1->width = width;
  a1->element = 0;
  a1->type = 0;
- if ((a1->data = (double *)calloc(size * width, sizeof(double))) == NULL)
+ if ((a1->data = (KFloat *)calloc(size * width, sizeof(KFloat))) == NULL)
   return (taErrMalloc);
  return (0);
 }
@@ -54,7 +54,7 @@ int DLL_EXPORT taAllocArrayIM(taArrayI *a1, int width, size_t size)
  a1->width = width;
  a1->element = 0;
  a1->type = 1;
- if ((a1->data = (unsigned int *)calloc(size * width, sizeof(int))) == NULL)
+ if ((a1->data = (int *)calloc(size * width, sizeof(int))) == NULL)
   return (taErrMalloc);
  return (0);
 }
@@ -68,8 +68,9 @@ int DLL_EXPORT taAllocBars(taBars *b1, size_t size)
  b1->datasize = size;
  b1->reccnt = 0;
  //b1->type = 0;
- if ((b1->op.data = (double *)calloc(size, SIZEOFBARDATA)) != NULL)
+ if ((b1->op.data = (KFloat *)calloc(size, SIZEOFBARDATA)) != NULL)
  {
+#ifdef  KFLOAT_DOUBLE
   b1->op.size = size;
   b1->op.width = 8;
   b1->op.element = 1;
@@ -80,20 +81,41 @@ int DLL_EXPORT taAllocBars(taBars *b1, size_t size)
   b1->cl.element = 4;
   b1->vol.element = 5;
   b1->turnov.element = 6;
-  b1->dt.data = (unsigned int *)b1->op.data;
+  b1->dt.data = (int *)b1->op.data;
   b1->dt.size = size;
   b1->dt.width = 16;
   b1->dt.element = 0;
   b1->dt.type = 1;
   b1->ti = b1->oi = b1->sprd = b1->dt;
   b1->ti.element = 1;
-  b1->oi.element = 2;
-  b1->sprd.element = 3;
+  b1->oi.element = 14;
+  b1->sprd.element = 15;
+#else
+  b1->op.size = size;
+  b1->op.width = 10;
+  b1->op.element = 2;
+  b1->op.type = 0;
+  b1->hi = b1->lo = b1->cl = b1->vol = b1->turnov = b1->op;
+  b1->hi.element = 3;
+  b1->lo.element = 4;
+  b1->cl.element = 5;
+  b1->vol.element = 6;
+  b1->turnov.element = 7;
+  b1->dt.data = (int *)b1->op.data;
+  b1->dt.size = size;
+  b1->dt.width = 10;
+  b1->dt.element = 0;
+  b1->dt.type = 1;
+  b1->ti = b1->oi = b1->sprd = b1->dt;
+  b1->ti.element = 1;
+  b1->oi.element = 8;
+  b1->sprd.element = 9;
+#endif
  }
  return (0);
 }
 
-long DLL_EXPORT taDecimals(double value, int places)
+long DLL_EXPORT taDecimals(KFloat value, int places)
 {
  double   d1;
  return (long)fabs((modf(value, &d1) * pow(10, places)));
@@ -120,7 +142,7 @@ void DLL_EXPORT taFreeBars(taBars *b1)
  return;
 }
 
-double DLL_EXPORT taGetArrayItem(taArray *a1, unsigned int pos)
+KFloat DLL_EXPORT taGetArrayItem(taArray *a1, unsigned int pos)
 {
  if (pos >= a1->size)
   return (0);
@@ -134,7 +156,7 @@ double DLL_EXPORT taGetArrayItem(taArray *a1, unsigned int pos)
  }
 }
 
-double DLL_EXPORT taGetArrayItemM(taArray *a1, int element, unsigned int pos)
+KFloat DLL_EXPORT taGetArrayItemM(taArray *a1, int element, unsigned int pos)
 {
  if (pos >= a1->size)
   return (0);
@@ -200,7 +222,7 @@ int DLL_EXPORT taReAllocBars(taBars *b1, size_t size)
    if ((unsigned int) size * SIZEOFBARDATA >= 0x80000000)
     return (taErrMalloc);
    temp = b1->op.data;
-   if ((b1->op.data = (double *)realloc(b1->op.data, size * SIZEOFBARDATA)) == NULL)
+   if ((b1->op.data = (KFloat *)realloc(b1->op.data, size * SIZEOFBARDATA)) == NULL)
    {
     b1->op.data = temp;
     return (taErrMalloc);
@@ -230,7 +252,7 @@ int DLL_EXPORT taReSizeBars(taBars *b1, size_t size)
  return (0);
 }
 
-void DLL_EXPORT taSetArrayItem(taArray *a1, unsigned int pos, double value)
+void DLL_EXPORT taSetArrayItem(taArray *a1, unsigned int pos, KFloat value)
 {
  if (pos >= a1->size)
   return;
@@ -241,7 +263,7 @@ void DLL_EXPORT taSetArrayItem(taArray *a1, unsigned int pos, double value)
  return;
 }
 
-void DLL_EXPORT taSetArrayItemM(taArray *a1, int element, unsigned int pos, double value)
+void DLL_EXPORT taSetArrayItemM(taArray *a1, int element, unsigned int pos, KFloat value)
 {
  if (pos >= a1->size)
   return;

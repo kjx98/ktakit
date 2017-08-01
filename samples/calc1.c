@@ -14,8 +14,8 @@ int      main()
  int    err, samp = 3, start = 0, stop = 0, nonzero = 1;
  int    barcount = -1, allocate = 1;
  long   barstart = 0;
- double closemin, closemax, closeavg, closesum, barmin, barmax;
- double stdev, corcoef, disp, slope, constant;
+ KFloat closemin, closemax, closeavg, closesum, barmin, barmax;
+ KFloat stdev, corcoef, disp, slope, constant;
  char   path[71] = ".";
  char   name[21] = "IBM.txt";
  char   infoname[21]= "txtInfo.txt";

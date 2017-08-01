@@ -112,30 +112,6 @@ extern	int		gbConfigCloseFileOnExit;	/* default: NO	*/
 extern	int		gbConfigDeleteBakOnExit;	/* default: YES */
 #endif
 
-#if	!defined(unix) && !defined(WIN32)
-ush	WINAPI my_ntohs( ush a );
-ush WINAPI my_htons( ush a );
-ulg	WINAPI my_ntohl( ulg x );
-ulg	WINAPI my_htonl( ulg x );
-#ifdef	__WATCOMC__
-#pragma aux my_ntohs =	\
-	"xchg    al,ah" \
-	parm [ax]	\
-	value [ax];
-
-#pragma aux my_htons =	\
-	"xchg al, ah"   \
-	parm [ax]	\
-	value [ax];
-#endif
-#else
-#define my_ntohs	ntohs
-#define my_ntohl	ntohl
-#define my_htons	htons
-#define my_htonl	htonl
-#endif
-
-
 
 /* Diagnostic functions */
 #ifdef DEBUG

@@ -9,10 +9,10 @@
 #include "ktakit.h"
 
 
-int DLL_EXPORT taPNFchart(taBars *pnfbars, double box, char *outfile, int append)
+int DLL_EXPORT taPNFchart(taBars *pnfbars, KFloat box, char *outfile, int append)
 {
  int    i1;
- double    f1, min1, max1, tenth;
+ KFloat    f1, min1, max1, tenth;
  FILE    *out;
 
 #ifndef _WINDOWS

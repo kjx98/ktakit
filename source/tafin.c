@@ -7,9 +7,9 @@
 #include "ktakit.h"
 
 
-double DLL_EXPORT taApprxCumProbDist(double d1)
+KFloat DLL_EXPORT taApprxCumProbDist(KFloat d1)
 {
- double   d2 = 0, d3 = 0, d4 = 0, d5 = 0, acpd = 0;
+ KFloat   d2 = 0, d3 = 0, d4 = 0, d5 = 0, acpd = 0;
 
  d2 = fabs(d1);
  d3 = 1 / (1 + 0.23164191 * d2);
@@ -59,10 +59,10 @@ int DLL_EXPORT taBearPut(struct taOptionSpreads *ops)
 }
 
 
-double DLL_EXPORT taBlackScholes(struct taOption * opt, double stockprice,
-            double intrate, double variance, unsigned int asofdate)
+KFloat DLL_EXPORT taBlackScholes(struct taOption * opt, KFloat stockprice,
+            KFloat intrate, KFloat variance, unsigned int asofdate)
 {
- double   d1 = 0, d2 = 0, bs = 0, e = 2.71828, f1 = 0, daysdiff = 0;
+ KFloat   d1 = 0, d2 = 0, bs = 0, e = 2.71828, f1 = 0, daysdiff = 0;
 
  intrate = intrate / 100;
  daysdiff = taJulianDif(asofdate, opt->expiredate);
@@ -77,7 +77,7 @@ double DLL_EXPORT taBlackScholes(struct taOption * opt, double stockprice,
 }
 
 
-double DLL_EXPORT taBondAccrInt(double coupon, unsigned int lastpaydate, unsigned int asofdate, double daysinyr)
+KFloat DLL_EXPORT taBondAccrInt(KFloat coupon, unsigned int lastpaydate, unsigned int asofdate, KFloat daysinyr)
 {
  int    daysfromlastpay = 0;
 
@@ -86,10 +86,10 @@ double DLL_EXPORT taBondAccrInt(double coupon, unsigned int lastpaydate, unsigne
 }
 
 
-double DLL_EXPORT taBondDuration(struct taBondInfo *bond, double discrate, unsigned int asofdate)
+KFloat DLL_EXPORT taBondDuration(struct taBondInfo *bond, KFloat discrate, unsigned int asofdate)
 {
  struct taTimeValue tvalue;
- double   f1 = 0, sumpv = 0, pv = 0;
+ KFloat   f1 = 0, sumpv = 0, pv = 0;
  int    i1 = 0, daysdiff = 0, yrs = 0;
 
  daysdiff = taJulianDif(asofdate, bond->maturitydate);
@@ -111,22 +111,22 @@ double DLL_EXPORT taBondDuration(struct taBondInfo *bond, double discrate, unsig
 }
 
 
-double DLL_EXPORT taBondDurationPriceChg(double price, double olddiscrate, double duration, double discrate)
+KFloat DLL_EXPORT taBondDurationPriceChg(KFloat price, KFloat olddiscrate, KFloat duration, KFloat discrate)
 {
  if (discrate < 1)
   return (taErrInvalidParm);
  return ((-1 * duration) * (((discrate - olddiscrate) / 100) / (1 + (discrate / 100))) * price);
-};
+}
 
-double DLL_EXPORT taBondPricing(struct taBondInfo *bond, double discrate, unsigned int asofdate)
+KFloat DLL_EXPORT taBondPricing(struct taBondInfo *bond, KFloat discrate, unsigned int asofdate)
 {
- double   c1 = 0, f1 = 0, f2 = 0, period = 0;
- double   f0 = 0;
- double   yrs = 0;
+ KFloat   c1 = 0, f1 = 0, f2 = 0, period = 0;
+ KFloat   f0 = 0;
+ KFloat   yrs = 0;
  int    daysdiff = 0;
 
  c1 = bond->coupon / bond->pymtsperyr;
- period = (double) 1.00 / bond->pymtsperyr;
+ period = (KFloat) 1.00 / bond->pymtsperyr;
  daysdiff = taJulianDif(asofdate, bond->maturitydate);
  yrs = ((daysdiff + 182) / 365);
  for (f0 = period; f0 <= yrs; f0 += period)
@@ -176,11 +176,11 @@ int DLL_EXPORT taBullPut(struct taOptionSpreads *ops)
  return (0);
 }
 
-double DLL_EXPORT taFutureValue(struct taTimeValue *tvalue)
+KFloat DLL_EXPORT taFutureValue(struct taTimeValue *tvalue)
 {
- double   power = 0;
- double   fv = 0;
- double   f1 = 0;
+ KFloat   power = 0;
+ KFloat   fv = 0;
+ KFloat   f1 = 0;
 
  f1 = tvalue->rate / 100;
  power = tvalue->compound * tvalue->periods;
@@ -194,9 +194,9 @@ double DLL_EXPORT taFutureValue(struct taTimeValue *tvalue)
 }
 
 
-double DLL_EXPORT taFutureValueAnnuity(struct taTimeValue *tvalue)
+KFloat DLL_EXPORT taFutureValueAnnuity(struct taTimeValue *tvalue)
 {
- double   fv = 0;
+ KFloat   fv = 0;
 
  fv = tvalue->rate / 100;
  fv = ((pow(1 + fv, tvalue->periods) - 1) / fv);
@@ -206,9 +206,9 @@ double DLL_EXPORT taFutureValueAnnuity(struct taTimeValue *tvalue)
 
 
 /* Interest Rate required for an investment to reach a Future Value */
-double DLL_EXPORT taFutureValueInt(struct taTimeValue *tvalue, double futurevalue)
+KFloat DLL_EXPORT taFutureValueInt(struct taTimeValue *tvalue, KFloat futurevalue)
 {
- double   power = 0;
+ KFloat   power = 0;
 
  power = 1 / tvalue->periods;
  tvalue->rate = 100 * (pow((futurevalue / tvalue->principal), power) - 1);
@@ -217,10 +217,10 @@ double DLL_EXPORT taFutureValueInt(struct taTimeValue *tvalue, double futurevalu
 
 
 /* Minimum Investment required for Future Value */
-double DLL_EXPORT taFutureValuePrinc(struct taTimeValue *tvalue, double futurevalue)
+KFloat DLL_EXPORT taFutureValuePrinc(struct taTimeValue *tvalue, KFloat futurevalue)
 {
- double   power = 0;
- double   f1 = 0;
+ KFloat   power = 0;
+ KFloat   f1 = 0;
 
  f1 = tvalue->rate / 100;
  power = tvalue->compound * tvalue->periods;
@@ -273,11 +273,11 @@ int DLL_EXPORT taLongStrangle(struct taOptionSpreads *ops)
 }
 
 
-double DLL_EXPORT taPresentValue(struct taTimeValue *tvalue)
+KFloat DLL_EXPORT taPresentValue(struct taTimeValue *tvalue)
 {
- double   power = 0;
- double   fv = 0;
- double   f1 = 0;
+ KFloat   power = 0;
+ KFloat   fv = 0;
+ KFloat   f1 = 0;
 
  f1 = tvalue->rate / 100;
  power = tvalue->compound * tvalue->periods;
@@ -292,9 +292,9 @@ double DLL_EXPORT taPresentValue(struct taTimeValue *tvalue)
 }
 
 
-double DLL_EXPORT taPresentValueAnnuity(struct taTimeValueA *tvaluea)
+KFloat DLL_EXPORT taPresentValueAnnuity(struct taTimeValueA *tvaluea)
 {
- double   f1 = 0, fv = 0;
+ KFloat   f1 = 0, fv = 0;
 
  if (tvaluea->discrate > 0)
   f1 = tvaluea->discrate / 100;
@@ -377,7 +377,7 @@ int DLL_EXPORT taOptionInit(struct taOptionSpreads *ops)
 }
 
 
-double DLL_EXPORT taTBillDiscYield(struct taBondInfo *bond, unsigned int asofdate)
+KFloat DLL_EXPORT taTBillDiscYield(struct taBondInfo *bond, unsigned int asofdate)
 {
  int    daysdiff = 0;
 
@@ -386,7 +386,7 @@ double DLL_EXPORT taTBillDiscYield(struct taBondInfo *bond, unsigned int asofdat
 }
 
 
-double DLL_EXPORT taTBillBondEqYield(struct taBondInfo *bond, unsigned int asofdate)
+KFloat DLL_EXPORT taTBillBondEqYield(struct taBondInfo *bond, unsigned int asofdate)
 {
  int    daysdiff = 0;
 
@@ -395,10 +395,10 @@ double DLL_EXPORT taTBillBondEqYield(struct taBondInfo *bond, unsigned int asofd
 }
 
 
-double DLL_EXPORT taYieldtoMaturity(struct taBondInfo *bond, unsigned int asofdate)
+KFloat DLL_EXPORT taYieldtoMaturity(struct taBondInfo *bond, unsigned int asofdate)
 {
  int    daysdiff = 0;
- double   yrs = 0, f1 = 0;
+ KFloat   yrs = 0, f1 = 0;
 
  daysdiff = taJulianDif(asofdate, bond->maturitydate);
  yrs = daysdiff / 365.00;

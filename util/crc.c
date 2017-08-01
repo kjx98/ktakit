@@ -8,6 +8,15 @@
  *							*
  *	$Revision$              *
  *	$Log$
+ *	Revision 1.3  2017/04/05 01:30:42  kjx
+ *	add Multicast NetIB;verify bMD,bRealTrade...
+ *
+ *	Revision 1.2  2017/03/31 07:33:27  kjx
+ *	Add net_ib for multicast DriftBlock
+ *
+ *	Revision 1.1.1.1  2017/03/07 02:36:55  kjx
+ *	Init Version for SHFE
+ *
  *							*
  *							*
  *							*
@@ -16,10 +25,13 @@
 
 #include "ktadefs.h"
 
+typedef unsigned char	uch;
+typedef unsigned short	ush;
+
 /* ========================================================================
  * Table of CRC-32's of all single-byte values (made by makecrc.c)
  */
-ulg crc_32_tab[] = {
+dword crc_32_tab[] = {
   0x00000000L, 0x77073096L, 0xee0e612cL, 0x990951baL, 0x076dc419L,
   0x706af48fL, 0xe963a535L, 0x9e6495a3L, 0x0edb8832L, 0x79dcb8a4L,
   0xe0d5e91eL, 0x97d2d988L, 0x09b64c2bL, 0x7eb17cbdL, 0xe7b82d07L,
@@ -79,19 +91,21 @@ ulg crc_32_tab[] = {
  * Run a set of bytes through the crc shift register.  If s is a NULL
  * pointer, then initialize the crc shift register contents instead.
  * Return the current crc in either case.
+ * NOT ThreadSafe
  */
-ulg updcrc(uch *s, unsigned n)
+dword updcrc(void *sP, int n)
 /*    uch *s;		      pointer to bytes to pump through */
 /*    unsigned n;	      number of bytes in s[] */
 {
-    register ulg c;         /* temporary variable */
+    register dword c;         /* temporary variable */
+    register uch *s=(uch *)sP;
 
-    static ulg crc = (ulg)0xffffffffL; /* shift register contents */
+    static dword crc = (dword)0xffffffffL; /* shift register contents */
 
     if (s == 0) {
-	c = 0xffffffffL;
+        c = 0xffffffffL;
     } else {
-	c = crc;
+        c = crc;
         if (n) do {
             c = crc_32_tab[((int)c ^ (*s++)) & 0xff] ^ (c >> 8);
         } while (--n);
@@ -101,3 +115,22 @@ ulg updcrc(uch *s, unsigned n)
     return c;
 }
 
+
+/* ===========================================================================
+ * Run a set of bytes through the crc shift register.
+ * ThreadSafe
+ */
+dword blkcrc(void *sP, int n)
+/*    uch *s;		      pointer to bytes to pump through */
+/*    unsigned n;	      number of bytes in s[] */
+{
+    register dword c= (dword)0xffffffffL;      /* temporary variable */
+    register uch *s=(uch *)sP;
+
+    if (n>0)
+        do {
+            c = crc_32_tab[((int)c ^ (*s++)) & 0xff] ^ (c >> 8);
+        } while (--n);
+//    return c ^ 0xffffffffL;	    /* (instead of ~c for 64-bit machines) */
+    return c;
+}

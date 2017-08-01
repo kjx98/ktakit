@@ -43,7 +43,7 @@ void OutputDBStr(LPSTR);
 
 void	warn(LPSTR fmt, ...)
 {
-    BYTE s[256];
+    char s[256];
     va_list marker;
 
     va_start(marker, fmt);
@@ -62,7 +62,7 @@ void	warn(LPSTR fmt, ...)
 
 void	my_log(int err, LPSTR fmt, ...)
 {
-    BYTE s[256];
+    char s[256];
     int len;
     va_list marker;
 

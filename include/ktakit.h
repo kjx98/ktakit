@@ -20,6 +20,13 @@
 
 #include "ktadefs.h"
 
+#ifdef  KFLOAT_DOUBLE
+typedef double  KFloat;
+#else
+typedef float   KFloat;
+#endif // KFLOAT_DOUBLE
+
+
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -51,11 +58,11 @@ extern "C" {
 
 typedef struct
 {
- double   *data;
+ KFloat   *data;
  int	size;
  int    width;
  int    element;
- int    type; /* 0=double, 1=int */
+ int    type; /* 0=KFloat, 1=int */
 } taArray;
 
 typedef struct
@@ -64,7 +71,7 @@ typedef struct
  int	size;
  int    width;
  int    element;
- int    type; /* 0=double, 1=int */
+ int    type; /* 0=KFloat, 1=int */
 } taArrayI;
 
 typedef struct
@@ -79,7 +86,7 @@ typedef struct
  int    datatype;       /* C S M O B X F */
  int    optiontype;     /* C P */
  int    period;         /* Intraday , period in seconds, such as 60 for M1, 300 for M5 */
- double strikeprice;
+ KFloat strikeprice;
  char   name[32];
 } taBars;
 
@@ -100,7 +107,7 @@ extern taBars  *taNULLBARS;
 #define taBarSize(b1) (b1.size)
 #define taBarSizeP(b1) (b1->size)
 
-#define SIZEOFBARDATA (4*sizeof(int)+6*sizeof(double))
+#define SIZEOFBARDATA (4*sizeof(int)+6*sizeof(KFloat))
 
 /* file type */
 #define taCSI 1
@@ -113,13 +120,13 @@ extern taBars  *taNULLBARS;
 #define taMT4 8
 
 /* frequency */
-#define taUNKNOWN    0
-#define taINTRADAY   1
-#define taDAILY      2
-#define taWEEKLY     3
-#define taMONTHLY    4
-#define taQUARTERLY  5
-#define taYEARLY     6
+#define taUNKNOWN    -1
+#define taINTRADAY   0
+#define taDAILY      1
+#define taWEEKLY     2
+#define taMONTHLY    3
+#define taQUARTERLY  4
+#define taYEARLY     5
 
 /* datatype */
 #define taBOND          1
@@ -129,7 +136,7 @@ extern taBars  *taNULLBARS;
 #define taSTOCK         5
 #define taINDEX         6
 #define taFOREX         7
-#define	taFUTURES	8
+#define	taFUTURES	    8
 
 /* optiontype */
 #define taCALL       1
@@ -140,18 +147,18 @@ int DLL_EXPORT taAllocArrayI(taArrayI *a1, size_t size);
 int DLL_EXPORT taAllocArrayM(taArray *a1, int width, size_t size);
 int DLL_EXPORT taAllocArrayIM(taArrayI *a1, int width, size_t size);
 int DLL_EXPORT taAllocBars(taBars *b1, size_t size);
-long DLL_EXPORT taDecimals(double value, int places);
+long DLL_EXPORT taDecimals(KFloat value, int places);
 void DLL_EXPORT taFreeArray(taArray *a1);
 void DLL_EXPORT taFreeArrayI(taArrayI *a1);
 void DLL_EXPORT taFreeBars(taBars *b1);
-double DLL_EXPORT taGetArrayItem(taArray *a1, unsigned int pos);
-double DLL_EXPORT taGetArrayItemM(taArray *a1, int element, unsigned int pos);
+KFloat DLL_EXPORT taGetArrayItem(taArray *a1, unsigned int pos);
+KFloat DLL_EXPORT taGetArrayItemM(taArray *a1, int element, unsigned int pos);
 int DLL_EXPORT taIEEEtoMS(float *ieee, float *ms);
 int DLL_EXPORT taMStoIEEE(float *ms, float *ieee);
 int DLL_EXPORT taReAllocBars(taBars *b1, size_t size);
 int DLL_EXPORT taReSizeBars(taBars *b1, size_t size);
-void DLL_EXPORT taSetArrayItem(taArray *a1, unsigned int pos, double value);
-void DLL_EXPORT taSetArrayItemM(taArray *a1, int element, unsigned int pos, double value);
+void DLL_EXPORT taSetArrayItem(taArray *a1, unsigned int pos, KFloat value);
+void DLL_EXPORT taSetArrayItemM(taArray *a1, int element, unsigned int pos, KFloat value);
 int DLL_EXPORT taErrDesc(int err, char *buffer);
 
 void taFree(void *buffer);
@@ -215,7 +222,7 @@ int     taStrNthChr(char *str, char chr, int n);
 /* taio                                                                 */
 /* -------------------------------------------------------------------- */
 
-int DLL_EXPORT taPNFchart(taBars *pnfbars, double box, char *outfile, int append);
+int DLL_EXPORT taPNFchart(taBars *pnfbars, KFloat box, char *outfile, int append);
 int DLL_EXPORT taReadDOPfile(char *filename, short *cols);
 int DLL_EXPORT taTXT2Array(char *infile, taArray *a1, char *delimit, int skip, int startcol, int stopcol);
 
@@ -248,83 +255,83 @@ int DLL_EXPORT taADXR(taBars *b1, taArray *a2, int term1, int term2, int term3, 
 int DLL_EXPORT taADX(taBars *b1, taArray *a2, int term1, int term2, int start);
 int DLL_EXPORT taArmsEMV(taBars *b1, taArray *a2, long volinc, int start);
 int DLL_EXPORT taArmsIdx(taArray *a1, taArray *a2, taArray *a3, taArray *a4, taArray *a5, int start, int stop);
-int DLL_EXPORT taArrayStats(taArray *a1, double *mini, double *maxi, double *avg, double *sum, int start, int stop, int nonzero);
+int DLL_EXPORT taArrayStats(taArray *a1, KFloat *mini, KFloat *maxi, KFloat *avg, KFloat *sum, int start, int stop, int nonzero);
 int DLL_EXPORT taArrayStatsPos(taArray *a1, int *mini, int *maxi, int start, int stop, int nonzero);
 int DLL_EXPORT taATR(taBars *b1, taArray *a2, int term, int start);
-double DLL_EXPORT taAvgPrice(taBars *b1, int pos);
-int DLL_EXPORT taBars2PNF(taBars *b1, taBars *b2, taArray *index, double box, double rev, int start);
-int DLL_EXPORT taBars2PNFhilo(taBars *b1, taBars *b2, taArray *index, double box, double rev, int start);
-int DLL_EXPORT taBarStats(taBars *b1, double *min1, double *max1, int start, int stop);
-int DLL_EXPORT taBollinger(taBars *b1, taArray *a2, taArray *a3, taArray *a4, double factor, int term, int start);
+KFloat DLL_EXPORT taAvgPrice(taBars *b1, int pos);
+int DLL_EXPORT taBars2PNF(taBars *b1, taBars *b2, taArray *index, KFloat box, KFloat rev, int start);
+int DLL_EXPORT taBars2PNFhilo(taBars *b1, taBars *b2, taArray *index, KFloat box, KFloat rev, int start);
+int DLL_EXPORT taBarStats(taBars *b1, KFloat *min1, KFloat *max1, int start, int stop);
+int DLL_EXPORT taBollinger(taBars *b1, taArray *a2, taArray *a3, taArray *a4, KFloat factor, int term, int start);
 int DLL_EXPORT taBoltonTremblay(taArray *a1, taArray *a2, taArray *a3, taArray *a4, int start);
 int DLL_EXPORT taCCI(taBars *b1, taArray *a2, int term, int start);
 int DLL_EXPORT taCFTPP(taBars *b1, taArray *a2, taArray *a3, taArray *a4, taArray *a5, int start);
 int DLL_EXPORT taChaikinMoneyFlow(taBars *b1, taArray *a2, int term, int start);
-double DLL_EXPORT taCorCoef(taArray *a1, taArray *a2, int samp, int start, int stop);
+KFloat DLL_EXPORT taCorCoef(taArray *a1, taArray *a2, int samp, int start, int stop);
 int DLL_EXPORT taCorCoefMv(taArray *a1, taArray *a2, taArray *a3, int samp, int term, int start);
-double DLL_EXPORT taCovariance(taArray *a1, taArray *a2, int start, int stop);
+KFloat DLL_EXPORT taCovariance(taArray *a1, taArray *a2, int start, int stop);
 int DLL_EXPORT taCovarianceMv(taArray *a1, taArray *a2, taArray *a3, int term, int start);
 int DLL_EXPORT taDemandIdx(taBars *b1, taArray *a2, int term, int stock, int start);
 int DLL_EXPORT taDeTrend(taArray *a1, taArray *a2, int start, int stop);
 int DLL_EXPORT taDI(taBars *b1, taArray *a2, taArray *a3, int term, int start);
-double DLL_EXPORT taDispersion(taArray *a1, int start, int stop);
+KFloat DLL_EXPORT taDispersion(taArray *a1, int start, int stop);
 int DLL_EXPORT taDispersionMv(taArray *a1, taArray *a2, int term, int start);
 int DLL_EXPORT taDMI(taBars *b1, taArray *a2, taArray *a3, int start);
 int DLL_EXPORT taDownAverage(taArray *a1, taArray *a2, int term, int start);
 int DLL_EXPORT taDX(taBars *b1, taArray *a2, int term, int start);
-int DLL_EXPORT taEnvelope(taArray *a1, taArray *a2, taArray *a3, taArray *a4, double pct, int start);
-int DLL_EXPORT taEnvelopePct(taArray *a1, taArray *a2, taArray *a3, double pct, int start);
+int DLL_EXPORT taEnvelope(taArray *a1, taArray *a2, taArray *a3, taArray *a4, KFloat pct, int start);
+int DLL_EXPORT taEnvelopePct(taArray *a1, taArray *a2, taArray *a3, KFloat pct, int start);
 int DLL_EXPORT taExpMA(taArray *a1, taArray *a2, int term, int start);
-double DLL_EXPORT taExpToPeriod(double e1);
+KFloat DLL_EXPORT taExpToPeriod(KFloat e1);
 int DLL_EXPORT taFastD(taBars *b1, taArray *a2, int term1, int term2, int start);
-int DLL_EXPORT taFibonacciProject(double f1, double f2, double *project1, double *project2, double *project3);
-int DLL_EXPORT taFibonacciRetrace(double f1, double f2, double *retrace1, double *retrace2, double *retrace3);
+int DLL_EXPORT taFibonacciProject(KFloat f1, KFloat f2, KFloat *project1, KFloat *project2, KFloat *project3);
+int DLL_EXPORT taFibonacciRetrace(KFloat f1, KFloat f2, KFloat *retrace1, KFloat *retrace2, KFloat *retrace3);
 int DLL_EXPORT taFillInterval(taArray *a1, taArray *a2, taArray *a3, int start);
-int DLL_EXPORT taGroupBars(taBars *b1, double *op, double *hi, double *lo, double *cl, double *vol, double *to, int term, int start);
+int DLL_EXPORT taGroupBars(taBars *b1, KFloat *op, KFloat *hi, KFloat *lo, KFloat *cl, KFloat *vol, KFloat *to, int term, int start);
 int DLL_EXPORT taGroupBarsArray(taBars *b1, taBars *b2, int term, int start);
 int DLL_EXPORT taGroupBarsDate(taBars *b1, taBars *b2, int period, unsigned int startdt, unsigned int startti, unsigned int enddt, unsigned int endti);
 int DLL_EXPORT taGroupBarsTime(taBars *b1, taBars *b2, unsigned int period, unsigned int startdt, unsigned int startti, unsigned int enddt, unsigned int endti);
-int DLL_EXPORT taHerrickPayoffIndex(taBars *b1, taArray *a2, double mult, double factor, int start);
+int DLL_EXPORT taHerrickPayoffIndex(taBars *b1, taArray *a2, KFloat mult, KFloat factor, int start);
 int DLL_EXPORT taLastHigh(taArray *a1, int start, int stop);
 int DLL_EXPORT taLastLow(taArray *a1, int start, int stop);
 int DLL_EXPORT taLineOsc(taArray *a1, taArray *a2, taArray *a3, int term, int start);
 int DLL_EXPORT taLstSqrMA(taArray *a1, taArray *a2, int term, int start);
 int DLL_EXPORT taMACD(taArray *a1, taArray *a2, taArray *a3, taArray *a4, taArray *a5, taArray *a6, int term1, int term2, int term3, int start);
-int DLL_EXPORT taMAEnvelope(taArray *a1, taArray *a2, taArray *a3, double pct, int type, int term, int start);
+int DLL_EXPORT taMAEnvelope(taArray *a1, taArray *a2, taArray *a3, KFloat pct, int type, int term, int start);
 int DLL_EXPORT taMAHighLow(taBars *b1, taArray *a2, taArray *a3, int type, int term, int start);
 int DLL_EXPORT taMcClellanOscSum(taArray *a1, taArray *a2, taArray *a3, taArray *a4, int term1, int term2, int start);
 int DLL_EXPORT taMFI(taBars *b1, taArray *a2, int start);
 int DLL_EXPORT taMomentum(taArray *a1, taArray *a2, int term, int start);
 int DLL_EXPORT taMovingSum(taArray *a1, taArray *a2, int term, int start);
-double DLL_EXPORT taOBOi(taBars *b1, int start, int stop);
+KFloat DLL_EXPORT taOBOi(taBars *b1, int start, int stop);
 int DLL_EXPORT taOBOiMv(taBars *b1, taArray *a2, int term, int start);
-double DLL_EXPORT taOBVol(taBars *b1, int start, int stop);
+KFloat DLL_EXPORT taOBVol(taBars *b1, int start, int stop);
 int DLL_EXPORT taOBVolExp(taBars *b1, taArray *obv, taArray *breakout, taArray *fieldtrend, long seedvol, int start);
 int DLL_EXPORT taOBVolMv(taBars *b1, taArray *a2, int term, int start);
 int DLL_EXPORT taOscillator(taArray *a1, taArray *a2, taArray *a3, int start);
-double DLL_EXPORT taPeriodToExp(double n1);
+KFloat DLL_EXPORT taPeriodToExp(KFloat n1);
 int DLL_EXPORT taRateOfChange(taArray *a1, taArray *a2, int factor, int term, int start);
 int DLL_EXPORT taRatio(taArray *a1, taArray *a2, taArray *a3, int start);
 int DLL_EXPORT taRawK(taBars *b1, taArray *a2, int term, int start);
-int DLL_EXPORT taRegressionLine(taArray *a1, double *slope, double *constant, int start, int stop);
+int DLL_EXPORT taRegressionLine(taArray *a1, KFloat *slope, KFloat *constant, int start, int stop);
 int DLL_EXPORT taRegressionLineMv(taArray *a1, taArray *a2, taArray *a3, int term, int start, int stop);
 int DLL_EXPORT taRSI(taArray *a1, taArray *a2, int term, int start);
 int DLL_EXPORT taRSIC(taBars *b1, taBars *b2, taArray *a1, int term, unsigned int startdate);
 int DLL_EXPORT taRWI(taBars *b1, taArray *a2, taArray *a3, int term, int start);
-int DLL_EXPORT taScaleArray(taArray *a1, taArray *a2, double amin, double amax, double mini, double maxi, int nonzero, int start);
+int DLL_EXPORT taScaleArray(taArray *a1, taArray *a2, KFloat amin, KFloat amax, KFloat mini, KFloat maxi, int nonzero, int start);
 int DLL_EXPORT taSimpleMA(taArray *a1, taArray *a2, int term, int start);
-double DLL_EXPORT taSlopeArrayPts(taArray *a1, int x1, int x2);
-double DLL_EXPORT taSlopePts(double x1, double y1, double x2, double y2);
+KFloat DLL_EXPORT taSlopeArrayPts(taArray *a1, int x1, int x2);
+KFloat DLL_EXPORT taSlopePts(KFloat x1, KFloat y1, KFloat x2, KFloat y2);
 int DLL_EXPORT taSlowD(taBars *b1, taArray *a2, int term1, int term2, int term3, int start);
-double DLL_EXPORT taStdDev(taArray *a1, int samp, int start, int stop);
+KFloat DLL_EXPORT taStdDev(taArray *a1, int samp, int start, int stop);
 int DLL_EXPORT taStdDevMv(taArray *a1, taArray *a2, int samp, int term, int start);
 int DLL_EXPORT taStochastic(taArray *a1, taArray *a2, int term, int start);
-double DLL_EXPORT taSumPrev(taArray *a1, int term, int start);
+KFloat DLL_EXPORT taSumPrev(taArray *a1, int term, int start);
 int DLL_EXPORT taTR(taBars *b1, taArray *a2, int start);
 int DLL_EXPORT taTrendScore(taArray *a1, taArray *a2, int term, int start);
-double DLL_EXPORT taTrueHigh(taBars *b1, int pos);
-double DLL_EXPORT taTrueLow(taBars *b1, int pos);
-double DLL_EXPORT taTrueRange(taBars *b1, int pos);
+KFloat DLL_EXPORT taTrueHigh(taBars *b1, int pos);
+KFloat DLL_EXPORT taTrueLow(taBars *b1, int pos);
+KFloat DLL_EXPORT taTrueRange(taBars *b1, int pos);
 int DLL_EXPORT taTSI(taArray *a1, taArray *a2, int term1, int term2, int start);
 int DLL_EXPORT taTXT2Array(char *infile, taArray *a1, char *delimit, int skip, int startcol, int stopcol);
 int DLL_EXPORT taUpAverage(taArray *a1, taArray *a2, int term, int start);
@@ -333,7 +340,7 @@ int DLL_EXPORT taVHF(taArray *a1, taArray *a2, int term, int start);
 int DLL_EXPORT taWeightedMA(taArray *a1, taArray *a2, int term, int start);
 int DLL_EXPORT taWellesMA(taArray *a1, taArray *a2, int term, int start);
 int DLL_EXPORT taWellesSum(taArray *a1, taArray *a2, int term, int start);
-int DLL_EXPORT taWellesVolatility(taBars *b1, taArray *a2, taArray *a3, taArray *a4, taArray *a5, double constant, int term, int start);
+int DLL_EXPORT taWellesVolatility(taBars *b1, taArray *a2, taArray *a3, taArray *a4, taArray *a5, KFloat constant, int term, int start);
 int DLL_EXPORT taWilliamsAD(taBars *b1, taArray *a2, int start);
 int DLL_EXPORT taWilliamsR(taBars *b1, taArray *a2, int term, int start);
 int DLL_EXPORT taFormationFill(taBars *b1, taArray *a2, char *formfunc, int start, int stop);
@@ -373,9 +380,9 @@ struct taCandles
 struct taCandleInfo
 {
  struct taCandles *candle;
- double  largeshadow;         /* Length pct to determine if shadow is taLARGE */
- double  smallshadow;         /* Length pct to determine if shadow is taSMALL */
- double  equalpct;            /* Tolerance level to determine equality */
+ KFloat  largeshadow;         /* Length pct to determine if shadow is taLARGE */
+ KFloat  smallshadow;         /* Length pct to determine if shadow is taSMALL */
+ KFloat  equalpct;            /* Tolerance level to determine equality */
 };
 
 
@@ -383,8 +390,8 @@ int DLL_EXPORT taCandleConstruct(taBars *b1, struct taCandleInfo *info);
 void  DLL_EXPORT taCandleFree(struct taCandleInfo *info);
 int DLL_EXPORT taCandleFill(taBars *b1, struct taCandleInfo *info, taArray *a2,
                           char *candlefunct, int start, int stop);
-int DLL_EXPORT taApproxEqual(double f1, double f2, double pct);
-double DLL_EXPORT taBodyMidpoint(taBars *b1, int pos);
+int DLL_EXPORT taApproxEqual(KFloat f1, KFloat f2, KFloat pct);
+KFloat DLL_EXPORT taBodyMidpoint(taBars *b1, int pos);
 int DLL_EXPORT taBodyGapUp(taBars *b1, int pos);
 int DLL_EXPORT taBodyGapDn(taBars *b1, int pos);
 int DLL_EXPORT taWesternGapUp(taBars *b1, int pos);
@@ -447,75 +454,75 @@ int DLL_EXPORT taCandleBotShadow(struct taCandleInfo *info, int pos);
 
 struct taOption
 {
- double price;
- double strike;
+ KFloat price;
+ KFloat strike;
  int    type;
  unsigned int expiredate;
 };
 
 struct taOptionSpreads
 {
- double stockprice;
+ KFloat stockprice;
  struct taOption buy[2];
  struct taOption sell[2];
- double maxprofit;
- double riskreward;
- double riskamt;
- double breakevenup;
- double breakevendn;
- double pctbreakevenup;
- double pctbreakevendn;
+ KFloat maxprofit;
+ KFloat riskreward;
+ KFloat riskamt;
+ KFloat breakevenup;
+ KFloat breakevendn;
+ KFloat pctbreakevenup;
+ KFloat pctbreakevendn;
 };
 
 struct taTimeValue
 {
- double principal;
- double rate;
- double periods;
+ KFloat principal;
+ KFloat rate;
+ KFloat periods;
  int    compound;
  //char   filler[2];
 };
 
 struct taTimeValueA
 {
- double principal;
- double discrate;
- double numpayments;
+ KFloat principal;
+ KFloat discrate;
+ KFloat numpayments;
 };
 
 struct taBondInfo
 {
- double facevalue;
- double price;
- double coupon;
+ KFloat facevalue;
+ KFloat price;
+ KFloat coupon;
  int    pymtsperyr;
  unsigned int maturitydate;
 };
 
-double DLL_EXPORT taApprxCumProbDist(double d1);
+KFloat DLL_EXPORT taApprxCumProbDist(KFloat d1);
 int  DLL_EXPORT taBearCall(struct taOptionSpreads *ops); /* Buy Hi strike Sell Lo strike */
 int  DLL_EXPORT taBearPut(struct taOptionSpreads *ops); /* Buy Hi strike Sell Lo strike */
-double DLL_EXPORT taBlackScholes(struct taOption *opt, double stockprice, double intrate, double variance, unsigned int asofdate);
-double DLL_EXPORT taBondAccrInt(double coupon, unsigned int lastpaydate, unsigned int asofdate, double daysinyr);
-double DLL_EXPORT taBondDuration(struct taBondInfo *bond, double discrate, unsigned int asofdate);
-double DLL_EXPORT taBondDurationPriceChg(double price, double olddiscrate, double duration, double discrate);
-double DLL_EXPORT taBondPricing (struct taBondInfo *bond, double discrate, unsigned int asofdate);
+KFloat DLL_EXPORT taBlackScholes(struct taOption *opt, KFloat stockprice, KFloat intrate, KFloat variance, unsigned int asofdate);
+KFloat DLL_EXPORT taBondAccrInt(KFloat coupon, unsigned int lastpaydate, unsigned int asofdate, KFloat daysinyr);
+KFloat DLL_EXPORT taBondDuration(struct taBondInfo *bond, KFloat discrate, unsigned int asofdate);
+KFloat DLL_EXPORT taBondDurationPriceChg(KFloat price, KFloat olddiscrate, KFloat duration, KFloat discrate);
+KFloat DLL_EXPORT taBondPricing (struct taBondInfo *bond, KFloat discrate, unsigned int asofdate);
 int  DLL_EXPORT taBullCall(struct taOptionSpreads *ops); /* Buy Lo strike Sell Hi strike */
 int  DLL_EXPORT taBullPut(struct taOptionSpreads *ops); /* Buy Lo strike Sell Hi strike */
-double DLL_EXPORT taFutureValue (struct taTimeValue *tvalue);
-double DLL_EXPORT taFutureValuePrinc (struct taTimeValue *tvalue, double futurevalue);
-double DLL_EXPORT taFutureValueInt (struct taTimeValue *tvalue, double futurevalue);
-double DLL_EXPORT taFutureValueAnnuity(struct taTimeValue *tvalue);
+KFloat DLL_EXPORT taFutureValue (struct taTimeValue *tvalue);
+KFloat DLL_EXPORT taFutureValuePrinc (struct taTimeValue *tvalue, KFloat futurevalue);
+KFloat DLL_EXPORT taFutureValueInt (struct taTimeValue *tvalue, KFloat futurevalue);
+KFloat DLL_EXPORT taFutureValueAnnuity(struct taTimeValue *tvalue);
 int  DLL_EXPORT taLongStraddle(struct taOptionSpreads *ops);
 int  DLL_EXPORT taLongStrangle(struct taOptionSpreads *ops);
-double DLL_EXPORT taPresentValue(struct taTimeValue *tvalue);
-double DLL_EXPORT taPresentValueAnnuity(struct taTimeValueA *tvaluea);
+KFloat DLL_EXPORT taPresentValue(struct taTimeValue *tvalue);
+KFloat DLL_EXPORT taPresentValueAnnuity(struct taTimeValueA *tvaluea);
 int  DLL_EXPORT taOptionInit(struct taOptionSpreads *ops);
 int  DLL_EXPORT taShortStraddle(struct taOptionSpreads *ops);
 int  DLL_EXPORT taShortStrangle(struct taOptionSpreads *ops);
-double DLL_EXPORT taTBillDiscYield (struct taBondInfo *bond, unsigned int asofdate);
-double DLL_EXPORT taTBillBondEqYield(struct taBondInfo *bond, unsigned int asofdate);
-double DLL_EXPORT taYieldtoMaturity(struct taBondInfo *bond, unsigned int asofdate);
+KFloat DLL_EXPORT taTBillDiscYield (struct taBondInfo *bond, unsigned int asofdate);
+KFloat DLL_EXPORT taTBillBondEqYield(struct taBondInfo *bond, unsigned int asofdate);
+KFloat DLL_EXPORT taYieldtoMaturity(struct taBondInfo *bond, unsigned int asofdate);
 /* -------------------------------------------------------------------- */
 /* tatrade                                                              */
 /* -------------------------------------------------------------------- */
@@ -541,11 +548,11 @@ double DLL_EXPORT taYieldtoMaturity(struct taBondInfo *bond, unsigned int asofda
 struct taOrderParms
 {
  char   systemname[80];
- double ticksize;        /* Tick increment for this issue */
- double valueoftick;
- double slippage;
- double commission;
- double margin;
+ KFloat ticksize;        /* Tick increment for this issue */
+ KFloat valueoftick;
+ KFloat slippage;
+ KFloat commission;
+ KFloat margin;
  long   ordertimedelay;  /* number of seconds before At Market order can occur */
  int    reversal;        /* allow auto exit and re-entry */
  int    bestprice;       /* enter at open if better price */
@@ -559,7 +566,7 @@ struct taCurrent
  long   longvol;         /* Number of Shares or Contracts Long  */
  long   shortvol;        /* Number of Shares or Contracts Short */
  long   totalvolume;     /* Contract                            */
- double avgentryprice;   /* Weigthed Avg of all open executions */
+ KFloat avgentryprice;   /* Weigthed Avg of all open executions */
  unsigned int entrydate; /* Of Latest Trade */
  unsigned int entrytime; /* Of Latest Trade */
  int    longduration;
@@ -575,7 +582,7 @@ struct taOrder
  long   volume;       /* Volume                */
  int    type;         /* (O)pen (C)lose Cancel(X)           */
  int    buysell;      /* (B)uy (S)ell                       */
- double reqprice;     /* Requested Price                    */
+ KFloat reqprice;     /* Requested Price                    */
  int    atind;        /* At (M)arket, (S)top or (L)imit     */
                         /* (S)top = Next Tick higher for Buy  */
                         /* (S)top = Next Tick lower  for Sell */
@@ -595,37 +602,37 @@ struct taExecution
  int    buysell;      /* Buy / Sell        */
  unsigned int date;   /* Order Date        */
  unsigned int time;   /* Order Time        */
- double price;        /* Actual Price      */
+ KFloat price;        /* Actual Price      */
  long   volume;       /* Volume            */
  long   remvolume;    /* Remaining Volume  */
 };
 
 struct taPerformance
 {
- double netprofit;       /* NP */
- double grossprofit;     /* GP */
- double grossloss;       /* GL */
+ KFloat netprofit;       /* NP */
+ KFloat grossprofit;     /* GP */
+ KFloat grossloss;       /* GL */
  long   trades;          /* NT */
- double pctprofitable;   /* PP */
+ KFloat pctprofitable;   /* PP */
  int    win;             /* NW */
  int    loss;            /* NL */
- double largestwin;      /* LW */
- double largestloss;     /* LL */
- double avgwin;          /* AW */
- double avgloss;         /* AL */
- double avgwintoavgloss; /* WL */
- double avgtrade;        /* AT */
+ KFloat largestwin;      /* LW */
+ KFloat largestloss;     /* LL */
+ KFloat avgwin;          /* AW */
+ KFloat avgloss;         /* AL */
+ KFloat avgwintoavgloss; /* WL */
+ KFloat avgtrade;        /* AT */
  int    maxconwin;       /* MW */
  int    maxconloss;      /* ML */
- double avgwinstreak;    /* WS */
- double avglosstreak;    /* LS */
- double maxdrawdown;     /* MD */
- double profitfactor;    /* PF */
- double maxcontractsheld;/* MC */
- double acctsizereqd;    /* AS */
- double rtnonacct;       /* RA */
- double prr;             /* PR */
- double openpospl;
+ KFloat avgwinstreak;    /* WS */
+ KFloat avglosstreak;    /* LS */
+ KFloat maxdrawdown;     /* MD */
+ KFloat profitfactor;    /* PF */
+ KFloat maxcontractsheld;/* MC */
+ KFloat acctsizereqd;    /* AS */
+ KFloat rtnonacct;       /* RA */
+ KFloat prr;             /* PR */
+ KFloat openpospl;
  int    winbars;
  int    lossbars;
  int    winstreak;
@@ -651,21 +658,21 @@ struct taOrderSystem
 
 struct taOptVar
 {
- double from;
- double to;
- double incr;
+ KFloat from;
+ KFloat to;
+ KFloat incr;
  long   count;
- double value;
+ KFloat value;
 };
 
 int DLL_EXPORT taOrderSystemInit(struct taOrderSystem *taOS, char *systemname, taBars *bars, int maxorders);
 void  DLL_EXPORT taOrderSystemReset(struct taOrderSystem *taOS);
 void  DLL_EXPORT taOrderSystemClose(struct taOrderSystem *taOS);
 int DLL_EXPORT taProcessOrders(struct taOrderSystem *taOS);
-int DLL_EXPORT taBuyToOpen(struct taOrderSystem *taOS, char *name, long volume, double price, int atind, int timeinforce);
-int DLL_EXPORT taSellToOpen(struct taOrderSystem *taOS, char *name, long volume, double price, int atind, int timeinforce);
-int DLL_EXPORT taSellToClose(struct taOrderSystem *taOS, char *name, char *fromname, long volume, double price, int atind, int timeinforce);
-int DLL_EXPORT taBuyToClose(struct taOrderSystem *taOS, char *name, char *fromname, long volume, double price, int atind, int timeinforce);
+int DLL_EXPORT taBuyToOpen(struct taOrderSystem *taOS, char *name, long volume, KFloat price, int atind, int timeinforce);
+int DLL_EXPORT taSellToOpen(struct taOrderSystem *taOS, char *name, long volume, KFloat price, int atind, int timeinforce);
+int DLL_EXPORT taSellToClose(struct taOrderSystem *taOS, char *name, char *fromname, long volume, KFloat price, int atind, int timeinforce);
+int DLL_EXPORT taBuyToClose(struct taOrderSystem *taOS, char *name, char *fromname, long volume, KFloat price, int atind, int timeinforce);
 int DLL_EXPORT taCancelOrder(struct taOrderSystem *taOS, char *name);
 
 int DLL_EXPORT taPrintOrders(struct taOrderSystem *taOS, char *outfile, int append);
@@ -772,8 +779,8 @@ struct taChartLine
  taBars     b1;
  int    chartnum;
  int    type;
- double ystart;
- double ystop;
+ KFloat ystart;
+ KFloat ystop;
  long   color1;
  long   color2;
  long   style;
@@ -783,9 +790,9 @@ struct taChartGrids
 {
  int    chartnum;
  int    filler;
- double value;
- double ystart;
- double ystop;
+ KFloat value;
+ KFloat ystart;
+ KFloat ystop;
  long   color;
  long   style;
 };
@@ -832,8 +839,8 @@ struct taChartInfo
  int    scaleright;
  int    dateleft;
  int    subtop[taCHART_SUBCNTMAX + 1];
- double subystart[taCHART_SUBCNTMAX];
- double subystop[taCHART_SUBCNTMAX];
+ KFloat subystart[taCHART_SUBCNTMAX];
+ KFloat subystop[taCHART_SUBCNTMAX];
  int    fontwidth;
  int    fontheight;
  taBars   masterbars;
@@ -867,9 +874,9 @@ struct taChartInfo
 #define taBRIGHTWHITE    0xFFFFFF
 
 int DLL_EXPORT taChart(HDC hdc, taArray *pa1, taBars *pb1, int xstart, int xstop, int xwidth,
-       		   double ystart, double ystop, int x1, int y1, int x2, int y2,
+       		   KFloat ystart, KFloat ystop, int x1, int y1, int x2, int y2,
 		         int type, long color1, long color2, long style);
-int DLL_EXPORT taChartGrid(HDC hdc, double level, double ystart, double ystop,
+int DLL_EXPORT taChartGrid(HDC hdc, KFloat level, KFloat ystart, KFloat ystop,
        		   int x1, int y1, int x2, int y2, long color, long style);
 int DLL_EXPORT taChartSetup(HDC hdc, struct taChartScreen *screen, struct taChartInfo *info);
 int DLL_EXPORT taChartPaint(HDC hdc, struct taChartScreen *screen, struct taChartInfo *info);
@@ -903,9 +910,9 @@ int DLL_EXPORT taChartPaint(HDC hdc, struct taChartScreen *screen, struct taChar
 extern char *taChartPath;
 
 int DLL_EXPORT taChart(taArray *pa1, taBars *pb1, int xstart, int xstop, int xwidth,
-        double ystart, double ystop, int x1, int y1, int x2, int y2,
+        KFloat ystart, KFloat ystop, int x1, int y1, int x2, int y2,
         int type, long color1, long color2, long style);
-int DLL_EXPORT taChartGrid(double level, double ystart, double ystop,
+int DLL_EXPORT taChartGrid(KFloat level, KFloat ystart, KFloat ystop,
         int x1, int y1, int x2, int y2, long color, long style);
 int DLL_EXPORT taChartSetup(struct taChartScreen *screen, struct taChartInfo *info);
 int DLL_EXPORT taChartPaint(struct taChartScreen *screen, struct taChartInfo *info);
@@ -913,13 +920,13 @@ int DLL_EXPORT taChartPaint(struct taChartScreen *screen, struct taChartInfo *in
 int DLL_EXPORT taChartScreenInit(struct taChartScreen *screen, int linemax, int gridmax);
 void  DLL_EXPORT taChartScreenClose(struct taChartScreen *screen);
 int DLL_EXPORT taChartLineDef(struct taChartScreen *screen, int chartnum,
-        taArray *a1, taBars *b1, double ystart, double ystop,
+        taArray *a1, taBars *b1, KFloat ystart, KFloat ystop,
         int type, long color1, long color2, long style);
-int DLL_EXPORT taChartGridDef(struct taChartScreen *screen, int chartnum, double value,
-        double ystart, double ystop, long color, long style);
+int DLL_EXPORT taChartGridDef(struct taChartScreen *screen, int chartnum, KFloat value,
+        KFloat ystart, KFloat ystop, long color, long style);
 int DLL_EXPORT taChartDraw(struct taChartScreen *screen);
 int DLL_EXPORT taChartPosition(struct taChartScreen *screen, struct taChartInfo *info,
-		      int x1, int y1, int *barnum, int *barpos, int *subchart, double *yvalue);
+		      int x1, int y1, int *barnum, int *barpos, int *subchart, KFloat *yvalue);
 
 
 /* taChart parameter quick reference                 */

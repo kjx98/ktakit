@@ -16,8 +16,8 @@ endif
 
 CFLAGS=$(DEBUGS) $(OPTIMIZE) -I../include
 
-objs =	util.o crc.o skw.o chgext.o warn.o filepath.o des.o ini.o foxint.o memwatch.o
-srcs =	util.c crc.c skw.c chgext.c warn.c filepath.c des.c ini.c foxint.c memwatch.c
+objs =	util.o crc.o skw.o chgext.o warn.o filepath.o ini.o foxint.o memwatch.o
+srcs =	util.c crc.c skw.c chgext.c warn.c filepath.c ini.c foxint.c memwatch.c
 
 all:	libmyutils.a
 
