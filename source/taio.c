@@ -59,7 +59,7 @@ int DLL_EXPORT taPNFchart(taBars *pnfbars, KFloat box, char *outfile, int append
 }
 
 
-int DLL_EXPORT taReadDOPfile(char *filename, short *cols)
+int DLL_EXPORT taReadDOPfile(char *filename, int *cols)
 {
  int    i1 = 0, i2;
  FILE    *fp1;
@@ -68,7 +68,7 @@ int DLL_EXPORT taReadDOPfile(char *filename, short *cols)
 
  if ((fp1 = fopen(filename, "rb")) == NULL)
   return (taErrFileOpen);
- memset(cols, 0, 8 * sizeof(short));
+ memset(cols, 0, 8 * sizeof(int));
  while (fgets(buffer, 80, fp1))
  {
   for (i2 = strlen(buffer) - 1; (buffer[i2] == 0x0D || buffer[i2] == 0x0A || buffer[i2] == 0x1A) && i2 >= 0; i2--)

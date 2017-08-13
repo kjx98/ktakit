@@ -186,17 +186,17 @@ int DLL_EXPORT taTXTread(taBars *b1, char *path, char *name, struct taTXTinfo *i
    if (info->ti == i2)
     taArrayItem(b1->ti, i1) = taTimeTxtToJulian(string, info->tiformat);
    if (info->op == i2)
-    taArrayItem(b1->op, i1) = (float)atof(string);
+    taArrayItem(b1->op, i1) = atof(string);
    if (info->hi == i2)
-    taArrayItem(b1->hi, i1) = (float)atof(string);
+    taArrayItem(b1->hi, i1) = atof(string);
    if (info->lo == i2)
-    taArrayItem(b1->lo, i1) = (float)atof(string);
+    taArrayItem(b1->lo, i1) = atof(string);
    if (info->cl == i2)
-    taArrayItem(b1->cl, i1) = (float)atof(string);
+    taArrayItem(b1->cl, i1) = atof(string);
    if (info->vol == i2)
-    taArrayItem(b1->vol, i1) = (float)atof(string);
+    taArrayItem(b1->vol, i1) = atof(string);
    if (info->oi == i2)
-    taArrayItem(b1->oi, i1) = (float)atof(string);
+    taArrayItem(b1->oi, i1) = atof(string);
   }
   i1++;
  }

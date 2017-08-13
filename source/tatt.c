@@ -10,16 +10,16 @@
 
 
 KFloat   taTT3bytetofloat(unsigned char *threebyter);
-KFloat   taTTcvt(KFloat price, short conversion, short meat);
+KFloat   taTTcvt(KFloat price, int conversion, int meat);
 
 
 long DLL_EXPORT taTTfindrec(char *path, char *name, unsigned int date, unsigned int *actualdate)
 {
- short    err = 0;
- long     recno = -1, guess = 0, lastguess = 0;
- long     maxent = 0, low = 0, high = 0;
- char     buffer[81];
- FILE    *fp1;
+ int    err = 0;
+ long   recno = -1, guess = 0, lastguess = 0;
+ long   maxent = 0, low = 0, high = 0;
+ char   buffer[81];
+ FILE   *fp1;
  struct taTTrec rec;
 
  strcpy(buffer, path);
@@ -81,10 +81,10 @@ long DLL_EXPORT taTTfindrec(char *path, char *name, unsigned int date, unsigned 
 
 int DLL_EXPORT taTTread(taBars *b1, char *path, char *name, long start, int cnt, int allocate)
 {
- short    i1 = 0, err = 0, conversion, meat = 0;
- long     reccnt;
- char     buffer[81];
- FILE    *fp1;
+ int    i1 = 0, err = 0, conversion, meat = 0;
+ long   reccnt;
+ char   buffer[81];
+ FILE   *fp1;
  struct taTTrec rec;
 
  strcpy(buffer, path);
@@ -178,7 +178,7 @@ KFloat   taTT3bytetofloat(unsigned char *threebyter)
 }
 
 
-KFloat   taTTcvt(KFloat price, short conversion, short meat)
+KFloat   taTTcvt(KFloat price, int conversion, int meat)
 {
  KFloat   newprice, whole, fraction;
 

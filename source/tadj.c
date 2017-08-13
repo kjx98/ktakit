@@ -8,13 +8,13 @@
 #include "ktakit.h"
 #include "tadj.h"
 
-short taDJfindfile(char *path, char *name, struct taDJinfo *info1);
+int taDJfindfile(char *path, char *name, struct taDJinfo *info1);
 
 
-short      taDJfindfile(char *path, char *name, struct taDJinfo *info1)
+int taDJfindfile(char *path, char *name, struct taDJinfo *info1)
 {
- short      err = 0, i1 = 0, reccnt = 0;
- char     buffer[81], shortname[9], company[16], symbol[11], equitytype, datatype;
+ int    err = 0, i1 = 0, reccnt = 0;
+ char   buffer[81], shortname[9], company[16], symbol[11], equitytype, datatype;
  FILE    *fp1;
  struct taDJinfo info;
  struct taDJinfohdr infohdr;
@@ -426,7 +426,7 @@ int DLL_EXPORT taDJread(taBars *b1, char *path, char *name, long start, int cnt,
    taArrayItem(b1->hi, i1) = 0;
    taArrayItem(b1->lo, i1) = 0;
    taArrayItem(b1->cl, i1) = dvc.cl;
-   taArrayItem(b1->vol, i1) = (float) dvc.vol;
+   taArrayItem(b1->vol, i1) = dvc.vol;
    taArrayItem(b1->oi, i1) = 0;
    i1++;
   }
@@ -457,7 +457,7 @@ int DLL_EXPORT taDJread(taBars *b1, char *path, char *name, long start, int cnt,
    taArrayItem(b1->hi, i1) = dvhlc.hi;
    taArrayItem(b1->lo, i1) = dvhlc.lo;
    taArrayItem(b1->cl, i1) = dvhlc.cl;
-   taArrayItem(b1->vol, i1) = (float) dvhlc.vol;
+   taArrayItem(b1->vol, i1) = dvhlc.vol;
    taArrayItem(b1->oi, i1) = 0;
    i1++;
   }
@@ -488,7 +488,7 @@ int DLL_EXPORT taDJread(taBars *b1, char *path, char *name, long start, int cnt,
    taArrayItem(b1->lo, i1) = dihlco.lo;
    taArrayItem(b1->cl, i1) = dihlco.cl;
    taArrayItem(b1->vol, i1) = 0;
-   taArrayItem(b1->oi, i1) = (float) dihlco.oi;
+   taArrayItem(b1->oi, i1) = dihlco.oi;
    i1++;
   }
   break;
@@ -502,7 +502,7 @@ int DLL_EXPORT taDJread(taBars *b1, char *path, char *name, long start, int cnt,
    taArrayItem(b1->hi, i1) = dvhlco.hi;
    taArrayItem(b1->lo, i1) = dvhlco.lo;
    taArrayItem(b1->cl, i1) = dvhlco.cl;
-   taArrayItem(b1->vol, i1) = (float) dvhlco.vol;
+   taArrayItem(b1->vol, i1) = dvhlco.vol;
    taArrayItem(b1->oi, i1) = 0;
    i1++;
   }
@@ -517,8 +517,8 @@ int DLL_EXPORT taDJread(taBars *b1, char *path, char *name, long start, int cnt,
    taArrayItem(b1->hi, i1) = dvihlco.hi;
    taArrayItem(b1->lo, i1) = dvihlco.lo;
    taArrayItem(b1->cl, i1) = dvihlco.cl;
-   taArrayItem(b1->vol, i1) = (float) dvihlco.vol;
-   taArrayItem(b1->oi, i1) = (float) dvihlco.oi;
+   taArrayItem(b1->vol, i1) = dvihlco.vol;
+   taArrayItem(b1->oi, i1) = dvihlco.oi;
    i1++;
   }
   break;
@@ -532,8 +532,8 @@ int DLL_EXPORT taDJread(taBars *b1, char *path, char *name, long start, int cnt,
    taArrayItem(b1->hi, i1) = 0;
    taArrayItem(b1->lo, i1) = 0;
    taArrayItem(b1->cl, i1) = 0;
-   taArrayItem(b1->vol, i1) = (float) div.vol;
-   taArrayItem(b1->oi, i1) = (float) div.oi;
+   taArrayItem(b1->vol, i1) = div.vol;
+   taArrayItem(b1->oi, i1) = div.oi;
    i1++;
   }
   break;

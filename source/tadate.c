@@ -8,58 +8,50 @@
 
 unsigned int DLL_EXPORT taDateTxtDif(char *date1, char *date2, int format1, int format2)
 {
- return (abs(taDateTxtToJulian(date1, format1) -
+    return (abs(taDateTxtToJulian(date1, format1) -
 	     taDateTxtToJulian(date2, format2)));
 }
 
 unsigned int DLL_EXPORT taDateTxtToJulian(char *date, int format)
 {
- int    cent, year, month, day;
- char   buffer[3] = "00";
- int    cols[12][4] = {
-    -1, 0, 3, 6,  0, 2, 5, 8,
-			 -1, 6, 0, 3,  6, 8, 0, 3,
-			 -1, 6, 3, 0,  6, 8, 3, 0,
-			 -1, 0, 2, 4,  0, 2, 4, 6,
-			 -1, 4, 0, 2,  4, 6, 0, 2,
-			 -1, 4, 2, 0,  4, 6, 2, 0};
+int     cent, year, month, day;
+char    buffer[3] = "00";
+int cols[12][4] = {
+        -1, 0, 3, 6,  0, 2, 5, 8,
+        -1, 6, 0, 3,  6, 8, 0, 3,
+        -1, 6, 3, 0,  6, 8, 3, 0,
+        -1, 0, 2, 4,  0, 2, 4, 6,
+        -1, 4, 0, 2,  4, 6, 0, 2,
+        -1, 4, 2, 0,  4, 6, 2, 0};
 
- if(date == NULL)
-  return(0);
- while (date[0] == ' ' )
-  date++;
- if(date[0] == '\"')
-  date++;
- if(date[0] == '\0' || date[0] == '\"')
-  return(0);
- if (format < 1 || format > 12)
-  return(0);
- format--;
- buffer[0] = date[cols[format][1]];
- buffer[1] = date[cols[format][1] + 1];
- year = atoi(buffer);
- if (cols[format][0] >= 0)
- {
-  buffer[0] = date[cols[format][0]];
-  buffer[1] = date[cols[format][0] + 1];
-  cent = 100 * (atoi(buffer) - 19);
- }
- else
- {
-  if (year < 61)
-   cent = 2000;
-  else
-   cent = 1900;
- }
- buffer[0] = date[cols[format][2]];
- buffer[1] = date[cols[format][2] + 1];
- month = atoi(buffer);
- buffer[0] = date[cols[format][3]];
- buffer[1] = date[cols[format][3] + 1];
- day = atoi(buffer);
- if (!year && !month && !day)
-  return (0);
- return (taYMDToJulian(year + cent, month, day));
+    if(date == NULL) return(0);
+    while (date[0] == ' ' ) date++;
+    if(date[0] == '\"') date++;
+    if(date[0] == '\0' || date[0] == '\"') return(0);
+    if (format < 1 || format > 12) return(0);
+    format--;
+    buffer[0] = date[cols[format][1]];
+    buffer[1] = date[cols[format][1] + 1];
+    year = atoi(buffer);
+    if (cols[format][0] >= 0)
+    {
+        buffer[0] = date[cols[format][0]];
+        buffer[1] = date[cols[format][0] + 1];
+        cent = 100 * (atoi(buffer) - 19);
+    }
+    else
+    {
+        if (year < 61) cent = 2000;
+        else cent = 1900;
+    }
+    buffer[0] = date[cols[format][2]];
+    buffer[1] = date[cols[format][2] + 1];
+    month = atoi(buffer);
+    buffer[0] = date[cols[format][3]];
+    buffer[1] = date[cols[format][3] + 1];
+    day = atoi(buffer);
+    if (!year && !month && !day) return (0);
+    return (taYMDToJulian(year + cent, month, day));
 }
 
 int DLL_EXPORT taDateTxtVal(char *date, int format)
@@ -235,10 +227,10 @@ void DLL_EXPORT taJulianToTimeTxt(unsigned int time, int format, char *sep, char
 void DLL_EXPORT taJulianToYMD(unsigned int date, int *year, int *month, int *day)
 {
  int daystable[12] = {0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334};
- int mm = 0, dd = 0, yy = 0;
+ unsigned mm = 0, dd = 0, yy = 0;
 
- yy = (unsigned short)((4 * (long) date - 1) / 1461);
- dd = (unsigned short)(date - ((1461 * (long) yy) / 4));
+ yy = (unsigned)((4 * date - 1) / 1461);
+ dd = (unsigned)(date - ((1461 * yy) / 4));
  yy += 61;
  if (yy % 4 == 0)
   for (mm = 2; mm < 12; mm++)

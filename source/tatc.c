@@ -8,17 +8,17 @@
 #include "ktakit.h"
 #include "tatc.h"
 
-unsigned short taTCDateToJulian(float date)
+unsigned    taTCDateToJulian(float date)
 {
- long     year = 0, month = 0, day = 0;
- short    syr = 0, smm = 0, sday = 0;
+ long   year = 0, month = 0, day = 0;
+ int    syr = 0, smm = 0, sday = 0;
 
  year = (long) (date / 10000);
  month = (long) ((date - year * 10000) / 100);
  day = (long) ((date - year * 10000) - (month * 100));
- syr = (short) year;
- smm = (short) month;
- sday = (short) day;
+ syr = year;
+ smm = month;
+ sday = day;
  return (taYMDToJulian(syr, smm, sday));
 }
 
@@ -108,7 +108,7 @@ long DLL_EXPORT taTCfindrec(char *path, char *name, unsigned int date, unsigned 
 
 int DLL_EXPORT taTClist(char *path, char *outfile, int append)
 {
- short  err = 0, i1, line = 0, page = 0;
+ int    err = 0, i1, line = 0, page = 0;
  long   cnt;
  char   buffer[81], symbol[7];
  FILE   *fp1, *out;
@@ -169,10 +169,10 @@ int DLL_EXPORT taTClist(char *path, char *outfile, int append)
 
 int DLL_EXPORT taTCread(taBars *b1, char *path, char *name, long start, int cnt, int allocate)
 {
- short    i1 = 0, err = 0;
- long     reccnt = 0;
- char     buffer[81];
- FILE    *fp1;
+ int    i1 = 0, err = 0;
+ long   reccnt = 0;
+ char   buffer[81];
+ FILE   *fp1;
  struct taTCrec rec;
  struct taTChdr hdr;
 

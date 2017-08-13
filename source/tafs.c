@@ -8,17 +8,17 @@
 #include "ktakit.h"
 #include "tafs.h"
 
-short    taFSfracrec(struct taFSfracs *fracs, short record, char *path);
+int taFSfracrec(struct taFSfracs *fracs, int record, char *path);
 KFloat   taFSfixprice(struct taFSfracs fracs, unsigned long price);
 
 
 long DLL_EXPORT taFSfindrec(char *path, char *name, unsigned int date, unsigned int time,
              unsigned int *actualdate, unsigned int *actualtime)
 {
- short    err = 0;
- long     recno = -1, guess = 0, lastguess = 0;
- long     maxent = 0, low = 0, high = 0;
- unsigned short dt = 0, ti = 0;
+ int    err = 0;
+ long   recno = -1, guess = 0, lastguess = 0;
+ long   maxent = 0, low = 0, high = 0;
+ unsigned short  dt = 0, ti = 0;
  char     buffer[81];
  FILE    *fp1;
  struct taFSinfo info;
@@ -85,9 +85,9 @@ long DLL_EXPORT taFSfindrec(char *path, char *name, unsigned int date, unsigned 
 
 int DLL_EXPORT taFSread(taBars *b1, char *path, char *name, long start, int cnt, int allocate)
 {
- short    i1, err, recno, done = 0;
- long     l1, reccnt;
- char     buffer[81];
+ int    i1, err, recno, done = 0;
+ long   l1, reccnt;
+ char   buffer[81];
  FILE    *fp1;
  struct taFSinfo info, voihdr;
  struct taFSdaily16 daily16;
@@ -183,10 +183,10 @@ int DLL_EXPORT taFSread(taBars *b1, char *path, char *name, long start, int cnt,
    {
     taArrayItem(b1->dt, i1) = var32.date;
     taArrayItem(b1->ti, i1) = var32.time;
-    taArrayItem(b1->op, i1) = (float) taFSfixprice(fracs, var32.open);
-    taArrayItem(b1->hi, i1) = (float) taFSfixprice(fracs, var32.high);
-    taArrayItem(b1->lo, i1) = (float) taFSfixprice(fracs, var32.low);
-    taArrayItem(b1->cl, i1) = (float) taFSfixprice(fracs, var32.close);
+    taArrayItem(b1->op, i1) = taFSfixprice(fracs, var32.open);
+    taArrayItem(b1->hi, i1) = taFSfixprice(fracs, var32.high);
+    taArrayItem(b1->lo, i1) = taFSfixprice(fracs, var32.low);
+    taArrayItem(b1->cl, i1) = taFSfixprice(fracs, var32.close);
     taArrayItem(b1->vol, i1) = 0;
     taArrayItem(b1->oi, i1) = 0;
     i1++;
@@ -199,10 +199,10 @@ int DLL_EXPORT taFSread(taBars *b1, char *path, char *name, long start, int cnt,
    {
     taArrayItem(b1->dt, i1) = var16.date;
     taArrayItem(b1->ti, i1) = var16.time;
-    taArrayItem(b1->op, i1) = (float) taFSfixprice(fracs, var16.open);
-    taArrayItem(b1->hi, i1) = (float) taFSfixprice(fracs, var16.high);
-    taArrayItem(b1->lo, i1) = (float) taFSfixprice(fracs, var16.low);
-    taArrayItem(b1->cl, i1) = (float) taFSfixprice(fracs, var16.close);
+    taArrayItem(b1->op, i1) = taFSfixprice(fracs, var16.open);
+    taArrayItem(b1->hi, i1) = taFSfixprice(fracs, var16.high);
+    taArrayItem(b1->lo, i1) = taFSfixprice(fracs, var16.low);
+    taArrayItem(b1->cl, i1) = taFSfixprice(fracs, var16.close);
     taArrayItem(b1->vol, i1) = 0;
     taArrayItem(b1->oi, i1) = 0;
     i1++;
@@ -218,10 +218,10 @@ int DLL_EXPORT taFSread(taBars *b1, char *path, char *name, long start, int cnt,
    {
     taArrayItem(b1->dt, i1) = daily32.date;
     taArrayItem(b1->ti, i1) = 0;
-    taArrayItem(b1->op, i1) = (float) taFSfixprice(fracs, daily32.open);
-    taArrayItem(b1->hi, i1) = (float) taFSfixprice(fracs, daily32.high);
-    taArrayItem(b1->lo, i1) = (float) taFSfixprice(fracs, daily32.low);
-    taArrayItem(b1->cl, i1) = (float) taFSfixprice(fracs, daily32.close);
+    taArrayItem(b1->op, i1) = taFSfixprice(fracs, daily32.open);
+    taArrayItem(b1->hi, i1) = taFSfixprice(fracs, daily32.high);
+    taArrayItem(b1->lo, i1) = taFSfixprice(fracs, daily32.low);
+    taArrayItem(b1->cl, i1) = taFSfixprice(fracs, daily32.close);
     taArrayItem(b1->vol, i1) = 0;
     taArrayItem(b1->oi, i1) = 0;
     i1++;
@@ -234,10 +234,10 @@ int DLL_EXPORT taFSread(taBars *b1, char *path, char *name, long start, int cnt,
    {
     taArrayItem(b1->dt, i1) = daily16.date;
     taArrayItem(b1->ti, i1) = 0;
-    taArrayItem(b1->op, i1) = (float) taFSfixprice(fracs, daily16.open);
-    taArrayItem(b1->hi, i1) = (float) taFSfixprice(fracs, daily16.high);
-    taArrayItem(b1->lo, i1) = (float) taFSfixprice(fracs, daily16.low);
-    taArrayItem(b1->cl, i1) = (float) taFSfixprice(fracs, daily16.close);
+    taArrayItem(b1->op, i1) = taFSfixprice(fracs, daily16.open);
+    taArrayItem(b1->hi, i1) = taFSfixprice(fracs, daily16.high);
+    taArrayItem(b1->lo, i1) = taFSfixprice(fracs, daily16.low);
+    taArrayItem(b1->cl, i1) = taFSfixprice(fracs, daily16.close);
     taArrayItem(b1->vol, i1) = 0;
     taArrayItem(b1->oi, i1) = 0;
     i1++;
@@ -280,8 +280,8 @@ int DLL_EXPORT taFSread(taBars *b1, char *path, char *name, long start, int cnt,
     }
     else
     {
-     taArrayItem(b1->vol, i1) = (float) voi32.vol;
-     taArrayItem(b1->oi, i1) = (float) voi32.oi;
+     taArrayItem(b1->vol, i1) = voi32.vol;
+     taArrayItem(b1->oi, i1) = voi32.oi;
      i1++;
     }
    }
@@ -303,8 +303,8 @@ int DLL_EXPORT taFSread(taBars *b1, char *path, char *name, long start, int cnt,
     }
     else
     {
-     taArrayItem(b1->vol, i1) = (float) voi16.vol;
-     taArrayItem(b1->oi, i1) = (float) voi16.oi;
+     taArrayItem(b1->vol, i1) = voi16.vol;
+     taArrayItem(b1->oi, i1) = voi16.oi;
      i1++;
     }
    }
@@ -314,7 +314,7 @@ int DLL_EXPORT taFSread(taBars *b1, char *path, char *name, long start, int cnt,
 }
 
 
-short    taFSfracrec(struct taFSfracs *fracs, short record, char *path)
+int     taFSfracrec(struct taFSfracs *fracs, int record, char *path)
 {
  char     buffer[81];
  FILE    *fp1;
