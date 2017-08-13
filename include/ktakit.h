@@ -223,7 +223,7 @@ int     taStrNthChr(char *str, char chr, int n);
 /* -------------------------------------------------------------------- */
 
 int DLL_EXPORT taPNFchart(taBars *pnfbars, KFloat box, char *outfile, int append);
-int DLL_EXPORT taReadDOPfile(char *filename, short *cols);
+int DLL_EXPORT taReadDOPfile(char *filename, int *cols);
 int DLL_EXPORT taTXT2Array(char *infile, taArray *a1, char *delimit, int skip, int startcol, int stopcol);
 
 #if !defined(_WINDOWS) || defined(_WIN32)
