@@ -15,15 +15,16 @@ unsigned    taCTdatetojulian(float date);
 
 int     taCTfindfile(char *path, char *name, taBars *b1, int *cols)
 {
-int     i1, i2, found = 0, err = 0;
-char    buffer[81], cwd[81];
-FILE    *fp1;
-struct taCTmasthdr masthdr;
-struct taCTdata data;
-struct taXmasterHdr xmasterhdr;
-struct taXmaster xmaster;
-int     columns[2][3][8] = {{{1,0,0,2,3,4,5,0},{1,0,2,3,4,5,6,0},{1,0,2,3,4,5,6,7}},
-                              {{1,2,0,3,4,5,6,0},{1,2,3,4,5,6,7,0},{1,2,3,4,5,6,7,8}}};
+    int     i1, i2, found = 0, err = 0;
+    char    buffer[81], cwd[81];
+    FILE    *fp1;
+    struct taCTmasthdr masthdr;
+    struct taCTdata data;
+    struct taXmasterHdr xmasterhdr;
+    struct taXmaster xmaster;
+    int     columns[2][3][8] = {{{1,0,0,2,3,4,5,0},{1,0,2,3,4,5,6,0},{1,0,2,3,4,5,6,7}},
+        {{1,2,0,3,4,5,6,0},{1,2,3,4,5,6,7,0},{1,2,3,4,5,6,7,8}}
+    };
 
     strcpy(cwd, path);
     if (cwd[0] != '\0' && cwd[strlen(cwd) - 1] != ':' && cwd[strlen(cwd) - 1] != '\\')
@@ -67,7 +68,7 @@ int     columns[2][3][8] = {{{1,0,0,2,3,4,5,0},{1,0,2,3,4,5,6,0},{1,0,2,3,4,5,6,
             if (found)
             {
                 fclose(fp1);
-    #ifdef  OMMIT
+#ifdef  OMMIT
                 b1->type = taCT;
                 strcpy(b1->path, path);
                 sprintf(b1->name, "F%i.DAT", data.filenbr);
@@ -80,32 +81,32 @@ int     columns[2][3][8] = {{{1,0,0,2,3,4,5,0},{1,0,2,3,4,5,6,0},{1,0,2,3,4,5,6,
                 b1->enddate = taCTdatetojulian((long)data.lastdate);
                 b1->deliverydate = 0;
                 b1->strikeprice = 0;
-    #endif
+#endif
                 b1->datatype = 0;
                 b1->optiontype = 0;
                 switch (data.dataformat)
                 {
                 case 'I':
-                     b1->frequency = taINTRADAY;
-                     break;
+                    b1->frequency = taINTRADAY;
+                    break;
                 case 'D':
-                     b1->frequency = taDAILY;
-                     break;
+                    b1->frequency = taDAILY;
+                    break;
                 case 'W':
-                     b1->frequency = taWEEKLY;
-                     break;
+                    b1->frequency = taWEEKLY;
+                    break;
                 case 'M':
-                     b1->frequency = taMONTHLY;
-                     break;
+                    b1->frequency = taMONTHLY;
+                    break;
                 case 'Q':
-                     b1->frequency = taQUARTERLY;
-                     break;
+                    b1->frequency = taQUARTERLY;
+                    break;
                 case 'Y':
-                     b1->frequency = taYEARLY;
-                     break;
+                    b1->frequency = taYEARLY;
+                    break;
                 default:
-                     b1->frequency = taUNKNOWN;
-                     break;
+                    b1->frequency = taUNKNOWN;
+                    break;
                 }
                 sprintf(buffer, "%sF%i.DOP", cwd, data.filenbr);
                 if ((err = taReadDOPfile(buffer, cols)))
@@ -147,50 +148,50 @@ int     columns[2][3][8] = {{{1,0,0,2,3,4,5,0},{1,0,2,3,4,5,6,0},{1,0,2,3,4,5,6,
                 else if (!stricmp(name, xmaster.name)) found = 1;
                 else
                 {
-                 sprintf(buffer, "F%i.MWD", xmaster.filenbr);
-                 if (!stricmp(name, buffer))
-                  found = 1;
+                    sprintf(buffer, "F%i.MWD", xmaster.filenbr);
+                    if (!stricmp(name, buffer))
+                        found = 1;
                 }
                 if (found)
                 {
                     fclose(fp1);
-             #ifdef OMMIT
-                     b1->type = taCT;
-                     strcpy(b1->path, path);
-                     sprintf(b1->name, "F%i.MWD", xmaster.filenbr);
-                     strcpy(b1->description, xmaster.name);
-                     strcpy(b1->symbol, xmaster.symbol);
-                     memset(b1->cusip, 0, 12);
-                     b1->begindate = taCTdatetojulian(xmaster.firstdate);
-                     b1->enddate = taCTdatetojulian(xmaster.lastdate);
-                     b1->deliverydate = 0;
-                     b1->strikeprice = 0;
-             #endif
+#ifdef OMMIT
+                    b1->type = taCT;
+                    strcpy(b1->path, path);
+                    sprintf(b1->name, "F%i.MWD", xmaster.filenbr);
+                    strcpy(b1->description, xmaster.name);
+                    strcpy(b1->symbol, xmaster.symbol);
+                    memset(b1->cusip, 0, 12);
+                    b1->begindate = taCTdatetojulian(xmaster.firstdate);
+                    b1->enddate = taCTdatetojulian(xmaster.lastdate);
+                    b1->deliverydate = 0;
+                    b1->strikeprice = 0;
+#endif
                     b1->datatype = 0;
                     b1->optiontype = 0;
                     switch (xmaster.dataformat)
                     {
-                     case 'I':
-                      b1->frequency = taINTRADAY;
-                      break;
-                     case 'D':
-                      b1->frequency = taDAILY;
-                      break;
-                     case 'W':
-                      b1->frequency = taWEEKLY;
-                      break;
-                     case 'M':
-                      b1->frequency = taMONTHLY;
-                      break;
-                     case 'Q':
-                      b1->frequency = taQUARTERLY;
-                      break;
-                     case 'Y':
-                      b1->frequency = taYEARLY;
-                      break;
-                     default:
-                      b1->frequency = taUNKNOWN;
-                      break;
+                    case 'I':
+                        b1->frequency = taINTRADAY;
+                        break;
+                    case 'D':
+                        b1->frequency = taDAILY;
+                        break;
+                    case 'W':
+                        b1->frequency = taWEEKLY;
+                        break;
+                    case 'M':
+                        b1->frequency = taMONTHLY;
+                        break;
+                    case 'Q':
+                        b1->frequency = taQUARTERLY;
+                        break;
+                    case 'Y':
+                        b1->frequency = taYEARLY;
+                        break;
+                    default:
+                        b1->frequency = taUNKNOWN;
+                        break;
                     }
                     i2 = 1;
                     cols[0] = i2++;
@@ -215,17 +216,17 @@ int     columns[2][3][8] = {{{1,0,0,2,3,4,5,0},{1,0,2,3,4,5,6,0},{1,0,2,3,4,5,6,
 
 
 long DLL_EXPORT taCTfindrec(char *path, char *name, unsigned int date, unsigned int time,
-            unsigned int *actualdate, unsigned int *actualtime)
+                            unsigned int *actualdate, unsigned int *actualtime)
 {
- int    i1, err = 0, cols[8], numfields = 0;
- int    year, month, day, hr, min, sec;
- long   recno = -1, guess = 0, lastguess = 0;
- long   maxent = 0, low = 0, high = 0;
- float  fields[20], dt = 0, ti = 0;
- char   buffer[81], cwd[81];
- FILE   *fp1;
- taBars   b1;
- struct taCTdathdr dathdr;
+    int    i1, err = 0, cols[8], numfields = 0;
+    int    year, month, day, hr, min, sec;
+    long   recno = -1, guess = 0, lastguess = 0;
+    long   maxent = 0, low = 0, high = 0;
+    float  fields[20], dt = 0, ti = 0;
+    char   buffer[81], cwd[81];
+    FILE   *fp1;
+    taBars   b1;
+    struct taCTdathdr dathdr;
 
     if ((err = taCTfindfile(path, name, &b1, cols))) return (err);
     strcpy(cwd, path);
@@ -297,209 +298,211 @@ long DLL_EXPORT taCTfindrec(char *path, char *name, unsigned int date, unsigned 
 
 int DLL_EXPORT taCTlist(char *path, char *outfile, int append)
 {
- int    i1 = 0, err = 0, done = 0, line = 0, page = 0;
- char   buffer[81], cwd[81];
- FILE    *fp1, *out;
- struct taCTmasthdr masthdr;
- struct taCTdata data;
- struct taXmasterHdr xmasterhdr;
- struct taXmaster xmaster;
+    int    i1 = 0, err = 0, done = 0, line = 0, page = 0;
+    char   buffer[81], cwd[81];
+    FILE    *fp1, *out;
+    struct taCTmasthdr masthdr;
+    struct taCTdata data;
+    struct taXmasterHdr xmasterhdr;
+    struct taXmaster xmaster;
 
- strcpy(cwd, path);
- if (cwd[0] != '\0' && cwd[strlen(cwd) - 1] != ':' && cwd[strlen(cwd) - 1] != '\\')
-  strcat(cwd, "\\");
+    strcpy(cwd, path);
+    if (cwd[0] != '\0' && cwd[strlen(cwd) - 1] != ':' && cwd[strlen(cwd) - 1] != '\\')
+        strcat(cwd, "\\");
 
 #ifndef _WINDOWS
- if (!stricmp(outfile, "STDOUT"))
- {
-  out = stdout;
-  if (append)
-   page = 1;
- }
- else
-#endif
- {
-  if (append)
-   out = fopen(outfile, "at");
-  else
-   out = fopen(outfile, "wt");
-  if (out == NULL)
-   return (taErrFileOpen);
- }
-
- fprintf(out, "Number Freq Symbol           Name\n");
- fprintf(out, "------ ---- ------           ----\n");
- line = 2;
-
- strcpy(buffer, cwd);
- strcat(buffer, "master");
- if ((fp1 = fopen(buffer, "rb")) == NULL)
-  err = taErrFileOpen;
- else
-  if (fread((char *) &masthdr, sizeof(struct taCTmasthdr), 1, fp1) == 0)
-  {
-   fclose(fp1);
-   err = taErrFileRead;
-  }
- if (!err)
- {
-  for (i1 = 0; i1 < masthdr.numentries; i1++)
-  {
-   if (fread((char *) &data, sizeof(struct taCTdata), 1, fp1) == 0)
-   {
-    fclose(fp1);
-    break;
-   }
-   if (!strncmp(data.name + 11, "<DIR>", 5))
-    continue;
-   fprintf(out, "%6u %c    %-16.16s %s\n", data.filenbr, data.dataformat, data.datasvcuse, data.name);
-#ifndef _WINDOWS
-   line++;
-   if (page && line == 25)
-   {
-    printf("Press any key to continue . . .");
-    getchar();
-    printf("\r                               \r");
-    line = 1;
-   }
-#endif
-  }
-  fclose(fp1);
- }
-
- strcpy(buffer, cwd);
- strcat(buffer, "xmaster");
- if ((fp1 = fopen(buffer, "rb")) != NULL)
- {
-  if (fread((char *) &xmasterhdr, sizeof(struct taXmasterHdr), 1, fp1) == 0)
-  {
-   fclose(fp1);
-   err = taErrFileRead;
-  }
-  else
-  {
-   for (i1 = 0; i1 < xmasterhdr.numentries; i1++)
-   {
-    if (fread((char *) &xmaster, sizeof(struct taXmaster), 1, fp1) == 0)
+    if (!stricmp(outfile, "STDOUT"))
     {
-     fclose(fp1);
-     break;
+        out = stdout;
+        if (append)
+            page = 1;
     }
-    fprintf(out, "%6u %c    %-16.16s %s\n", xmaster.filenbr, xmaster.dataformat, xmaster.symbol, xmaster.name);
-#ifndef _WINDOWS
-    line++;
-    if (page && line == 25)
-    {
-     printf("Press any key to continue . . .");
-     getchar();
-     printf("\r                               \r");
-     line = 1;
-    }
+    else
 #endif
-   }
-   fclose(fp1);
-  }
- }
+    {
+        if (append)
+            out = fopen(outfile, "at");
+        else
+            out = fopen(outfile, "wt");
+        if (out == NULL)
+            return (taErrFileOpen);
+    }
+
+    fprintf(out, "Number Freq Symbol           Name\n");
+    fprintf(out, "------ ---- ------           ----\n");
+    line = 2;
+
+    strcpy(buffer, cwd);
+    strcat(buffer, "master");
+    if ((fp1 = fopen(buffer, "rb")) == NULL)
+        err = taErrFileOpen;
+    else if (fread((char *) &masthdr, sizeof(struct taCTmasthdr), 1, fp1) == 0)
+    {
+        fclose(fp1);
+        err = taErrFileRead;
+    }
+    if (!err)
+    {
+        for (i1 = 0; i1 < masthdr.numentries; i1++)
+        {
+            if (fread((char *) &data, sizeof(struct taCTdata), 1, fp1) == 0)
+            {
+                fclose(fp1);
+                break;
+            }
+            if (!strncmp(data.name + 11, "<DIR>", 5))
+                continue;
+            fprintf(out, "%6u %c    %-16.16s %s\n", data.filenbr, data.dataformat,
+                    data.datasvcuse, data.name);
+#ifndef _WINDOWS
+            line++;
+            if (page && line == 25)
+            {
+                printf("Press any key to continue . . .");
+                getchar();
+                printf("\r                               \r");
+                line = 1;
+            }
+#endif
+        }
+        fclose(fp1);
+    }
+
+    strcpy(buffer, cwd);
+    strcat(buffer, "xmaster");
+    if ((fp1 = fopen(buffer, "rb")) != NULL)
+    {
+        if (fread((char *) &xmasterhdr, sizeof(struct taXmasterHdr), 1, fp1) == 0)
+        {
+            fclose(fp1);
+            err = taErrFileRead;
+        }
+        else
+        {
+            for (i1 = 0; i1 < xmasterhdr.numentries; i1++)
+            {
+                if (fread((char *) &xmaster, sizeof(struct taXmaster), 1, fp1) == 0)
+                {
+                    fclose(fp1);
+                    break;
+                }
+                fprintf(out, "%6u %c    %-16.16s %s\n", xmaster.filenbr,
+                        xmaster.dataformat, xmaster.symbol, xmaster.name);
+#ifndef _WINDOWS
+                line++;
+                if (page && line == 25)
+                {
+                    printf("Press any key to continue . . .");
+                    getchar();
+                    printf("\r                               \r");
+                    line = 1;
+                }
+#endif
+            }
+            fclose(fp1);
+        }
+    }
 
 #ifndef _WINDOWS
- if (stricmp(outfile, "STDOUT"))
+    if (stricmp(outfile, "STDOUT"))
 #endif
-  fclose(out);
- return (0);
+        fclose(out);
+    return (0);
 }
 
 
 int DLL_EXPORT taCTread(taBars *b1, char *path, char *name, long start, int cnt, int allocate)
 {
- int    i1, i2, err, recno, cols[8], numfields = 0;
- float    fields[9];
- char     buffer[81], cwd[81];
- FILE    *fp1;
- struct taCTdathdr dathdr;
+    int    i1, i2, err, recno, cols[8], numfields = 0;
+    float    fields[9];
+    char     buffer[81], cwd[81];
+    FILE    *fp1;
+    struct taCTdathdr dathdr;
 
- if ((err = taCTfindfile(path, name, b1, cols)))
-  return (err);
- strcpy(cwd, path);
- if (cwd[0] != '\0' && cwd[strlen(cwd) - 1] != ':' && cwd[strlen(cwd) - 1] != '\\')
-  strcat(cwd, "\\");
- strcpy(buffer, cwd);
- strcat(buffer, b1->name);
- if ((fp1 = fopen(buffer, "rb")) == NULL)
-  return (taErrFileOpen);
- fread((char *) &dathdr, sizeof(struct taCTdathdr), 1, fp1);
- if (cnt < 0)
- {
-  if (start > 0)
-   cnt = min(dathdr.lastrec - 1, 16000) - start;
-  else
-   cnt = min(dathdr.lastrec - 1, 16000);
- }
- if (allocate)
- {
-  if ((err = taAllocBars(b1, cnt)))
-   return (err);
- }
- if (cnt == 0)
- {
-  fclose(fp1);
-  return (0);
- }
- b1->reccnt = (long) dathdr.lastrec - 1;
- cnt = min(cnt, b1->datasize);
- if (start < 0)
-  start = max(0, b1->reccnt - cnt);
- if (start > dathdr.lastrec - 2)
- {
-  fclose(fp1);
-  return (taErrRecordNotFound);
- }
- for (i2 = 0; i2 < 8; i2++)
-  if (cols[i2])
-   numfields++;
- recno = start + 2;
- fseek(fp1, numfields * sizeof(float) * (start + 1), SEEK_SET);
- fields[0] = 0;
- i1 = 0;
- cnt = min(cnt, b1->datasize);
+    if ((err = taCTfindfile(path, name, b1, cols)))
+        return (err);
+    strcpy(cwd, path);
+    if (cwd[0] != '\0' && cwd[strlen(cwd) - 1] != ':' && cwd[strlen(cwd) - 1] != '\\')
+        strcat(cwd, "\\");
+    strcpy(buffer, cwd);
+    strcat(buffer, b1->name);
+    if ((fp1 = fopen(buffer, "rb")) == NULL)
+        return (taErrFileOpen);
+    fread((char *) &dathdr, sizeof(struct taCTdathdr), 1, fp1);
+    if (cnt < 0)
+    {
+        if (start > 0)
+            cnt = min(dathdr.lastrec - 1, 16000) - start;
+        else
+            cnt = min(dathdr.lastrec - 1, 16000);
+    }
+    if (allocate)
+    {
+        if ((err = taAllocBars(b1, cnt)))
+            return (err);
+    }
+    if (cnt == 0)
+    {
+        fclose(fp1);
+        return (0);
+    }
+    b1->reccnt = (long) dathdr.lastrec - 1;
+    cnt = min(cnt, b1->datasize);
+    if (start < 0)
+        start = max(0, b1->reccnt - cnt);
+    if (start > dathdr.lastrec - 2)
+    {
+        fclose(fp1);
+        return (taErrRecordNotFound);
+    }
+    for (i2 = 0; i2 < 8; i2++)
+        if (cols[i2])
+            numfields++;
+    recno = start + 2;
+    fseek(fp1, numfields * sizeof(float) * (start + 1), SEEK_SET);
+    fields[0] = 0;
+    i1 = 0;
+    cnt = min(cnt, b1->datasize);
 
- while (i1 < cnt && recno <= dathdr.lastrec && fread((char *) &fields[1], numfields * sizeof(float), 1, fp1) > 0)
- {
-  for (i2 = 1; i2 <= numfields; i2++)
-   taMStoIEEE(&fields[i2], &fields[i2]);
-  taArrayItem(b1->dt, i1) = taCTdatetojulian((long)fields[cols[0]]);
-  taArrayItem(b1->ti, i1) = taCTtimetojulian((long)fields[cols[1]]);
-  taArrayItem(b1->op, i1) = fields[cols[2]];
-  taArrayItem(b1->hi, i1) = fields[cols[3]];
-  taArrayItem(b1->lo, i1) = fields[cols[4]];
-  taArrayItem(b1->cl, i1) = fields[cols[5]];
-  taArrayItem(b1->vol, i1) = fields[cols[6]];
-  taArrayItem(b1->oi, i1) = fields[cols[7]];
-  i1++;
-  recno++;
- }
- fclose(fp1);
- taReSizeBars(b1, i1);
- return (err);
+    while (i1 < cnt && recno <= dathdr.lastrec &&
+            fread((char *) &fields[1], numfields * sizeof(float), 1, fp1) > 0)
+    {
+        for (i2 = 1; i2 <= numfields; i2++)
+            taMStoIEEE(&fields[i2], &fields[i2]);
+        taArrayItem(b1->dt, i1) = taCTdatetojulian((long)fields[cols[0]]);
+        taArrayItem(b1->ti, i1) = taCTtimetojulian((long)fields[cols[1]]);
+        taArrayItem(b1->op, i1) = fields[cols[2]];
+        taArrayItem(b1->hi, i1) = fields[cols[3]];
+        taArrayItem(b1->lo, i1) = fields[cols[4]];
+        taArrayItem(b1->cl, i1) = fields[cols[5]];
+        taArrayItem(b1->vol, i1) = fields[cols[6]];
+        taArrayItem(b1->oi, i1) = fields[cols[7]];
+        i1++;
+        recno++;
+    }
+    fclose(fp1);
+    taReSizeBars(b1, i1);
+    return (err);
 }
 
 
 unsigned    taCTtimetojulian(float time)
 {
- int    hr, min, sec;
+    int    hr, min, sec;
 
- hr = (int) (time / 10000);
- min = (int) ((time - hr * 10000) / 100);
- sec = (int) ((time - hr * 10000) - (min * 100));
- return (taHMSToJulian((unsigned) hr, (unsigned) min, (unsigned) sec));
+    hr = (int) (time / 10000);
+    min = (int) ((time - hr * 10000) / 100);
+    sec = (int) ((time - hr * 10000) - (min * 100));
+    return (taHMSToJulian((unsigned) hr, (unsigned) min, (unsigned) sec));
 }
 
 
 unsigned    taCTdatetojulian(float date)
 {
- int    year, month, day;
+    int    year, month, day;
 
- year = (int) (date / 10000);
- month = (int) ((date - year * 10000) / 100);
- day = (int) ((date - year * 10000 - month * 100));
- return (taYMDToJulian((unsigned) year, (unsigned) month, (unsigned) day));
+    year = (int) (date / 10000);
+    month = (int) ((date - year * 10000) / 100);
+    day = (int) ((date - year * 10000 - month * 100));
+    return (taYMDToJulian((unsigned) year, (unsigned) month, (unsigned) day));
 }

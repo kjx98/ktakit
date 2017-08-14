@@ -501,7 +501,8 @@ int DLL_EXPORT taCCI(taBars *b1, taArray *a2, int term, int start)
     taSimpleMA(&tpavg, &md, term, start);
     for (pos = start + 3 * term - 3; pos < b1->size && pos < a2->size; pos++)
     {
-        taArrayItemP(a2, pos) = (taArrayItem(tp, pos) - taArrayItem(ma, pos)) / (taArrayItem(md, pos) * .015);
+        taArrayItemP(a2, pos) = (taArrayItem(tp, pos) - taArrayItem(ma, pos))
+                                / (taArrayItem(md, pos) * .015);
     }
     taFreeArray(&md);
     taFreeArray(&ma);
@@ -1238,7 +1239,8 @@ int DLL_EXPORT taHerrickPayoffIndex(taBars *b1, taArray *a2, KFloat mult, KFloat
         }
         else
         {
-            taArrayItemP(a2, pos) = taArrayItemP(a2, pos - 1) + ((hpi - taArrayItemP(a2, pos - 1)) * factor);
+            taArrayItemP(a2, pos) = taArrayItemP(a2, pos - 1) +
+                                    ((hpi - taArrayItemP(a2, pos - 1)) * factor);
         }
     }
     return (0);
@@ -1447,7 +1449,8 @@ int DLL_EXPORT taMFI(taBars *b1, taArray *a2, int start)
     for (pos = start; pos < b1->size && pos < a2->size; pos++)
     {
         if (taArrayItem(b1->vol, pos))
-            taArrayItemP(a2, pos) = constant * (taArrayItem(b1->hi, pos) - taArrayItem(b1->lo, pos)) / taArrayItem(b1->vol, pos);
+            taArrayItemP(a2, pos) = constant *
+                            (taArrayItem(b1->hi, pos) - taArrayItem(b1->lo, pos)) / taArrayItem(b1->vol, pos);
         else
             taArrayItemP(a2, pos) = 0;
     }
@@ -2228,7 +2231,8 @@ int DLL_EXPORT taVHF(taArray *a1, taArray *a2, int term, int start)
     taArrayItemP(a2, start) = 0;
     for (pos = start + 1; pos <= start + term && pos < a2->size; pos++)
     {
-        sum += fabs((taArrayItemP(a1, pos) - taArrayItemP(a1, pos - 1)) / taArrayItemP(a1, pos - 1));
+        sum += fabs((taArrayItemP(a1, pos) - taArrayItemP(a1, pos - 1))
+                / taArrayItemP(a1, pos - 1));
         taArrayItemP(a2, pos) = 0;
     }
     taArrayStats(a1, &locl, &hicl, NULL, NULL, pos - term, pos - 1, 0);
@@ -2236,8 +2240,10 @@ int DLL_EXPORT taVHF(taArray *a1, taArray *a2, int term, int start)
     for (; pos < a1->size && pos < a2->size; pos++)
     {
         taArrayStats(a1, &locl, &hicl, NULL, NULL, pos - term + 1, pos, 0);
-        sum += fabs((taArrayItemP(a1, pos) - taArrayItemP(a1, pos - 1)) / taArrayItemP(a1, pos - 1));
-        sum -= fabs((taArrayItemP(a1, pos - term) - taArrayItemP(a1, pos - term - 1)) / taArrayItemP(a1, pos - term - 1));
+        sum += fabs((taArrayItemP(a1, pos) - taArrayItemP(a1, pos - 1))
+                / taArrayItemP(a1, pos - 1));
+        sum -= fabs((taArrayItemP(a1, pos - term) - taArrayItemP(a1, pos - term - 1))
+                / taArrayItemP(a1, pos - term - 1));
         taArrayItemP(a2, pos) = (hicl - locl) / sum;
     }
     return (0);
