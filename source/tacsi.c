@@ -26,8 +26,7 @@ struct taCSImrec mrec;
     if (path[0] != '\0' && path[strlen(path) - 1] != ':' && path[strlen(path) - 1] != '\\')
         strcat(buffer, "\\");
     strcat(buffer, "qmaster");
-    if ((fp1 = fopen(buffer, "rb")) == NULL)
-        return (taErrFileOpen);
+    if ((fp1 = fopen(buffer, "rb")) == NULL) return (taErrFileOpen);
 
     for (i1 = 0; i1 < 120; i1++)
     {

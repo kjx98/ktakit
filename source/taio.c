@@ -16,17 +16,13 @@ int DLL_EXPORT taPNFchart(taBars *pnfbars, KFloat box, char *outfile, int append
     FILE    *out;
 
 #ifndef _WINDOWS
-    if (!stricmp(outfile, "STDOUT"))
-        out = stdout;
+    if (!stricmp(outfile, "STDOUT")) out = stdout;
     else
 #endif
     {
-        if (append)
-            out = fopen(outfile, "at");
-        else
-            out = fopen(outfile, "wt");
-        if (out == NULL)
-            return (taErrFileOpen);
+        if (append) out = fopen(outfile, "at");
+        else out = fopen(outfile, "wt");
+        if (out == NULL) return (taErrFileOpen);
     }
     tenth = box / 10;
     taArrayStats(&pnfbars->hi, NULL, &max1, NULL, NULL, 0, pnfbars->size, 1);
@@ -40,12 +36,11 @@ int DLL_EXPORT taPNFchart(taBars *pnfbars, KFloat box, char *outfile, int append
         fprintf(out, "\n%5li.%03li ", (long)f1, taDecimals(f1, 3));
         for (i1 = 0; i1 < pnfbars->size; i1++)
         {
-            if (taArrayItem(pnfbars->lo, i1) <= f1 + tenth && taArrayItem(pnfbars->hi, i1) >= f1 - tenth)
+            if (taArrayItem(pnfbars->lo, i1) <= f1 + tenth &&
+                taArrayItem(pnfbars->hi, i1) >= f1 - tenth)
             {
-                if (taArrayItem(pnfbars->oi, i1) > 0)
-                    fprintf(out, "X");
-                else
-                    fprintf(out, "O");
+                if (taArrayItem(pnfbars->oi, i1) > 0) fprintf(out, "X");
+                else fprintf(out, "O");
             }
             else
                 fprintf(out, " ");
@@ -61,20 +56,19 @@ int DLL_EXPORT taPNFchart(taBars *pnfbars, KFloat box, char *outfile, int append
 
 int DLL_EXPORT taReadDOPfile(char *filename, int *cols)
 {
-    int    i1 = 0, i2;
-    FILE    *fp1;
-    char    *p1, buffer[81];
-    static char *fields[8] = {"DATE", "TIME", "OPEN", "HIGH", "LOW", "CLOSE", "VOL", "OI"};
+int    i1 = 0, i2;
+FILE    *fp1;
+char    *p1, buffer[81];
+static char *fields[8] = {"DATE", "TIME", "OPEN", "HIGH", "LOW", "CLOSE", "VOL", "OI"};
 
-    if ((fp1 = fopen(filename, "rb")) == NULL)
-        return (taErrFileOpen);
+    if ((fp1 = fopen(filename, "rb")) == NULL) return (taErrFileOpen);
     memset(cols, 0, 8 * sizeof(int));
     while (fgets(buffer, 80, fp1))
     {
-        for (i2 = strlen(buffer) - 1; (buffer[i2] == 0x0D || buffer[i2] == 0x0A || buffer[i2] == 0x1A) && i2 >= 0; i2--)
+        for (i2 = strlen(buffer) - 1; (buffer[i2] == 0x0D || buffer[i2] == 0x0A
+            || buffer[i2] == 0x1A) && i2 >= 0; i2--)
             buffer[i2] = '\0';
-        if (buffer[0] == '\0')
-            continue;
+        if (buffer[0] == '\0') continue;
         p1 = strtok(buffer, ",");
         i1++;
         for (i2 = 0; i2 < 8; i2++)
@@ -97,11 +91,9 @@ int DLL_EXPORT taTXT2Array(char *infile, taArray *a1, char *delimit, int skip, i
     char     buffer[256], *p1;
     FILE    *fp1;
 
-    if ((fp1 = fopen(infile, "rt")) == NULL)
-        return (taErrFileOpen);
+    if ((fp1 = fopen(infile, "rt")) == NULL) return (taErrFileOpen);
     for (recno = 0; fgets(buffer, 255, fp1) != NULL; recno++)
-        if (buffer[0] != '\n' && recno >= skip)
-            i1++;
+        if (buffer[0] != '\n' && recno >= skip) i1++;
     stopcol--;
     startcol--;
     if (taAllocArrayM(a1, stopcol - startcol + 1, i1))
@@ -116,10 +108,8 @@ int DLL_EXPORT taTXT2Array(char *infile, taArray *a1, char *delimit, int skip, i
         {
             for (i1 = 0; i1 <= stopcol; i1++)
             {
-                if (i1 == 0)
-                    p1 = strtok(buffer, delimit);
-                else
-                    p1 = strtok(NULL, delimit);
+                if (i1 == 0) p1 = strtok(buffer, delimit);
+                else p1 = strtok(NULL, delimit);
                 if (i1 >= startcol && i1 <= stopcol)
                     taArrayItemPM(a1, i1 - startcol, pos) = atof(p1);
             }
@@ -146,25 +136,20 @@ int DLL_EXPORT taArrayPrintf(char *outfile, int append, int start, int stop, cha
     if (!stricmp(outfile, "STDOUT"))
     {
         out = stdout;
-        if (append)
-            page = 1;
+        if (append) page = 1;
     }
     else
 #endif
     {
-        if (append)
-            out = fopen(outfile, "at");
-        else
-            out = fopen(outfile, "wt");
-        if (out == NULL)
-            return (taErrFileOpen);
+        if (append) out = fopen(outfile, "at");
+        else out = fopen(outfile, "wt");
+        if (out == NULL) return (taErrFileOpen);
     }
     if (heading)
     {
         fprintf(out, heading);
         for (i1 = 0; heading[i1]; i1++)
-            if (heading[i1] == '\n')
-                line++;
+            if (heading[i1] == '\n') line++;
     }
     p1 = format;
     va_start(marker, format);
@@ -174,8 +159,7 @@ int DLL_EXPORT taArrayPrintf(char *outfile, int append, int start, int stop, cha
         if (i1)
         {
             format += i1;
-            if (!format[0])
-                break;
+            if (!format[0]) break;
         }
         if (format[1] == '%')
         {
@@ -224,8 +208,7 @@ int DLL_EXPORT taArrayPrintf(char *outfile, int append, int start, int stop, cha
                 buffer[i1] = '\0';
                 fprintf(out, buffer);
                 format += i1;
-                if (!format[0])
-                    break;
+                if (!format[0]) break;
             }
             if (format[1] == '%')
             {
@@ -244,8 +227,7 @@ int DLL_EXPORT taArrayPrintf(char *outfile, int append, int start, int stop, cha
             case 'i':
             case 'u':
                 ai1 = va_arg(marker, taArrayI);
-                if (pos >= ai1.size)
-                    continue;
+                if (pos >= ai1.size) continue;
                 done = 0;
                 for (i1 = 0; i1 < 6; i1++)
                 {
@@ -253,8 +235,7 @@ int DLL_EXPORT taArrayPrintf(char *outfile, int append, int start, int stop, cha
                     {
                         sep[0] = buffer[strlen(dtformat[i1]) + 1];
                         sep[1] = '\0';
-                        if (sep[0] == 'i' || sep[0] == 'u')
-                            i1 += 6;
+                        if (sep[0] == 'i' || sep[0] == 'u') i1 += 6;
                         taJulianToDateTxt(taArrayItem(ai1, pos), i1 + 1, sep, datebuffer);
                         fprintf(out, "%s", datebuffer);
                         done = 1;
@@ -276,8 +257,7 @@ int DLL_EXPORT taArrayPrintf(char *outfile, int append, int start, int stop, cha
                         sep[0] = buffer[3];
                     }
                     sep[1] = '\0';
-                    if (sep[0] == 'i' || sep[0] == 'u')
-                        i1 += 2;
+                    if (sep[0] == 'i' || sep[0] == 'u') i1 += 2;
                     taJulianToTimeTxt(taArrayItem(ai1, pos), i1 + 1, sep, datebuffer);
                     fprintf(out, "%s", datebuffer);
                     break;
@@ -287,8 +267,7 @@ int DLL_EXPORT taArrayPrintf(char *outfile, int append, int start, int stop, cha
 
             case 'f':
                 a1 = va_arg(marker, taArray);
-                if (pos >= a1.size)
-                    continue;
+                if (pos >= a1.size) continue;
                 fprintf(out, buffer, taArrayItem(a1, pos));
                 break;
 

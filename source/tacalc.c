@@ -23,8 +23,7 @@ int DLL_EXPORT taADXR(taBars *b1, taArray *a2, int term1, int term2, int term3, 
     taArray    adx;
     int    i1, pos;
 
-    if ((i1 = taAllocArray(&adx, b1->size)))
-        return (i1);
+    if ((i1 = taAllocArray(&adx, b1->size))) return (i1);
 
     taADX(b1, &adx, term1, term2, start);
 
@@ -42,8 +41,7 @@ int DLL_EXPORT taADX(taBars *b1, taArray *a2, int term1, int term2, int start)
     taArray    dx;
     int    i1;
 
-    if ((i1 = taAllocArray(&dx, b1->size)))
-        return (i1);
+    if ((i1 = taAllocArray(&dx, b1->size))) return (i1);
 
     taDX(b1, &dx, term1, start);
     taWellesMA(&dx, a2, term2, start + term1);
@@ -87,10 +85,8 @@ int DLL_EXPORT taArmsIdx(taArray *a1, taArray *a2, taArray *a3, taArray *a4, taA
 
     for (pos = start; pos <= stop && pos < a1->size && pos < a5->size; pos++)
     {
-        if (taArrayItemP(a1, pos) == 0 || taArrayItemP(a2, pos) == 0)
-            ad = 1;
-        else
-            ad = (taArrayItemP(a1, pos) / taArrayItemP(a2, pos));
+        if (taArrayItemP(a1, pos) == 0 || taArrayItemP(a2, pos) == 0) ad = 1;
+        else ad = (taArrayItemP(a1, pos) / taArrayItemP(a2, pos));
         if (taArrayItemP(a3, pos) == 0 || taArrayItemP(a4, pos) == 0)
             ud = 1;
         else
@@ -106,23 +102,17 @@ int DLL_EXPORT taArrayStats(taArray *a1, KFloat *mini, KFloat *maxi, KFloat *avg
     int    pos, cnt = 0;
     KFloat    point, total = 0;
 
-    if (mini)
-        *mini = taArrayItemP(a1, start);
-    if (maxi)
-        *maxi = taArrayItemP(a1, start);
-    if (avg)
-        *avg = 0;
-    if (sum)
-        *sum = 0;
+    if (mini) *mini = taArrayItemP(a1, start);
+    if (maxi) *maxi = taArrayItemP(a1, start);
+    if (avg) *avg = 0;
+    if (sum) *sum = 0;
 
     for (pos = start; pos <= stop && pos < a1->size; pos++)
     {
         point = taArrayItemP(a1, pos);
         if (mini)
-            if (!nonzero || point)
-                *mini = min(*mini, point);
-        if (maxi)
-            *maxi = max(*maxi, point);
+            if (!nonzero || point) *mini = min(*mini, point);
+        if (maxi) *maxi = max(*maxi, point);
         if (sum || avg)
             if (!nonzero || point)
             {
@@ -130,10 +120,8 @@ int DLL_EXPORT taArrayStats(taArray *a1, KFloat *mini, KFloat *maxi, KFloat *avg
                 total += point;
             }
     }
-    if (sum)
-        *sum = total;
-    if (avg)
-        *avg = total / cnt;
+    if (sum) *sum = total;
+    if (avg) *avg = total / cnt;
     return (0);
 }
 
@@ -141,23 +129,19 @@ int DLL_EXPORT taArrayStatsPos(taArray *a1, int *mini, int *maxi, int start, int
 {
     int    pos;
 
-    if (mini)
-        *mini = start;
-    if (maxi)
-        *maxi = start;
+    if (mini) *mini = start;
+    if (maxi) *maxi = start;
 
     for (pos = start; pos <= stop && pos < a1->size; pos++)
     {
         if (mini)
         {
             if (!nonzero || taArrayItemP(a1, pos))
-                if (taArrayItemP(a1, pos) < taArrayItemP(a1, *mini))
-                    *mini = pos;
+                if (taArrayItemP(a1, pos) < taArrayItemP(a1, *mini)) *mini = pos;
         }
         if (maxi)
         {
-            if (taArrayItemP(a1, pos) > taArrayItemP(a1, *maxi))
-                *maxi = pos;
+            if (taArrayItemP(a1, pos) > taArrayItemP(a1, *maxi)) *maxi = pos;
         }
     }
     return (0);
@@ -168,8 +152,7 @@ int DLL_EXPORT taATR(taBars *b1, taArray *a2, int term, int start)
     int    i1;
     taArray    tr;
 
-    if ((i1 = taAllocArray(&tr, b1->size)))
-        return (i1);
+    if ((i1 = taAllocArray(&tr, b1->size))) return (i1);
     taTR(b1, &tr, start);
     taWellesMA(&tr, a2, term, start);
     taFreeArray(&tr);
@@ -205,10 +188,8 @@ int DLL_EXPORT taBars2PNF(taBars *b1, taBars *b2, taArray *index, KFloat box, KF
     int    i1, pos1 = 0, pos2 = 0;
 
     if (!(i1 = taAllocBars(b2, b1->size)))
-        if ((i1 = taAllocArray(index, b1->size)))
-            taFreeBars(b2);
-    if (i1)
-        return (i1);
+        if ((i1 = taAllocArray(index, b1->size))) taFreeBars(b2);
+    if (i1) return (i1);
 
     for (pos1 = 0; pos1 <= start && pos1 < b1->size; pos1++)
         taArrayItemP(index, pos1) = pos2;
@@ -225,8 +206,7 @@ int DLL_EXPORT taBars2PNF(taBars *b1, taBars *b2, taArray *index, KFloat box, KF
             taArrayItem(b2->hi, pos2) = taArrayItem(b1->cl, pos1);
         taArrayItemP(index, pos1) = pos2;
     }
-    if (pos1 == b1->size)
-        return (taErrInvalidParm);
+    if (pos1 == b1->size) return (taErrInvalidParm);
     if (taArrayItem(b1->cl, start) > taArrayItem(b1->cl, pos1))
         taArrayItem(b2->oi, pos2) = -1;
     else
@@ -283,10 +263,8 @@ int DLL_EXPORT taBars2PNFhilo(taBars *b1, taBars *b2, taArray *index, KFloat box
     int    i1, pos1 = 0, pos2 = 0;
 
     if (!(i1 = taAllocBars(b2, b1->size)))
-        if ((i1 = taAllocArray(index, b1->size)))
-            taFreeBars(b2);
-    if (i1)
-        return (i1);
+        if ((i1 = taAllocArray(index, b1->size))) taFreeBars(b2);
+    if (i1) return (i1);
 
     for (pos1 = 0; pos1 <= start && pos1 < b1->size; pos1++)
         taArrayItemP(index, pos1) = pos2;
@@ -312,8 +290,7 @@ int DLL_EXPORT taBars2PNFhilo(taBars *b1, taBars *b2, taArray *index, KFloat box
         }
         taArrayItemP(index, pos1) = pos2;
     }
-    if (pos1 == b1->size)
-        return (taErrInvalidParm);
+    if (pos1 == b1->size) return (taErrInvalidParm);
     for (; pos1 < b1->size; pos1++)
     {
         if (taArrayItem(b2->oi, pos2) == 1)
@@ -366,10 +343,8 @@ int DLL_EXPORT taBarStats(taBars *b1, KFloat *min1, KFloat *max1, int start, int
 {
     int    pos = 0;
 
-    if (min1)
-        *min1 = taArrayItem(b1->cl, start);
-    if (max1)
-        *max1 = taArrayItem(b1->cl, start);
+    if (min1) *min1 = taArrayItem(b1->cl, start);
+    if (max1) *max1 = taArrayItem(b1->cl, start);
 
     for (pos = start; pos <= stop && pos < b1->size; pos++)
     {
@@ -401,11 +376,9 @@ int DLL_EXPORT taBollinger(taBars *b1, taArray *a2, taArray *a3, taArray *a4, KF
     taArray    tp, std;
     int    pos, i1;
 
-    if (term <= 0)
-        return (taErrInvalidParm);
+    if (term <= 0) return (taErrInvalidParm);
 
-    if ((i1 = taAllocArray(&tp, b1->size)))
-        return (i1);
+    if ((i1 = taAllocArray(&tp, b1->size))) return (i1);
     if ((i1 = taAllocArray(&std, b1->size)))
     {
         taFreeArray(&tp);
@@ -448,10 +421,8 @@ int DLL_EXPORT taBoltonTremblay(taArray *a1, taArray *a2, taArray *a3, taArray *
         {
             f1 = taArrayItemP(a1, pos) / taArrayItemP(a3, pos) -
                  taArrayItemP(a2, pos) / taArrayItemP(a3, pos);
-            if (f1 < 0)
-                taArrayItemP(a4, pos) = taArrayItemP(a4, pos - 1) - sqrt(fabs(f1));
-            else
-                taArrayItemP(a4, pos) = taArrayItemP(a4, pos - 1) + sqrt(fabs(f1));
+            if (f1 < 0) taArrayItemP(a4, pos) = taArrayItemP(a4, pos - 1) - sqrt(fabs(f1));
+            else taArrayItemP(a4, pos) = taArrayItemP(a4, pos - 1) + sqrt(fabs(f1));
         }
     }
     return (0);
@@ -466,8 +437,7 @@ int DLL_EXPORT taCCI(taBars *b1, taArray *a2, int term, int start)
     taArray    md;                   /* Mean deviations */
     KFloat    hi = 0, lo = 0;
 
-    if ((i1 = taAllocArray(&tp, b1->size)))
-        return (i1);
+    if ((i1 = taAllocArray(&tp, b1->size))) return (i1);
     if ((i1 = taAllocArray(&tpavg, b1->size)))
     {
         taFreeArray(&tp);
@@ -536,8 +506,7 @@ int DLL_EXPORT taChaikinMoneyFlow(taBars *b1, taArray *a2, int term, int start)
     int    err, pos;   /*  sum((((cl - lo) - (hi - lo)) / (hi - lo)) * vol)  */
     taArray    temp;
 
-    if ((err = taAllocArray(&temp, b1->size)))
-        return (err);
+    if ((err = taAllocArray(&temp, b1->size))) return (err);
     for (pos = start; pos < b1->size; pos++)
     {
         if (taArrayItem(b1->hi, pos) == taArrayItem(b1->lo, pos))
@@ -641,10 +610,8 @@ int DLL_EXPORT taDemandIdx(taBars *b1, taArray *a2, int term, int stock, int sta
                      min(taArrayItem(b1->lo, pos), taArrayItem(b1->lo, pos - 1));
         else
             range += taArrayItem(b1->hi, pos) - taArrayItem(b1->lo, pos);
-        if (stock)
-            volume += sqrt(taArrayItem(b1->vol, pos));
-        else
-            volume += taArrayItem(b1->vol, pos);
+        if (stock) volume += sqrt(taArrayItem(b1->vol, pos));
+        else volume += taArrayItem(b1->vol, pos);
     }
     c20 = range / term;
     avgvol = volume / term;
@@ -655,24 +622,18 @@ int DLL_EXPORT taDemandIdx(taBars *b1, taArray *a2, int term, int stock, int sta
         avgprice = (taArrayItem(b1->hi, pos) + taArrayItem(b1->lo, pos) +
                     2 * taArrayItem(b1->cl, pos)) / 4;
         pricechg = avgprice - prev_avgprice;
-        if (pricechg < 0)
-            pctpricechg = pricechg / avgprice;
-        else
-            pctpricechg = pricechg / prev_avgprice;
+        if (pricechg < 0) pctpricechg = pricechg / avgprice;
+        else pctpricechg = pricechg / prev_avgprice;
         range = max(taArrayItem(b1->hi, pos), taArrayItem(b1->hi, pos - 1)) -
                 min(taArrayItem(b1->lo, pos), taArrayItem(b1->lo, pos - 1));
         c20 = (.9 * c20) + (.1 * range);
         K = 3 * avgprice / c20;
         c8 = fabs(pctpricechg * K);
         c9 = exp(c8);
-        if (stock)
-            volume = sqrt(taArrayItem(b1->vol, pos));
-        else
-            volume = taArrayItem(b1->vol, pos);
-        if (volume)
-            normvol = volume / prev_avgvol;
-        else
-            normvol = 0;
+        if (stock) volume = sqrt(taArrayItem(b1->vol, pos));
+        else volume = taArrayItem(b1->vol, pos);
+        if (volume) normvol = volume / prev_avgvol;
+        else normvol = 0;
         c13 = normvol / c9;
         if (pricechg < 0)
         {
@@ -713,8 +674,7 @@ int DLL_EXPORT taDI(taBars *b1, taArray *a2, taArray *a3, int term, int start)
     taArray    dmip, dmim, tr, dmips, dmims, trs; /* di = 100 * dmi_sum / tr_sum */
     int    pos = 0, i1;
 
-    if ((i1 = taAllocArray(&dmip, b1->size)))
-        return (i1);
+    if ((i1 = taAllocArray(&dmip, b1->size))) return (i1);
     if ((i1 = taAllocArray(&dmim, b1->size)))
     {
         taFreeArray(&dmip);
@@ -867,8 +827,7 @@ int DLL_EXPORT taDX(taBars *b1, taArray *a2, int term, int start)
     int    pos = 0, i1;          /* --------------------  */
     /* (di_plus + di_minus)  */
 
-    if ((i1 = taAllocArray(&dip, b1->size)))
-        return (i1);
+    if ((i1 = taAllocArray(&dip, b1->size))) return (i1);
     if ((i1 = taAllocArray(&dim, b1->size)))
     {
         taFreeArray(&dip);
@@ -938,8 +897,7 @@ int DLL_EXPORT taFastD(taBars *b1, taArray *a2, int term1, int term2, int start)
     int    i1;
     taArray    rawk;
 
-    if ((i1 = taAllocArray(&rawk, b1->size)))
-        return (i1);
+    if ((i1 = taAllocArray(&rawk, b1->size))) return (i1);
 
     taRawK(b1, &rawk, term1, start);
     taExpMA(&rawk, a2, term2, start + term1 - 1);
@@ -1006,8 +964,7 @@ int DLL_EXPORT taGroupBars(taBars *b1, KFloat *op, KFloat *hi, KFloat *lo, KFloa
 {
     int    pos = start;
 
-    if (start - term + 1 < 0 || start > b1->op.size)
-        return (taErrInvalidParm);
+    if (start - term + 1 < 0 || start > b1->op.size) return (taErrInvalidParm);
 
     *op = taArrayItem(b1->op, pos - term + 1);                            /* First Open      */
     *cl = taArrayItem(b1->cl, pos);                                       /* Last Close      */
@@ -1059,8 +1016,7 @@ int DLL_EXPORT taGroupBarsDate(taBars *b1, taBars *b2, int period,
 
     if (period != BY_DAY && period != BY_WEEK && period != BY_MONTH)
         return (taErrInvalidParm);
-    if ((i1 = taAllocBars(&b3, b1->size)) != 0)
-        return (i1);
+    if ((i1 = taAllocBars(&b3, b1->size)) != 0) return (i1);
 
     while (pos < b1->size && (taArrayItem(b1->dt, pos) < startdt ||
                               (taArrayItem(b1->dt, pos) == startdt && taArrayItem(b1->ti, pos) < startti)))
@@ -1082,8 +1038,7 @@ int DLL_EXPORT taGroupBarsDate(taBars *b1, taBars *b2, int period,
         switch (period)
         {
         case BY_DAY:
-            if (taArrayItem(b1->dt, pos) != taArrayItem(b1->dt, pos - 1))
-                newbar = 1;
+            if (taArrayItem(b1->dt, pos) != taArrayItem(b1->dt, pos - 1)) newbar = 1;
             break;
         case BY_WEEK:
             if (taJulianDOW(taArrayItem(b1->dt, pos)) < taJulianDOW(taArrayItem(b1->dt, pos - 1)) ||
@@ -1092,8 +1047,7 @@ int DLL_EXPORT taGroupBarsDate(taBars *b1, taBars *b2, int period,
             break;
         case BY_MONTH:
             taJulianToYMD(taArrayItem(b1->dt, pos), &year1, &month1, &day1);
-            if (month1 != month0 || year1 != year0)
-                newbar = 1;
+            if (month1 != month0 || year1 != year0) newbar = 1;
             year0 = year1;
             month0 = month1;
             day0 = day1;
@@ -1145,8 +1099,7 @@ int DLL_EXPORT taGroupBarsTime(taBars *b1, taBars *b2, unsigned int period,
     taBars     b3;
 
     period /= 2;
-    if ((i1 = taAllocBars(&b3, b1->size)) != 0)
-        return (i1);
+    if ((i1 = taAllocBars(&b3, b1->size)) != 0) return (i1);
 
     while (pos < b1->size && (taArrayItem(b1->dt, pos) < startdt ||
                               (taArrayItem(b1->dt, pos) == startdt && taArrayItem(b1->ti, pos) < startti)))
@@ -1166,10 +1119,8 @@ int DLL_EXPORT taGroupBarsTime(taBars *b1, taBars *b2, unsigned int period,
     while (pos < b1->size && (taArrayItem(b1->dt, pos) < enddt ||
                               (taArrayItem(b1->dt, pos) == enddt && taArrayItem(b1->ti, pos) <= endti)))
     {
-        if (taArrayItem(b1->dt, pos) != taArrayItem(b1->dt, pos - 1))
-            newbar = 1;
-        if (taArrayItem(b1->ti, pos) - begintime >= period)
-            newbar = 1;
+        if (taArrayItem(b1->dt, pos) != taArrayItem(b1->dt, pos - 1)) newbar = 1;
+        if (taArrayItem(b1->ti, pos) - begintime >= period) newbar = 1;
         if (newbar)
         {
             taArrayItem(b3.dt, pos2) = taArrayItem(b1->dt, pos - 1);
@@ -1258,10 +1209,8 @@ int DLL_EXPORT taLastHigh(taArray *a1, int start, int stop)
 
     if (pos == stop)
     {
-        if (taArrayItemP(a1, start) >= taArrayItemP(a1, stop))
-            return (start);
-        else
-            return (stop);
+        if (taArrayItemP(a1, start) >= taArrayItemP(a1, stop)) return (start);
+        else return (stop);
     }
     return (pos);
 }
@@ -1278,10 +1227,8 @@ int DLL_EXPORT taLastLow(taArray *a1, int start, int stop)
 
     if (pos == stop)
     {
-        if (taArrayItemP(a1, start) >= taArrayItemP(a1, stop))
-            return (start);
-        else
-            return (stop);
+        if (taArrayItemP(a1, start) >= taArrayItemP(a1, stop)) return (start);
+        else return (stop);
     }
     return (pos);
 }
@@ -1291,8 +1238,7 @@ int DLL_EXPORT taLineOsc(taArray *a1, taArray *a2, taArray *a3, int term, int st
     taArray    ma1, ma2;
     int    i1;
 
-    if ((i1 = taAllocArray(&ma1, a1->size)))
-        return (i1);
+    if ((i1 = taAllocArray(&ma1, a1->size))) return (i1);
     if ((i1 = taAllocArray(&ma2, a2->size)))
     {
         taFreeArray(&ma1);
@@ -1344,8 +1290,7 @@ int DLL_EXPORT taMAEnvelope(taArray *a1, taArray *a2, taArray *a3, KFloat pct, i
     int    i1;
     taArray    ma;
 
-    if ((i1 = taAllocArray(&ma, a1->size)))
-        return (i1);
+    if ((i1 = taAllocArray(&ma, a1->size))) return (i1);
 
     switch (type)
     {
@@ -1409,8 +1354,7 @@ int DLL_EXPORT taMcClellanOscSum(taArray *a1, taArray *a2, taArray *a3, taArray 
     taArray    diff1, ma1, ma2;
     int    pos = 0, i1 = 0;
 
-    if ((i1 = taAllocArray(&ma1, a1->size)))
-        return (i1);
+    if ((i1 = taAllocArray(&ma1, a1->size))) return (i1);
     if ((i1 = taAllocArray(&ma2, a1->size)))
     {
         taFreeArray(&ma1);
@@ -1429,10 +1373,8 @@ int DLL_EXPORT taMcClellanOscSum(taArray *a1, taArray *a2, taArray *a3, taArray 
     taOscillator(&ma1, &ma2, a3, start);
     for (pos = 0; pos < a1->size; pos++)
     {
-        if (pos == 0)
-            taArrayItemP(a4, pos) = taArrayItemP(a3, pos);
-        else
-            taArrayItemP(a4, pos) = taArrayItemP(a4, pos - 1) + taArrayItemP(a3, pos);
+        if (pos == 0) taArrayItemP(a4, pos) = taArrayItemP(a3, pos);
+        else taArrayItemP(a4, pos) = taArrayItemP(a4, pos - 1) + taArrayItemP(a3, pos);
     }
     taFreeArray(&diff1);
     taFreeArray(&ma2);
@@ -1480,8 +1422,7 @@ int DLL_EXPORT taMovingSum(taArray *a1, taArray *a2, int term, int start)
         sum += taArrayItemP(a1, pos);
         taArrayItemP(a2, pos) = 0;
     }
-    if (pos == start + term)
-        taArrayItemP(a2, pos - 1) = sum;
+    if (pos == start + term) taArrayItemP(a2, pos - 1) = sum;
     for (; pos < a1->size && pos < a2->size; pos++)
     {
         sum += taArrayItemP(a1, pos);
@@ -1564,8 +1505,7 @@ int DLL_EXPORT taOBVolExp(taBars *b1, taArray *obv, taArray *breakout,
         if (taArrayItem(b1->cl, pos) > taArrayItem(b1->cl, pos - 1))
         {
             taArrayItemP(obv, pos) = taArrayItemP(obv, pos - 1) + taArrayItem(b1->vol, pos);
-            if (direction != 1 && pos > start + 1)
-                lotarget = taArrayItemP(obv, pos - 1);
+            if (direction != 1 && pos > start + 1) lotarget = taArrayItemP(obv, pos - 1);
             direction = 1;
         }
         taArrayItemP(breakout, pos) = 0;
@@ -1747,8 +1687,7 @@ int DLL_EXPORT taRSI(taArray *a1, taArray *a2, int term, int start)
     int    pos, i1;              /* 100 - 100 / (1 + UpAvg / DnAvg) */
     taArray    upavg, dnavg;
 
-    if ((i1 = taAllocArray(&upavg, a1->size)))
-        return (i1);
+    if ((i1 = taAllocArray(&upavg, a1->size))) return (i1);
     if ((i1 = taAllocArray(&dnavg, a1->size)))
     {
         taFreeArray(&upavg);
@@ -1778,8 +1717,7 @@ int DLL_EXPORT taRSIC(taBars *b1, taBars *b2, taArray *a1, int term, unsigned in
 
     /* read up and sync on date */
     for (i1 = 0; i1 < b1->size; i1++)
-        if (taArrayItem(b1->dt, i1) >= startdate)
-            break;
+        if (taArrayItem(b1->dt, i1) >= startdate) break;
     if (i1 == b1->size)
         return (taErrInvalidParm);        /* couldn't find date */
 
@@ -1808,8 +1746,7 @@ int DLL_EXPORT taRWI(taBars *b1, taArray *a2, taArray *a3, int term, int start)
     KFloat    avg = 0, rwilo = 0, rwihi = 0;
     taArray    tr, lblo, lbhi;       /* true range, look back lo, look back hi */
 
-    if ((i1 = taAllocArray(&tr, b1->size)))
-        return (i1);
+    if ((i1 = taAllocArray(&tr, b1->size))) return (i1);
     if ((i1 = taAllocArray(&lblo, b1->size)))
     {
         taFreeArray(&tr);
@@ -1886,8 +1823,7 @@ int DLL_EXPORT taSimpleMA(taArray *a1, taArray *a2, int term, int start)
         f1 += taArrayItemP(a1, pos);
         taArrayItemP(a2, pos) = 0;
     }
-    if (pos == start + term)
-        taArrayItemP(a2, pos - 1) = f1 / term;
+    if (pos == start + term) taArrayItemP(a2, pos - 1) = f1 / term;
     for (; pos < a1->size && pos < a2->size; pos++)
     {
         f1 += taArrayItemP(a1, pos);
@@ -1912,8 +1848,7 @@ int DLL_EXPORT taSlowD(taBars *b1, taArray *a2, int term1, int term2, int term3,
     int    i1;
     taArray    rawk, fastd;
 
-    if ((i1 = taAllocArray(&rawk, b1->size)))
-        return (i1);
+    if ((i1 = taAllocArray(&rawk, b1->size))) return (i1);
     if ((i1 = taAllocArray(&fastd, b1->size)))
     {
         taFreeArray(&rawk);
@@ -1981,8 +1916,7 @@ KFloat DLL_EXPORT taSumPrev(taArray *a1, int term, int start)
     KFloat    sum = 0;
 
     begining = start - term + 1;
-    if (begining < 0)
-        begining = 0;
+    if (begining < 0) begining = 0;
     for (pos = start; pos >= begining; pos--)
         sum += taArrayItemP(a1, pos);
     return (sum);
@@ -2015,18 +1949,14 @@ int DLL_EXPORT taTrendScore(taArray *a1, taArray *a2, int term, int start)
     for (pos = start + 1; pos <= start + term && pos < a2->size; pos++)
     {
         taArrayItemP(a2, pos) = 0;
-        if (taArrayItemP(a1, pos) >= taArrayItemP(a1, pos - 1))
-            score += 1;
-        else
-            score -= 1;
+        if (taArrayItemP(a1, pos) >= taArrayItemP(a1, pos - 1)) score += 1;
+        else score -= 1;
     }
     taArrayItemP(a2, pos - 1) = score;
     for (; pos < a1->size && pos < a2->size; pos++)
     {
-        if (taArrayItemP(a1, pos) >= taArrayItemP(a1, pos - 1))
-            score += 1;
-        else
-            score -= 1;
+        if (taArrayItemP(a1, pos) >= taArrayItemP(a1, pos - 1)) score += 1;
+        else score -= 1;
         if (taArrayItemP(a1, pos - term) >= taArrayItemP(a1, pos - term - 1))
             score -= 1;
         else
@@ -2062,8 +1992,7 @@ int DLL_EXPORT taTSI(taArray *a1, taArray *a2, int term1, int term2, int start)
     taArray    mtm, absmtm, longmtm, shortmtm, longamtm, shortamtm;
     int    pos = 0, i1 = 0;
 
-    if ((i1 = taAllocArray(&mtm, a1->size)))
-        return (i1);
+    if ((i1 = taAllocArray(&mtm, a1->size))) return (i1);
     if ((i1 = taAllocArray(&absmtm, a1->size)))
     {
         taFreeArray(&mtm);
@@ -2154,8 +2083,7 @@ int DLL_EXPORT taUltimateOsc(taBars *b1, taArray *a2, int term1, int term2, int 
     int    err, pos, maxi;
     taArray    x0, y0, x1, y1;
 
-    if ((err = taAllocArray(&x0, b1->size)))
-        return (err);
+    if ((err = taAllocArray(&x0, b1->size))) return (err);
     if ((err = taAllocArray(&x1, b1->size)))
     {
         taFreeArray(&x0);
@@ -2311,8 +2239,7 @@ int DLL_EXPORT taWellesVolatility(taBars *b1, taArray *a2, taArray *a3, taArray 
     int    pos, i1, shortest, position = -1;
 
     shortest = min(min(min(a2->size, a3->size), a4->size), a5->size);
-    if ((i1 = taAllocArray(&atr, b1->size)))
-        return (i1);
+    if ((i1 = taAllocArray(&atr, b1->size))) return (i1);
 
     taATR(b1, &atr, term, start);
 
@@ -2416,8 +2343,7 @@ int DLL_EXPORT taFormationFill(taBars *b1, taArray *a2, char *formfunc, int star
 
     stop = min(stop, min(b1->size - 1, a2->size - 1));
     for (i1 = 0; formations[i1][0]; i1++)
-        if (!stricmp(formfunc, formations[i1]))
-            break;
+        if (!stricmp(formfunc, formations[i1])) break;
     switch (i1)
     {
     case 0:
@@ -2452,8 +2378,7 @@ int DLL_EXPORT taFormationFill(taBars *b1, taArray *a2, char *formfunc, int star
 
 int DLL_EXPORT taCPR(taBars *b1, int pos)
 {
-    if (pos == 0)
-        return (taZERO);
+    if (pos == 0) return (taZERO);
     if (taArrayItem(b1->hi, pos) > taArrayItem(b1->hi, pos - 1) &&
             taArrayItem(b1->lo, pos) < taArrayItem(b1->lo, pos - 1))
     {
@@ -2467,19 +2392,15 @@ int DLL_EXPORT taCPR(taBars *b1, int pos)
 
 int DLL_EXPORT taGap(taBars *b1, int pos)
 {
-    if (pos == 0)
-        return (taZERO);
-    if (taArrayItem(b1->lo, pos) > taArrayItem(b1->hi, pos - 1))
-        return (taUP);
-    if (taArrayItem(b1->hi, pos) < taArrayItem(b1->lo, pos - 1))
-        return (taDOWN);
+    if (pos == 0) return (taZERO);
+    if (taArrayItem(b1->lo, pos) > taArrayItem(b1->hi, pos - 1)) return (taUP);
+    if (taArrayItem(b1->hi, pos) < taArrayItem(b1->lo, pos - 1)) return (taDOWN);
     return (taZERO);
 }
 
 int DLL_EXPORT taIslandReversal(taBars *b1, int pos)
 {
-    if (pos == 0)
-        return (taZERO);
+    if (pos == 0) return (taZERO);
     if (taArrayItem(b1->hi, pos) < taArrayItem(b1->lo, pos - 1) &&
             taArrayItem(b1->cl, pos) > taArrayItem(b1->lo, pos) +
             (taArrayItem(b1->hi, pos) - taArrayItem(b1->lo, pos)) * .70)
@@ -2493,8 +2414,7 @@ int DLL_EXPORT taIslandReversal(taBars *b1, int pos)
 
 int DLL_EXPORT taInsideBar(taBars *b1, int pos)
 {
-    if (pos == 0)
-        return (taFALSE);
+    if (pos == 0) return (taFALSE);
     if (taArrayItem(b1->hi, pos) < taArrayItem(b1->hi, pos - 1) &&
             taArrayItem(b1->lo, pos) > taArrayItem(b1->lo, pos - 1))
         return (taTRUE);
@@ -2503,8 +2423,7 @@ int DLL_EXPORT taInsideBar(taBars *b1, int pos)
 
 int DLL_EXPORT taKeyReversal(taBars *b1, int pos)
 {
-    if (pos == 0)
-        return (taZERO);
+    if (pos == 0) return (taZERO);
     if (taArrayItem(b1->lo, pos) < taArrayItem(b1->lo, pos - 1) &&
             taArrayItem(b1->cl, pos) > taArrayItem(b1->cl, pos - 1))
         return (taUP);
@@ -2516,8 +2435,7 @@ int DLL_EXPORT taKeyReversal(taBars *b1, int pos)
 
 int DLL_EXPORT taOutsideBar(taBars *b1, int pos)
 {
-    if (pos == 0)
-        return (taFALSE);
+    if (pos == 0) return (taFALSE);
     if (taArrayItem(b1->hi, pos) > taArrayItem(b1->hi, pos - 1) &&
             taArrayItem(b1->lo, pos) < taArrayItem(b1->lo, pos - 1))
         return (taTRUE);
@@ -2526,8 +2444,7 @@ int DLL_EXPORT taOutsideBar(taBars *b1, int pos)
 
 int DLL_EXPORT taCrossOver(taArray *a1, taArray *a2, int pos)
 {
-    if (pos == 0)
-        return (taZERO);
+    if (pos == 0) return (taZERO);
     if ((taArrayItemP(a1, pos) > taArrayItemP(a2, pos)) &&
             (taArrayItemP(a1, pos - 1) < taArrayItemP(a2, pos - 1)))
         return (taUP);
@@ -2550,8 +2467,7 @@ int DLL_EXPORT taCrossOverFill(taArray *a1, taArray *a2, taArray *a3, int start,
 
 int DLL_EXPORT taTurn(taArray *a1, int pos)
 {
-    if (pos < 2)
-        return (taZERO);
+    if (pos < 2) return (taZERO);
     if ((taArrayItemP(a1, pos) > taArrayItemP(a1, pos - 1)) &&
             (taArrayItemP(a1, pos - 1) < taArrayItemP(a1, pos - 2)))
         return (taUP);

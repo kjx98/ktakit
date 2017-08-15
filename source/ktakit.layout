@@ -2,64 +2,39 @@
 <CodeBlocks_layout_file>
 	<FileVersion major="1" minor="0" />
 	<ActiveTarget name="Release" />
-	<File name="../include/ktatypes.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="tatc.c" open="0" top="0" tabpos="9" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="2040" topLine="0" />
-		</Cursor>
-	</File>
-	<File name="../include/ktadefs.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="1011" topLine="31" />
-		</Cursor>
-	</File>
-	<File name="../include/util.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="2149" topLine="60" />
-		</Cursor>
-	</File>
-	<File name="tadj.h" open="0" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="3910" topLine="93" />
+			<Cursor1 position="5494" topLine="208" />
 		</Cursor>
 	</File>
 	<File name="tadj.c" open="0" top="0" tabpos="10" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="381" topLine="252" />
+			<Cursor1 position="1954" topLine="0" />
 		</Cursor>
 	</File>
-	<File name="tatc.c" open="1" top="0" tabpos="9" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="tacsi.c" open="0" top="0" tabpos="5" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="934" topLine="122" />
+			<Cursor1 position="900" topLine="364" />
 		</Cursor>
 	</File>
-	<File name="../include/ktastd.h" open="0" top="0" tabpos="5" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="tacalc.c" open="0" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="2841" topLine="114" />
-		</Cursor>
-	</File>
-	<File name="tadate.c" open="0" top="0" tabpos="9" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="8420" topLine="242" />
-		</Cursor>
-	</File>
-	<File name="tafs.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="2505" topLine="112" />
+			<Cursor1 position="80570" topLine="2386" />
 		</Cursor>
 	</File>
 	<File name="taarray.c" open="1" top="1" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="148" topLine="267" />
+			<Cursor1 position="6824" topLine="323" />
 		</Cursor>
 	</File>
-	<File name="tacsi.h" open="0" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="tadj.h" open="0" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="4093" topLine="57" />
+			<Cursor1 position="3910" topLine="36" />
 		</Cursor>
 	</File>
-	<File name="ktakit32.def" open="0" top="0" tabpos="7" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="tatrade.c" open="0" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="745" topLine="0" />
+			<Cursor1 position="39764" topLine="889" />
 		</Cursor>
 	</File>
 	<File name="tact.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
@@ -69,47 +44,32 @@
 	</File>
 	<File name="tatt.c" open="0" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="2827" topLine="303" />
-		</Cursor>
-	</File>
-	<File name="tatt.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="389" topLine="0" />
-		</Cursor>
-	</File>
-	<File name="tacandle.c" open="1" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="128" topLine="848" />
-		</Cursor>
-	</File>
-	<File name="tact.c" open="0" top="0" tabpos="8" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="14732" topLine="472" />
+			<Cursor1 position="4573" topLine="293" />
 		</Cursor>
 	</File>
 	<File name="tatxt.c" open="0" top="0" tabpos="4" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="9087" topLine="278" />
+			<Cursor1 position="8535" topLine="270" />
 		</Cursor>
 	</File>
-	<File name="tafin.c" open="0" top="0" tabpos="10" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="taio.c" open="0" top="0" tabpos="7" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="10261" topLine="355" />
+			<Cursor1 position="7744" topLine="255" />
 		</Cursor>
 	</File>
-	<File name="tatrade.c" open="0" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="tadate.c" open="0" top="0" tabpos="9" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="51873" topLine="1128" />
+			<Cursor1 position="7086" topLine="220" />
 		</Cursor>
 	</File>
-	<File name="tacsi.c" open="1" top="0" tabpos="5" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="tact.c" open="0" top="0" tabpos="8" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="359" topLine="326" />
+			<Cursor1 position="10135" topLine="389" />
 		</Cursor>
 	</File>
-	<File name="tafile.c" open="0" top="0" tabpos="11" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="ktakit32.def" open="0" top="0" tabpos="7" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="2648" topLine="132" />
+			<Cursor1 position="745" topLine="0" />
 		</Cursor>
 	</File>
 	<File name="../include/ktakit.h" open="0" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
@@ -117,34 +77,74 @@
 			<Cursor1 position="4370" topLine="60" />
 		</Cursor>
 	</File>
+	<File name="tacsi.h" open="0" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="4093" topLine="57" />
+		</Cursor>
+	</File>
+	<File name="tafin.c" open="0" top="0" tabpos="10" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="11753" topLine="0" />
+		</Cursor>
+	</File>
+	<File name="tastr.c" open="0" top="0" tabpos="8" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="1327" topLine="33" />
+		</Cursor>
+	</File>
+	<File name="tachart.c" open="0" top="0" tabpos="4" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="29688" topLine="775" />
+		</Cursor>
+	</File>
+	<File name="tacandle.c" open="0" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="33995" topLine="846" />
+		</Cursor>
+	</File>
+	<File name="tatt.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="389" topLine="0" />
+		</Cursor>
+	</File>
+	<File name="../include/ktadefs.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="1011" topLine="31" />
+		</Cursor>
+	</File>
 	<File name="tatc.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
 			<Cursor1 position="345" topLine="0" />
 		</Cursor>
 	</File>
-	<File name="tastr.c" open="1" top="0" tabpos="8" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="tafile.c" open="0" top="0" tabpos="11" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="90" topLine="0" />
+			<Cursor1 position="925" topLine="128" />
 		</Cursor>
 	</File>
-	<File name="tachart.c" open="1" top="0" tabpos="4" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="../include/ktatypes.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="34674" topLine="946" />
+			<Cursor1 position="2040" topLine="0" />
 		</Cursor>
 	</File>
-	<File name="tacalc.c" open="1" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="tafs.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="17087" topLine="0" />
+			<Cursor1 position="2505" topLine="112" />
 		</Cursor>
 	</File>
-	<File name="taio.c" open="1" top="0" tabpos="7" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="../include/ktastd.h" open="0" top="0" tabpos="5" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="259" topLine="0" />
+			<Cursor1 position="2841" topLine="114" />
 		</Cursor>
 	</File>
-	<File name="tafs.c" open="1" top="0" tabpos="6" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="tafs.c" open="0" top="0" tabpos="6" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="8111" topLine="234" />
+			<Cursor1 position="10031" topLine="303" />
+		</Cursor>
+	</File>
+	<File name="../include/util.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="2149" topLine="60" />
 		</Cursor>
 	</File>
 </CodeBlocks_layout_file>

@@ -26,7 +26,8 @@ int     taUpdateCurrent(struct taOrderSystem *taOS);
 int     taSortOrders(const void *elem1v, const void *elem2v);
 
 
-int DLL_EXPORT taOrderSystemInit(struct taOrderSystem *taOS, char *systemname, taBars *bars, int maxorders)
+int DLL_EXPORT taOrderSystemInit(struct taOrderSystem *taOS, char *systemname,
+                                taBars *bars, int maxorders)
 {
     taOS->Order = (struct taOrder *)taMalloc(maxorders * sizeof(struct taOrder));
     if(taOS->Order == NULL)
@@ -103,8 +104,7 @@ int DLL_EXPORT taProcessOrders(struct taOrderSystem *taOS)
         if (taOS->OrderParms.ttreport[0] != '\0')
         {
 #ifndef _WINDOWS
-            if (!stricmp(taOS->OrderParms.ttreport, "STDOUT"))
-                outptr = stdout;
+            if (!stricmp(taOS->OrderParms.ttreport, "STDOUT")) outptr = stdout;
             else
 #endif
                 if ((outptr = fopen(taOS->OrderParms.ttreport, "wt")) == NULL)
@@ -119,16 +119,14 @@ int DLL_EXPORT taProcessOrders(struct taOrderSystem *taOS)
         }
         return (1);
     }
-    if (taOS->Current.barnum >= taBarSize(taOS->bars))
-        return (0);
+    if (taOS->Current.barnum >= taBarSize(taOS->bars)) return (0);
 
     if (taOS->OrderCnt)
         qsort(taOS->Order, taOS->OrderCnt, sizeof(struct taOrder), taSortOrders);
 
     for (i1 = 0; i1 < taOS->OrderCnt; i1++)
     {
-        if (taOS->Order[i1].deletesw == 1)
-            continue;
+        if (taOS->Order[i1].deletesw == 1) continue;
 
         if (taOS->Order[i1].date > taArrayItem(taOS->bars.dt, taOS->Current.barnum))
             continue;
@@ -169,7 +167,8 @@ int DLL_EXPORT taProcessOrders(struct taOrderSystem *taOS)
                 switch (taOS->Order[i1].buysell)
                 {
                 case taBUY:
-                    if (!buyopen && taArrayItem(taOS->bars.hi, taOS->Current.barnum) >= taOS->Order[i1].reqprice)
+                    if (!buyopen &&
+                        taArrayItem(taOS->bars.hi, taOS->Current.barnum) >= taOS->Order[i1].reqprice)
                     {
                         if (taOS->OrderParms.bestprice &&
                                 taOS->Order[i1].reqprice <= taArrayItem(taOS->bars.op, taOS->Current.barnum))
@@ -326,7 +325,8 @@ int DLL_EXPORT taProcessOrders(struct taOrderSystem *taOS)
                 case taBUY:
                     if (taArrayItem(taOS->bars.hi, taOS->Current.barnum) >= taOS->Order[i1].reqprice)
                     {
-                        if (taOS->OrderParms.bestprice && taOS->Order[i1].reqprice <= taArrayItem(taOS->bars.op, taOS->Current.barnum))
+                        if (taOS->OrderParms.bestprice && taOS->Order[i1].reqprice <=
+                        taArrayItem(taOS->bars.op, taOS->Current.barnum))
                             taMatchInExec(taOS, i1, taBUY, taArrayItem(taOS->bars.op, taOS->Current.barnum));
                         else if (taOS->Order[i1].reqprice <= taArrayItem(taOS->bars.lo, taOS->Current.barnum))
                         {
@@ -343,7 +343,8 @@ int DLL_EXPORT taProcessOrders(struct taOrderSystem *taOS)
                 case taSELL:
                     if (taArrayItem(taOS->bars.lo, taOS->Current.barnum) <= taOS->Order[i1].reqprice)
                     {
-                        if (taOS->OrderParms.bestprice && taOS->Order[i1].reqprice >= taArrayItem(taOS->bars.op, taOS->Current.barnum))
+                        if (taOS->OrderParms.bestprice && taOS->Order[i1].reqprice >=
+                            taArrayItem(taOS->bars.op, taOS->Current.barnum))
                         {
                             taMatchInExec(taOS, i1, taSELL, taArrayItem(taOS->bars.op, taOS->Current.barnum));
                         }
@@ -396,8 +397,7 @@ int DLL_EXPORT taProcessOrders(struct taOrderSystem *taOS)
     /* Compress InExec Stack */
     for (i1 = 0, i2 = 0; i1 <= taOS->InExecCnt; i1++)
     {
-        if (i1 < taOS->InExecCnt && taOS->InExec[i1].remvolume == 0)
-            compress++;
+        if (i1 < taOS->InExecCnt && taOS->InExec[i1].remvolume == 0) compress++;
         else
         {
             if (compress)
@@ -478,10 +478,8 @@ int DLL_EXPORT taSellToClose(struct taOrderSystem *taOS, char *name, char *fromn
     taOS->Order[taOS->OrderCnt].type = taCLOSE;
     taOS->Order[taOS->OrderCnt].buysell = taSELL;
     taOS->Order[taOS->OrderCnt].volume = volume;
-    if (atind == taMARKET)
-        taOS->Order[taOS->OrderCnt].reqprice = FLT_MAX;
-    else
-        taOS->Order[taOS->OrderCnt].reqprice = price;
+    if (atind == taMARKET) taOS->Order[taOS->OrderCnt].reqprice = FLT_MAX;
+    else taOS->Order[taOS->OrderCnt].reqprice = price;
     taOS->Order[taOS->OrderCnt].atind = atind;
     taOS->Order[taOS->OrderCnt].timeinforce = timeinforce;
     taOS->Order[taOS->OrderCnt].date = taArrayItem(taOS->bars.dt, taOS->Current.barnum);
@@ -505,10 +503,8 @@ int DLL_EXPORT taBuyToClose(struct taOrderSystem *taOS, char *name, char *fromna
     taOS->Order[taOS->OrderCnt].type = taCLOSE;
     taOS->Order[taOS->OrderCnt].buysell = taBUY;
     taOS->Order[taOS->OrderCnt].volume = volume;
-    if (atind == taMARKET)
-        taOS->Order[taOS->OrderCnt].reqprice = 0;
-    else
-        taOS->Order[taOS->OrderCnt].reqprice = price;
+    if (atind == taMARKET) taOS->Order[taOS->OrderCnt].reqprice = 0;
+    else taOS->Order[taOS->OrderCnt].reqprice = price;
     taOS->Order[taOS->OrderCnt].atind = atind;
     taOS->Order[taOS->OrderCnt].timeinforce = timeinforce;
     taOS->Order[taOS->OrderCnt].date = taArrayItem(taOS->bars.dt, taOS->Current.barnum);
@@ -539,24 +535,20 @@ int DLL_EXPORT taPrintOrders(struct taOrderSystem *taOS, char *outfile, int appe
     char     ti[9];
     FILE    *outptr = NULL;
 
-    if (taOS->OrderCnt == 0)
-        return (0);
+    if (taOS->OrderCnt == 0) return (0);
 
 #ifndef _WINDOWS
-    if (!stricmp(outfile, "STDOUT"))
-        outptr = stdout;
+    if (!stricmp(outfile, "STDOUT")) outptr = stdout;
     else
 #endif
     {
         if (append)
         {
-            if ((outptr = fopen(outfile, "at")) == NULL)
-                return (-4);
+            if ((outptr = fopen(outfile, "at")) == NULL) return (-4);
         }
         else
         {
-            if ((outptr = fopen(outfile, "wt")) == NULL)
-                return (-4);
+            if ((outptr = fopen(outfile, "wt")) == NULL) return (-4);
         }
     }
 
@@ -564,10 +556,8 @@ int DLL_EXPORT taPrintOrders(struct taOrderSystem *taOS, char *outfile, int appe
 
     for (i1 = 0; i1 < taOS->OrderCnt && i1 < taOS->OrderSize; i1++)
     {
-        if (taOS->Order[i1].reqprice == FLT_MAX)
-            f1 = 0;
-        else
-            f1 = taOS->Order[i1].reqprice;
+        if (taOS->Order[i1].reqprice == FLT_MAX) f1 = 0;
+        else f1 = taOS->Order[i1].reqprice;
         taJulianToDateTxt(taOS->Order[i1].date, DTFORMAT_MM_DD_YY, "/", dt);
         taJulianToTimeTxt(taOS->Order[i1].date, TIFORMAT_HH_MM_SS, ":", ti);
         fprintf(outptr, "%4i %s %s %-20s %c %c %c %c %8li %4li.%03li\n",
@@ -591,20 +581,17 @@ int DLL_EXPORT taProfitRpt(struct taOrderSystem *taOS, char *outfile, int append
     char    buffer[16];
 
 #ifndef _WINDOWS
-    if (!stricmp(outfile, "STDOUT"))
-        outptr = stdout;
+    if (!stricmp(outfile, "STDOUT")) outptr = stdout;
     else
 #endif
     {
         if (append)
         {
-            if ((outptr = fopen(outfile, "at")) == NULL)
-                return (-4);
+            if ((outptr = fopen(outfile, "at")) == NULL) return (-4);
         }
         else
         {
-            if ((outptr = fopen(outfile, "wt")) == NULL)
-                return (-4);
+            if ((outptr = fopen(outfile, "wt")) == NULL) return (-4);
         }
     }
     fprintf(outptr, "--------------------------------------------------------------\n");
@@ -716,42 +703,33 @@ int DLL_EXPORT taProfitRpt1(struct taOrderSystem *taOS, char *outfile, int appen
                          };
 
 #ifndef _WINDOWS
-    if (!stricmp(outfile, "STDOUT"))
-        outptr = stdout;
+    if (!stricmp(outfile, "STDOUT")) outptr = stdout;
     else
 #endif
     {
         if (append)
         {
-            if ((outptr = fopen(outfile, "at")) == NULL)
-                return (taErrFileOpen);
+            if ((outptr = fopen(outfile, "at")) == NULL) return (taErrFileOpen);
         }
         else
         {
-            if ((outptr = fopen(outfile, "wt")) == NULL)
-                return (taErrFileOpen);
+            if ((outptr = fopen(outfile, "wt")) == NULL) return (taErrFileOpen);
         }
     }
     fprintf(outptr, heading);
     fldname[3] = '\0';
     for (i1 = 0; fields[i1]; i1++)
     {
-        if (isalpha(fields[i1]))
-            fldname[fldpos++] = fields[i1];
-        else
-            fprintf(outptr, "%c", fields[i1]);
+        if (isalpha(fields[i1])) fldname[fldpos++] = fields[i1];
+        else fprintf(outptr, "%c", fields[i1]);
         if (fldpos == 3)
         {
             fldpos = 0;
-            if (toupper(fldname[0]) == 'L')
-                perf = taOS->Long;
-            else if (toupper(fldname[0]) == 'S')
-                perf = taOS->Short;
-            else
-                perf = taOS->Net;
+            if (toupper(fldname[0]) == 'L') perf = taOS->Long;
+            else if (toupper(fldname[0]) == 'S') perf = taOS->Short;
+            else perf = taOS->Net;
             for (i2 = 0; i2 < 23; i2++)
-                if (!stricmp(fldname + 1, names[i2]))
-                    break;
+                if (!stricmp(fldname + 1, names[i2])) break;
             switch (i2)
             {
             case 0:   /* NP */
@@ -850,10 +828,8 @@ long DLL_EXPORT taOptVarCount(struct taOptVar *vars, int numvars)
 
     for (i1 = 0; i1 < numvars; i1++)
     {
-        if (vars[i1].incr == 0)
-            vars[i1].count = 1;
-        else
-            vars[i1].count = (long)((vars[i1].to - vars[i1].from) / vars[i1].incr + 1);
+        if (vars[i1].incr == 0) vars[i1].count = 1;
+        else vars[i1].count = (long)((vars[i1].to - vars[i1].from) / vars[i1].incr + 1);
         count *= vars[i1].count;
     }
     return(count);
@@ -865,8 +841,7 @@ int DLL_EXPORT taOptVarValue(struct taOptVar *vars, int numvars, long iteration)
     int      i1;
     long     count = 1, step;
 
-    if (iteration > taOptVarCount(vars, numvars))
-        return (taErrInvalidParm);
+    if (iteration > taOptVarCount(vars, numvars)) return (taErrInvalidParm);
     iteration--;
     for (i1 = 0; i1 < numvars; i1++)
     {
@@ -898,8 +873,7 @@ void     taInitCurrentParms(struct taOrderSystem *taOS)
 
 int      taCreateInExec(struct taOrderSystem *taOS, int ordnum, char buysell, KFloat price)
 {
-    if (taOS->InExecCnt >= taOS->InExecSize)
-        return (taErrMalloc);
+    if (taOS->InExecCnt >= taOS->InExecSize) return (taErrMalloc);
     taOS->InExec[taOS->InExecCnt].barnum = taOS->Current.barnum;
     strcpy(taOS->InExec[taOS->InExecCnt].name, taOS->Order[ordnum].name);
     taOS->InExec[taOS->InExecCnt].buysell = buysell;
@@ -927,11 +901,9 @@ int      taCloseInExec(struct taOrderSystem *taOS, int ordnum, char buysell, KFl
         return (0);
     for (i1 = 0; i1 < taOS->InExecCnt; i1++)
     {
-        if (taOS->InExec[i1].remvolume &&
-                taOS->InExec[i1].buysell != buysell)
+        if (taOS->InExec[i1].remvolume && taOS->InExec[i1].buysell != buysell)
         {
-            taCreateOutExec(taOS, ordnum, buysell, price, i1,
-                            taOS->InExec[i1].remvolume);
+            taCreateOutExec(taOS, ordnum, buysell, price, i1, taOS->InExec[i1].remvolume);
         }
     }
     return (0);
@@ -989,8 +961,7 @@ int      taCreateOutExec(struct taOrderSystem *taOS, int ordnum, char buysell, K
     if (taOS->OrderParms.ttreport[0])
     {
 #ifndef _WINDOWS
-        if (!stricmp(taOS->OrderParms.ttreport, "STDOUT"))
-            outptr = stdout;
+        if (!stricmp(taOS->OrderParms.ttreport, "STDOUT")) outptr = stdout;
         else
 #endif
             if ((outptr = fopen(taOS->OrderParms.ttreport, "at")) == NULL)
@@ -1028,17 +999,13 @@ int      taCreateOutExec(struct taOrderSystem *taOS, int ordnum, char buysell, K
     if (!taIsNoArray(taOS->tradegraph))
     {
         i1 = (int) taArrayItem(taOS->tradegraph, taOS->InExec[inexecnum].barnum);
-        if (taOS->InExec[inexecnum].buysell == taBUY)
-            i1 |= taBO;
-        else
-            i1 |= taSO;
+        if (taOS->InExec[inexecnum].buysell == taBUY) i1 |= taBO;
+        else i1 |= taSO;
         taArrayItem(taOS->tradegraph, taOS->InExec[inexecnum].barnum) = i1;
 
         i1 = (int) taArrayItem(taOS->tradegraph, taOS->Current.barnum);
-        if (OutExec.buysell == taBUY)
-            i1 |= taBC;
-        else
-            i1 |= taSC;
+        if (OutExec.buysell == taBUY) i1 |= taBC;
+        else i1 |= taSC;
         taArrayItem(taOS->tradegraph, taOS->Current.barnum) = i1;
     }
 
@@ -1072,8 +1039,7 @@ KFloat   taCalcProfit(struct taOrderSystem *taOS, long in, struct taExecution Ou
             taOS->Short.win++;
             taOS->Short.winstreak++;
             taOS->Short.grossprofit += profit;
-            if (profit > taOS->Short.largestwin)
-                taOS->Short.largestwin = profit;
+            if (profit > taOS->Short.largestwin) taOS->Short.largestwin = profit;
             taOS->Short.lossstreak = 0;
             taOS->Short.maxconwin = max(taOS->Short.maxconwin, taOS->Short.winstreak);
             taOS->Short.winbars += OutExec.barnum - taOS->InExec[in].barnum + 1;
@@ -1083,8 +1049,7 @@ KFloat   taCalcProfit(struct taOrderSystem *taOS, long in, struct taExecution Ou
             taOS->Short.loss++;
             taOS->Short.lossstreak++;
             taOS->Short.grossloss += profit;
-            if (profit < taOS->Short.largestloss)
-                taOS->Short.largestloss = profit;
+            if (profit < taOS->Short.largestloss) taOS->Short.largestloss = profit;
             taOS->Short.winstreak = 0;
             taOS->Short.maxconloss = max(taOS->Short.maxconloss, taOS->Short.lossstreak);
             taOS->Short.lossbars += OutExec.barnum - taOS->InExec[in].barnum + 1;
@@ -1120,8 +1085,7 @@ KFloat   taCalcProfit(struct taOrderSystem *taOS, long in, struct taExecution Ou
             taOS->Long.win++;
             taOS->Long.winstreak++;
             taOS->Long.grossprofit += profit;
-            if (profit > taOS->Long.largestwin)
-                taOS->Long.largestwin = profit;
+            if (profit > taOS->Long.largestwin) taOS->Long.largestwin = profit;
             taOS->Long.lossstreak = 0;
             taOS->Long.maxconwin = max(taOS->Long.maxconwin, taOS->Long.winstreak);
             taOS->Long.winbars += OutExec.barnum - taOS->InExec[in].barnum + 1;
@@ -1131,8 +1095,7 @@ KFloat   taCalcProfit(struct taOrderSystem *taOS, long in, struct taExecution Ou
             taOS->Long.loss++;
             taOS->Long.lossstreak++;
             taOS->Long.grossloss += profit;
-            if (profit < taOS->Long.largestloss)
-                taOS->Long.largestloss = profit;
+            if (profit < taOS->Long.largestloss) taOS->Long.largestloss = profit;
             taOS->Long.winstreak = 0;
             taOS->Long.maxconloss = max(taOS->Long.maxconloss, taOS->Long.lossstreak);
             taOS->Long.lossbars += OutExec.barnum - taOS->InExec[in].barnum + 1;
@@ -1200,8 +1163,7 @@ KFloat   taCalcProfit(struct taOrderSystem *taOS, long in, struct taExecution Ou
     taOS->Net.trades = taOS->Long.trades + taOS->Short.trades;
     taOS->Net.win = taOS->Long.win + taOS->Short.win;
     taOS->Net.largestwin = max(taOS->Long.largestwin, taOS->Short.largestwin);
-    if (taOS->Net.win)
-        taOS->Net.avgwin = taOS->Net.grossprofit / taOS->Net.win;
+    if (taOS->Net.win) taOS->Net.avgwin = taOS->Net.grossprofit / taOS->Net.win;
     taOS->Net.maxconwin = max(taOS->Long.maxconwin, taOS->Short.maxconwin);
 
     taOS->Net.maxdrawdown = min(taOS->Long.maxdrawdown, taOS->Short.maxdrawdown);
@@ -1274,8 +1236,7 @@ int      taUpdateCurrent(struct taOrderSystem *taOS)
     taOS->Short.openpospl = 0;
     taOS->Net.openpospl = 0;
 
-    if (!taOS->InExecCnt)
-        return (0);
+    if (!taOS->InExecCnt) return (0);
 
     taInitCurrentParms(taOS);
     for (i1 = 0; i1 < taOS->InExecCnt; i1++)

@@ -21,8 +21,7 @@ long DLL_EXPORT taTXTfindrec(char *path, char *name, struct taTXTinfo *info,
 
     strcpy(infile, path);
 #ifdef	unix
-    if (infile[0] != '\0' && infile[strlen(infile) - 1] != '/')
-        strcat(infile, "/");
+    if (infile[0] != '\0' && infile[strlen(infile) - 1] != '/') strcat(infile, "/");
 #else
     if (infile[0] != '\0' && infile[strlen(infile) - 1] != ':' && infile[strlen(infile) - 1] != '\\')
         strcat(infile, "\\");
@@ -37,22 +36,16 @@ long DLL_EXPORT taTXTfindrec(char *path, char *name, struct taTXTinfo *info,
         if (buffer[0] == '\n' || l1 < info->skip) continue;
         for (i1 = 1; i1 <= maxcol; i1++)
         {
-            if (i1 == 1)
-                string = strtok(buffer, info->delimit);
-            else
-                string = strtok(NULL, info->delimit);
-            if (info->dt == i1)
-                dt1 = taDateTxtToJulian(string, info->dtformat);
-            if (info->ti == i1)
-                ti1 = taTimeTxtToJulian(string, info->tiformat);
+            if (i1 == 1) string = strtok(buffer, info->delimit);
+            else string = strtok(NULL, info->delimit);
+            if (info->dt == i1) dt1 = taDateTxtToJulian(string, info->dtformat);
+            if (info->ti == i1) ti1 = taTimeTxtToJulian(string, info->tiformat);
         }
         if (dt1 > date || (dt1 == date && ti1 >= time))
         {
             recno = l2;
-            if (actualdate)
-                *actualdate = dt1;
-            if (actualtime)
-                *actualtime = ti1;
+            if (actualdate) *actualdate = dt1;
+            if (actualtime) *actualtime = ti1;
             break;
         }
         l2++;
@@ -195,8 +188,9 @@ int DLL_EXPORT taTXTreadinfo(char *path, char *infile, struct taTXTinfo *info)
     int      i1;
     char     fullname[81];
     char     buffer[81], buffer2[81], buffer3[81];
-    char    *dtformat[13] = {"N/A", "YY_MM_DD", "CCYY_MM_DD", "MM_DD_YY", "MM_DD_CCYY", "DD_MM_YY", "DD_MM_CCYY",
-                             "YYMMDD", "CCYYMMDD", "MMDDYY", "MMDDCCYY", "DDMMYY", "DDMMCCYY"
+    char    *dtformat[13] = {"N/A", "YY_MM_DD", "CCYY_MM_DD", "MM_DD_YY", "MM_DD_CCYY",
+                            "DD_MM_YY", "DD_MM_CCYY", "YYMMDD", "CCYYMMDD", "MMDDYY",
+                            "MMDDCCYY", "DDMMYY", "DDMMCCYY"
                             };
     char    *tiformat[5] = {"N/A", "HH_MM_SS", "HH_MM", "HHMMSS", "HHMM"};
     FILE    *fp1;
@@ -273,8 +267,9 @@ int DLL_EXPORT taTXTwriteinfo(char *path, char *outfile, struct taTXTinfo *info)
 {
     int      i1;
     char     fullname[81];
-    char    *dtformat[13] = {"N/A", "YY_MM_DD", "CCYY_MM_DD", "MM_DD_YY", "MM_DD_CCYY", "DD_MM_YY", "DD_MM_CCYY",
-                             "YYMMDD", "CCYYMMDD", "MMDDYY", "MMDDCCYY", "DDMMYY", "DDMMCCYY"
+    char    *dtformat[13] = {"N/A", "YY_MM_DD", "CCYY_MM_DD", "MM_DD_YY", "MM_DD_CCYY",
+                            "DD_MM_YY", "DD_MM_CCYY", "YYMMDD", "CCYYMMDD", "MMDDYY",
+                            "MMDDCCYY", "DDMMYY", "DDMMCCYY"
                             };
     char    *tiformat[5] = {"N/A", "HH_MM_SS", "HH_MM", "HHMMSS", "HHMM"};
     FILE    *fp1;

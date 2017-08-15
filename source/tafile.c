@@ -32,8 +32,7 @@ long DLL_EXPORT taFILEfindrec(char *type, char *path, char *name,
     switch (taFILEtype(type))
     {
     case taTXT:
-        if ((err = taTXTreadinfo(path, type, &txtinfo)))
-            return (err);
+        if ((err = taTXTreadinfo(path, type, &txtinfo))) return (err);
         return (taTXTfindrec(path, name, &txtinfo, date, time, actualdate, actualtime));
 
     case taCSI:

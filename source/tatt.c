@@ -37,12 +37,10 @@ long DLL_EXPORT taTTfindrec(char *path, char *name, unsigned int date, unsigned 
     while (recno < 0 && !err)
     {
         guess = (low + high + 1) / 2;
-        if (guess >= maxent)
-            return(taErrRecordNotFound);
+        if (guess >= maxent) return(taErrRecordNotFound);
         if (guess == lastguess)
         {
-            if (low == 0)
-                guess = 0;
+            if (low == 0) guess = 0;
             else
             {
                 recno = guess;
@@ -64,17 +62,13 @@ long DLL_EXPORT taTTfindrec(char *path, char *name, unsigned int date, unsigned 
             recno = guess;
             break;
         }
-        if (rec.dt > date)
-            high = guess;
-        if (rec.dt < date)
-            low = guess;
+        if (rec.dt > date) high = guess;
+        if (rec.dt < date) low = guess;
         lastguess = guess;
     }
     fclose(fp1);
-    if (actualdate)
-        *actualdate = rec.dt - 21915;
-    if (err)
-        return (err);
+    if (actualdate) *actualdate = rec.dt - 21915;
+    if (err) return (err);
     return (recno);
 }
 
@@ -141,8 +135,7 @@ int DLL_EXPORT taTTread(taBars *b1, char *path, char *name, long start, int cnt,
         return (0);
     }
     cnt = min(cnt, b1->datasize);
-    if (start < 0)
-        start = max(0, b1->reccnt - cnt);
+    if (start < 0) start = max(0, b1->reccnt - cnt);
 
     if (fseek(fp1, (start + 1) * sizeof(struct taTTrec), SEEK_SET))
     {

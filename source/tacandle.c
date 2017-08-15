@@ -107,8 +107,7 @@ int DLL_EXPORT taCandleFill(taBars *b1, struct taCandleInfo *info, taArray *a2,
 
     stop = min(stop, min(b1->size - 1, a2->size - 1));
     for (i1 = 0; formations[i1][0]; i1++)
-        if (!stricmp(candlefunct, formations[i1]))
-            break;
+        if (!stricmp(candlefunct, formations[i1])) break;
     switch (i1)
     {
     case 0:
@@ -370,16 +369,16 @@ int DLL_EXPORT taAdvanceBlock(taBars *b1, struct taCandleInfo *info, int pos)
 int DLL_EXPORT taBeltHoldLineBull(taBars *b1, struct taCandleInfo *info, int pos)
 {
     if (info->candle[pos].color == taWHITECNDL &&
-            info->candle[pos].shape == taLARGE &&
-            taArrayItem(b1->op, pos) == taArrayItem(b1->lo, pos)) return (taTRUE);
+        info->candle[pos].shape == taLARGE &&
+        taArrayItem(b1->op, pos) == taArrayItem(b1->lo, pos)) return (taTRUE);
     else  return (taFALSE);
 }
 
 int DLL_EXPORT taBeltHoldLineBear(taBars *b1, struct taCandleInfo *info, int pos)
 {
     if (info->candle[pos].color == taBLACKCNDL &&
-            info->candle[pos].shape == taLARGE &&
-            taArrayItem(b1->op, pos) == taArrayItem(b1->hi, pos)) return (taTRUE);
+        info->candle[pos].shape == taLARGE &&
+        taArrayItem(b1->op, pos) == taArrayItem(b1->hi, pos)) return (taTRUE);
     else return (taFALSE);
 }
 
@@ -387,12 +386,12 @@ int DLL_EXPORT taCounterAttackBear(taBars *b1, struct taCandleInfo *info, int po
 {
     if (pos < 1) return (taFALSE);
     if (info->candle[pos].color == taBLACKCNDL &&
-            info->candle[pos - 1].color == taWHITECNDL &&
-            info->candle[pos].shape != taDOJI &&
-            info->candle[pos - 1].shape != taDOJI &&
-            taApproxEqual(taArrayItem(b1->cl, pos), taArrayItem(b1->cl, pos - 1), info->equalpct) &&
-            taArrayItem(b1->op, pos) - taArrayItem(b1->cl, pos - 1) >=
-            taArrayItem(b1->cl, pos - 1) - taArrayItem(b1->op, pos - 1)) return (taTRUE);
+        info->candle[pos - 1].color == taWHITECNDL &&
+        info->candle[pos].shape != taDOJI &&
+        info->candle[pos - 1].shape != taDOJI &&
+        taApproxEqual(taArrayItem(b1->cl, pos), taArrayItem(b1->cl, pos - 1), info->equalpct) &&
+        taArrayItem(b1->op, pos) - taArrayItem(b1->cl, pos - 1) >=
+        taArrayItem(b1->cl, pos - 1) - taArrayItem(b1->op, pos - 1)) return (taTRUE);
     else return (taFALSE);
 }
 
@@ -400,12 +399,12 @@ int DLL_EXPORT taCounterAttackBull(taBars *b1, struct taCandleInfo *info, int po
 {
     if (pos < 1) return (taFALSE);
     if (info->candle[pos].color == taWHITECNDL &&
-            info->candle[pos - 1].color == taBLACKCNDL &&
-            info->candle[pos].shape != taDOJI &&
-            info->candle[pos - 1].shape != taDOJI &&
-            taApproxEqual(taArrayItem(b1->cl, pos), taArrayItem(b1->cl, pos - 1), info->equalpct) &&
-            taArrayItem(b1->cl, pos - 1) - taArrayItem(b1->op, pos) >=
-            taArrayItem(b1->op, pos - 1) - taArrayItem(b1->cl, pos - 1)) return (taTRUE);
+        info->candle[pos - 1].color == taBLACKCNDL &&
+        info->candle[pos].shape != taDOJI &&
+        info->candle[pos - 1].shape != taDOJI &&
+        taApproxEqual(taArrayItem(b1->cl, pos), taArrayItem(b1->cl, pos - 1), info->equalpct) &&
+        taArrayItem(b1->cl, pos - 1) - taArrayItem(b1->op, pos) >=
+        taArrayItem(b1->op, pos - 1) - taArrayItem(b1->cl, pos - 1)) return (taTRUE);
     else return (taFALSE);
 }
 
@@ -413,10 +412,10 @@ int DLL_EXPORT taDarkCloudCover(taBars *b1, struct taCandleInfo *info, int pos)
 {
     if (pos < 1) return (taFALSE);
     if (info->candle[pos].color == taBLACKCNDL &&
-            info->candle[pos - 1].color == taWHITECNDL &&
-            info->candle[pos - 1].shape == taLARGE &&
-            taArrayItem(b1->op, pos) > taArrayItem(b1->hi, pos - 1) &&
-            taArrayItem(b1->cl, pos) < taBodyMidpoint(b1, pos - 1)) return (taTRUE);
+        info->candle[pos - 1].color == taWHITECNDL &&
+        info->candle[pos - 1].shape == taLARGE &&
+        taArrayItem(b1->op, pos) > taArrayItem(b1->hi, pos - 1) &&
+        taArrayItem(b1->cl, pos) < taBodyMidpoint(b1, pos - 1)) return (taTRUE);
     else return (taFALSE);
 }
 
@@ -424,11 +423,11 @@ int DLL_EXPORT taEngulfingLineBear(taBars *b1, struct taCandleInfo *info, int po
 {
     if (pos < 1) return (taFALSE);
     if (info->candle[pos].color == taBLACKCNDL &&
-            info->candle[pos - 1].color == taWHITECNDL &&
-            info->candle[pos].shape == taLARGE &&
-            info->candle[pos - 1].shape == taSMALL &&
-            taArrayItem(b1->op, pos) > taArrayItem(b1->cl, pos - 1) &&
-            taArrayItem(b1->cl, pos) < taArrayItem(b1->op, pos - 1)) return (taTRUE);
+        info->candle[pos - 1].color == taWHITECNDL &&
+        info->candle[pos].shape == taLARGE &&
+        info->candle[pos - 1].shape == taSMALL &&
+        taArrayItem(b1->op, pos) > taArrayItem(b1->cl, pos - 1) &&
+        taArrayItem(b1->cl, pos) < taArrayItem(b1->op, pos - 1)) return (taTRUE);
     else return (taFALSE);
 }
 
@@ -436,11 +435,11 @@ int DLL_EXPORT taEngulfingLineBull(taBars *b1, struct taCandleInfo *info, int po
 {
     if (pos < 1) return (taFALSE);
     if (info->candle[pos].color == taWHITECNDL &&
-            info->candle[pos - 1].color == taBLACKCNDL &&
-            info->candle[pos].shape == taLARGE &&
-            info->candle[pos - 1].shape == taSMALL &&
-            taArrayItem(b1->op, pos) < taArrayItem(b1->cl, pos - 1) &&
-            taArrayItem(b1->cl, pos) > taArrayItem(b1->op, pos - 1)) return (taTRUE);
+        info->candle[pos - 1].color == taBLACKCNDL &&
+        info->candle[pos].shape == taLARGE &&
+        info->candle[pos - 1].shape == taSMALL &&
+        taArrayItem(b1->op, pos) < taArrayItem(b1->cl, pos - 1) &&
+        taArrayItem(b1->cl, pos) > taArrayItem(b1->op, pos - 1)) return (taTRUE);
     else return (taFALSE);
 }
 
@@ -448,11 +447,11 @@ int DLL_EXPORT taEveningDojiStar(taBars *b1, struct taCandleInfo *info, int pos)
 {
     if (pos < 2) return (taFALSE);
     if (info->candle[pos].color == taBLACKCNDL &&
-            info->candle[pos - 2].color == taWHITECNDL &&
-            info->candle[pos - 1].shape == taDOJI &&
-            info->candle[pos - 2].shape == taLARGE &&
-            taBodyGapUp(b1, pos - 1) &&
-            taArrayItem(b1->cl, pos) < taBodyMidpoint(b1, pos - 2)) return (taTRUE);
+        info->candle[pos - 2].color == taWHITECNDL &&
+        info->candle[pos - 1].shape == taDOJI &&
+        info->candle[pos - 2].shape == taLARGE &&
+        taBodyGapUp(b1, pos - 1) &&
+        taArrayItem(b1->cl, pos) < taBodyMidpoint(b1, pos - 2)) return (taTRUE);
     else return (taFALSE);
 }
 
@@ -460,11 +459,11 @@ int DLL_EXPORT taEveningStar(taBars *b1, struct taCandleInfo *info, int pos)
 {
     if (pos < 2) return (taFALSE);
     if (info->candle[pos].color == taBLACKCNDL &&
-            info->candle[pos - 2].color == taWHITECNDL &&
-            info->candle[pos - 1].shape == taSMALL &&
-            info->candle[pos - 2].shape == taLARGE &&
-            taBodyGapUp(b1, pos - 1) &&
-            taArrayItem(b1->cl, pos) < taBodyMidpoint(b1, pos - 2)) return (taTRUE);
+        info->candle[pos - 2].color == taWHITECNDL &&
+        info->candle[pos - 1].shape == taSMALL &&
+        info->candle[pos - 2].shape == taLARGE &&
+        taBodyGapUp(b1, pos - 1) &&
+        taArrayItem(b1->cl, pos) < taBodyMidpoint(b1, pos - 2)) return (taTRUE);
     else return (taFALSE);
 }
 
@@ -473,20 +472,20 @@ int DLL_EXPORT taFalling3Method(taBars *b1, struct taCandleInfo *info, int pos)
 {
     if (pos < 4) return (taFALSE);
     if (info->candle[pos].color == taBLACKCNDL &&
-            info->candle[pos - 1].color == taWHITECNDL &&
-            info->candle[pos - 2].color == taWHITECNDL &&
-            info->candle[pos - 3].color == taWHITECNDL &&
-            info->candle[pos - 4].color == taBLACKCNDL &&
-            info->candle[pos].shape == taLARGE &&
-            info->candle[pos - 1].shape == taSMALL &&
-            info->candle[pos - 2].shape == taSMALL &&
-            info->candle[pos - 3].shape == taSMALL &&
-            info->candle[pos - 4].shape == taLARGE &&
-            taArrayItem(b1->cl, pos) < taArrayItem(b1->cl, pos - 4) &&
-            taArrayItem(b1->cl, pos - 4) < taArrayItem(b1->op, pos - 3) &&
-            taArrayItem(b1->cl, pos - 3) < taArrayItem(b1->cl, pos - 2) &&
-            taArrayItem(b1->cl, pos - 2) < taArrayItem(b1->cl, pos - 1) &&
-            taArrayItem(b1->cl, pos - 1) <= max(taArrayItem(b1->op, pos), taArrayItem(b1->op, pos - 4)))
+        info->candle[pos - 1].color == taWHITECNDL &&
+        info->candle[pos - 2].color == taWHITECNDL &&
+        info->candle[pos - 3].color == taWHITECNDL &&
+        info->candle[pos - 4].color == taBLACKCNDL &&
+        info->candle[pos].shape == taLARGE &&
+        info->candle[pos - 1].shape == taSMALL &&
+        info->candle[pos - 2].shape == taSMALL &&
+        info->candle[pos - 3].shape == taSMALL &&
+        info->candle[pos - 4].shape == taLARGE &&
+        taArrayItem(b1->cl, pos) < taArrayItem(b1->cl, pos - 4) &&
+        taArrayItem(b1->cl, pos - 4) < taArrayItem(b1->op, pos - 3) &&
+        taArrayItem(b1->cl, pos - 3) < taArrayItem(b1->cl, pos - 2) &&
+        taArrayItem(b1->cl, pos - 2) < taArrayItem(b1->cl, pos - 1) &&
+        taArrayItem(b1->cl, pos - 1) <= max(taArrayItem(b1->op, pos), taArrayItem(b1->op, pos - 4)))
         return (taTRUE);
     else return (taFALSE);
 }
@@ -495,26 +494,26 @@ int DLL_EXPORT taFalling3Method(taBars *b1, struct taCandleInfo *info, int pos)
 int DLL_EXPORT taGravestoneDoji(taBars *b1, struct taCandleInfo *info, int pos)
 {
     if (info->candle[pos].shape == taDOJI &&
-            taArrayItem(b1->lo, pos) == min(taArrayItem(b1->op, pos), taArrayItem(b1->cl, pos)))
-        return (taTRUE);
+        taArrayItem(b1->lo, pos) == min(taArrayItem(b1->op, pos), taArrayItem(b1->cl, pos)))
+            return (taTRUE);
     else return (taFALSE);
 }
 
 int DLL_EXPORT taHammer(taBars *b1, struct taCandleInfo *info, int pos)
 {
     if (info->candle[pos].color == taBLACKCNDL &&
-            info->candle[pos].shape != taLARGE &&
-            info->candle[pos].topshadow == taSMALL &&
-            info->candle[pos].botshadow == taLARGE) return (taTRUE);
+        info->candle[pos].shape != taLARGE &&
+        info->candle[pos].topshadow == taSMALL &&
+        info->candle[pos].botshadow == taLARGE) return (taTRUE);
     else return (taFALSE);
 }
 
 int DLL_EXPORT taHangingman(taBars *b1, struct taCandleInfo *info, int pos)
 {
     if (info->candle[pos].color == taWHITECNDL &&
-            info->candle[pos].shape != taLARGE &&
-            info->candle[pos].topshadow == taSMALL &&
-            info->candle[pos].botshadow == taLARGE) return (taTRUE);
+        info->candle[pos].shape != taLARGE &&
+        info->candle[pos].topshadow == taSMALL &&
+        info->candle[pos].botshadow == taLARGE) return (taTRUE);
     else return (taFALSE);
 }
 
@@ -523,13 +522,12 @@ int DLL_EXPORT taHaramiBlack(taBars *b1, struct taCandleInfo *info, int pos)
     /* Bottom Signal */
     if (pos < 1) return (taFALSE);
     if (info->candle[pos].shape == taSMALL &&
-            info->candle[pos - 1].color == taBLACKCNDL &&
-            info->candle[pos - 1].shape == taLARGE &&
-            taArrayItem(b1->op, pos) > taArrayItem(b1->cl, pos - 1) &&
-            taArrayItem(b1->op, pos) < taArrayItem(b1->op, pos - 1) &&
-            taArrayItem(b1->cl, pos) > taArrayItem(b1->cl, pos - 1) &&
-            taArrayItem(b1->cl, pos) < taArrayItem(b1->op, pos - 1))
-        return (taTRUE);
+        info->candle[pos - 1].color == taBLACKCNDL &&
+        info->candle[pos - 1].shape == taLARGE &&
+        taArrayItem(b1->op, pos) > taArrayItem(b1->cl, pos - 1) &&
+        taArrayItem(b1->op, pos) < taArrayItem(b1->op, pos - 1) &&
+        taArrayItem(b1->cl, pos) > taArrayItem(b1->cl, pos - 1) &&
+        taArrayItem(b1->cl, pos) < taArrayItem(b1->op, pos - 1)) return (taTRUE);
     else return (taFALSE);
 }
 
@@ -538,13 +536,12 @@ int DLL_EXPORT taHaramiCrossBlack(taBars *b1, struct taCandleInfo *info, int pos
     /* Bottom Signal */
     if (pos < 1) return (taFALSE);
     if (info->candle[pos].shape == taDOJI &&
-            info->candle[pos - 1].color == taBLACKCNDL &&
-            info->candle[pos - 1].shape == taLARGE &&
-            taArrayItem(b1->op, pos) > taArrayItem(b1->cl, pos - 1) &&
-            taArrayItem(b1->op, pos) < taArrayItem(b1->op, pos - 1) &&
-            taArrayItem(b1->cl, pos) > taArrayItem(b1->cl, pos - 1) &&
-            taArrayItem(b1->cl, pos) < taArrayItem(b1->op, pos - 1))
-        return (taTRUE);
+        info->candle[pos - 1].color == taBLACKCNDL &&
+        info->candle[pos - 1].shape == taLARGE &&
+        taArrayItem(b1->op, pos) > taArrayItem(b1->cl, pos - 1) &&
+        taArrayItem(b1->op, pos) < taArrayItem(b1->op, pos - 1) &&
+        taArrayItem(b1->cl, pos) > taArrayItem(b1->cl, pos - 1) &&
+        taArrayItem(b1->cl, pos) < taArrayItem(b1->op, pos - 1)) return (taTRUE);
     else return (taFALSE);
 }
 
@@ -553,13 +550,12 @@ int DLL_EXPORT taHaramiCrossWhite(taBars *b1, struct taCandleInfo *info, int pos
     /* Top Signal */
     if (pos < 1) return (taFALSE);
     if (info->candle[pos].shape == taDOJI &&
-            info->candle[pos - 1].color == taWHITECNDL &&
-            info->candle[pos - 1].shape == taLARGE &&
-            taArrayItem(b1->op, pos) < taArrayItem(b1->cl, pos - 1) &&
-            taArrayItem(b1->op, pos) > taArrayItem(b1->op, pos - 1) &&
-            taArrayItem(b1->cl, pos) < taArrayItem(b1->cl, pos - 1) &&
-            taArrayItem(b1->cl, pos) > taArrayItem(b1->op, pos - 1))
-        return (taTRUE);
+        info->candle[pos - 1].color == taWHITECNDL &&
+        info->candle[pos - 1].shape == taLARGE &&
+        taArrayItem(b1->op, pos) < taArrayItem(b1->cl, pos - 1) &&
+        taArrayItem(b1->op, pos) > taArrayItem(b1->op, pos - 1) &&
+        taArrayItem(b1->cl, pos) < taArrayItem(b1->cl, pos - 1) &&
+        taArrayItem(b1->cl, pos) > taArrayItem(b1->op, pos - 1)) return (taTRUE);
     else return (taFALSE);
 }
 
@@ -569,13 +565,12 @@ int DLL_EXPORT taHaramiWhite(taBars *b1, struct taCandleInfo *info, int pos)
     /* Top Signal */
     if (pos < 1) return (taFALSE);
     if (info->candle[pos].shape == taSMALL &&
-            info->candle[pos - 1].color == taWHITECNDL &&
-            info->candle[pos - 1].shape == taLARGE &&
-            taArrayItem(b1->op, pos) < taArrayItem(b1->cl, pos - 1) &&
-            taArrayItem(b1->op, pos) > taArrayItem(b1->op, pos - 1) &&
-            taArrayItem(b1->cl, pos) < taArrayItem(b1->cl, pos - 1) &&
-            taArrayItem(b1->cl, pos) > taArrayItem(b1->op, pos - 1))
-        return (taTRUE);
+        info->candle[pos - 1].color == taWHITECNDL &&
+        info->candle[pos - 1].shape == taLARGE &&
+        taArrayItem(b1->op, pos) < taArrayItem(b1->cl, pos - 1) &&
+        taArrayItem(b1->op, pos) > taArrayItem(b1->op, pos - 1) &&
+        taArrayItem(b1->cl, pos) < taArrayItem(b1->cl, pos - 1) &&
+        taArrayItem(b1->cl, pos) > taArrayItem(b1->op, pos - 1)) return (taTRUE);
     else return (taFALSE);
 }
 
@@ -583,7 +578,7 @@ int DLL_EXPORT taHighWave(taBars *b1, struct taCandleInfo *info, int pos)     /*
                                                          * indicates reversal */
 {
     if (info->candle[pos].shape == taSMALL &&
-            (info->candle[pos].topshadow == taLARGE || info->candle[pos].botshadow == taLARGE))
+        (info->candle[pos].topshadow == taLARGE || info->candle[pos].botshadow == taLARGE))
         return (taTRUE);
     else return (taFALSE);
 }
@@ -592,28 +587,28 @@ int DLL_EXPORT taInNeckLine(taBars *b1, struct taCandleInfo *info, int pos)
 {
     if (pos < 1) return (taFALSE);
     if (info->candle[pos].color == taWHITECNDL &&
-            info->candle[pos - 1].color == taBLACKCNDL &&
-            info->candle[pos].shape == taSMALL &&
-            info->candle[pos - 1].shape != taDOJI &&
-            taApproxEqual(taArrayItem(b1->cl, pos), taArrayItem(b1->lo, pos - 1), info->equalpct) &&
-            taArrayItem(b1->cl, pos) > taArrayItem(b1->lo, pos - 1)) return (taTRUE);
+        info->candle[pos - 1].color == taBLACKCNDL &&
+        info->candle[pos].shape == taSMALL &&
+        info->candle[pos - 1].shape != taDOJI &&
+        taApproxEqual(taArrayItem(b1->cl, pos), taArrayItem(b1->lo, pos - 1), info->equalpct) &&
+        taArrayItem(b1->cl, pos) > taArrayItem(b1->lo, pos - 1)) return (taTRUE);
     else return (taFALSE);
 }
 
 int DLL_EXPORT taInvertedHammer(taBars *b1, struct taCandleInfo *info, int pos)       /* Bullish */
 {
     if (info->candle[pos].color == taWHITECNDL &&
-            info->candle[pos].shape != taLARGE &&
-            info->candle[pos].topshadow == taLARGE &&
-            info->candle[pos].botshadow == taSMALL) return (taTRUE);
+        info->candle[pos].shape != taLARGE &&
+        info->candle[pos].topshadow == taLARGE &&
+        info->candle[pos].botshadow == taSMALL) return (taTRUE);
     else return (taFALSE);
 }
 
 int DLL_EXPORT taLongLeggedDoji(taBars *b1, struct taCandleInfo *info, int pos)
 {
     if (info->candle[pos].shape == taDOJI &&
-            info->candle[pos].topshadow == taLARGE &&
-            info->candle[pos].botshadow == taLARGE) return (taTRUE);
+        info->candle[pos].topshadow == taLARGE &&
+        info->candle[pos].botshadow == taLARGE) return (taTRUE);
     else return (taFALSE);
 }
 
@@ -622,19 +617,19 @@ int DLL_EXPORT taMatHoldPattern(taBars *b1, struct taCandleInfo *info, int pos)
 {
     if (pos < 4) return (taFALSE);
     if (info->candle[pos].color == taWHITECNDL &&
-            info->candle[pos - 1].color == taBLACKCNDL &&
-            info->candle[pos - 2].color == taBLACKCNDL &&
-            info->candle[pos - 3].color == taBLACKCNDL &&
-            info->candle[pos - 4].color == taWHITECNDL &&
-            info->candle[pos].shape != taDOJI &&
-            info->candle[pos - 1].shape == taSMALL &&
-            info->candle[pos - 2].shape == taSMALL &&
-            info->candle[pos - 3].shape == taSMALL &&
-            info->candle[pos - 4].shape == taLARGE &&
-            taBodyGapUp(b1, pos - 3) &&
-            taBodyGapUp(b1, pos) &&
-            taArrayItem(b1->op, pos - 3) > taArrayItem(b1->op, pos - 2) &&
-            taArrayItem(b1->op, pos - 2) > taArrayItem(b1->op, pos - 1)) return (taTRUE);
+        info->candle[pos - 1].color == taBLACKCNDL &&
+        info->candle[pos - 2].color == taBLACKCNDL &&
+        info->candle[pos - 3].color == taBLACKCNDL &&
+        info->candle[pos - 4].color == taWHITECNDL &&
+        info->candle[pos].shape != taDOJI &&
+        info->candle[pos - 1].shape == taSMALL &&
+        info->candle[pos - 2].shape == taSMALL &&
+        info->candle[pos - 3].shape == taSMALL &&
+        info->candle[pos - 4].shape == taLARGE &&
+        taBodyGapUp(b1, pos - 3) &&
+        taBodyGapUp(b1, pos) &&
+        taArrayItem(b1->op, pos - 3) > taArrayItem(b1->op, pos - 2) &&
+        taArrayItem(b1->op, pos - 2) > taArrayItem(b1->op, pos - 1)) return (taTRUE);
     else return (taFALSE);
 }
 
@@ -643,13 +638,13 @@ int DLL_EXPORT taMorningStar(taBars *b1, struct taCandleInfo *info, int pos)
 {
     if (pos < 2) return (taFALSE);
     if (info->candle[pos].color == taWHITECNDL &&
-            info->candle[pos - 2].color == taBLACKCNDL &&
-            info->candle[pos].shape != taDOJI &&
-            info->candle[pos - 1].shape == taSMALL &&
-            info->candle[pos - 2].shape == taLARGE &&
-            taBodyGapDn(b1, pos - 1) &&
-            taArrayItem(b1->op, pos) > taArrayItem(b1->op, pos - 1) &&
-            taArrayItem(b1->cl, pos) > taBodyMidpoint(b1, pos - 2)) return (taTRUE);
+        info->candle[pos - 2].color == taBLACKCNDL &&
+        info->candle[pos].shape != taDOJI &&
+        info->candle[pos - 1].shape == taSMALL &&
+        info->candle[pos - 2].shape == taLARGE &&
+        taBodyGapDn(b1, pos - 1) &&
+        taArrayItem(b1->op, pos) > taArrayItem(b1->op, pos - 1) &&
+        taArrayItem(b1->cl, pos) > taBodyMidpoint(b1, pos - 2)) return (taTRUE);
     else return (taFALSE);
 }
 
@@ -657,13 +652,13 @@ int DLL_EXPORT taMorningDojiStar(taBars *b1, struct taCandleInfo *info, int pos)
 {
     if (pos < 2) return (taFALSE);
     if (info->candle[pos].color == taWHITECNDL &&
-            info->candle[pos - 2].color == taBLACKCNDL &&
-            info->candle[pos].shape != taDOJI &&
-            info->candle[pos - 1].shape == taDOJI &&
-            info->candle[pos - 2].shape == taLARGE &&
-            taBodyGapDn(b1, pos - 1) &&
-            taArrayItem(b1->op, pos) > taArrayItem(b1->op, pos - 1) &&
-            taArrayItem(b1->cl, pos) > taBodyMidpoint(b1, pos - 2)) return (taTRUE);
+        info->candle[pos - 2].color == taBLACKCNDL &&
+        info->candle[pos].shape != taDOJI &&
+        info->candle[pos - 1].shape == taDOJI &&
+        info->candle[pos - 2].shape == taLARGE &&
+        taBodyGapDn(b1, pos - 1) &&
+        taArrayItem(b1->op, pos) > taArrayItem(b1->op, pos - 1) &&
+        taArrayItem(b1->cl, pos) > taBodyMidpoint(b1, pos - 2)) return (taTRUE);
     else return (taFALSE);
 }
 
@@ -671,11 +666,11 @@ int DLL_EXPORT taPiercingLine(taBars *b1, struct taCandleInfo *info, int pos)
 {
     if (pos < 1) return (taFALSE);
     if (info->candle[pos].color == taWHITECNDL &&
-            info->candle[pos - 1].color == taBLACKCNDL &&
-            info->candle[pos].shape != taDOJI &&
-            info->candle[pos - 1].shape == taLARGE &&
-            taArrayItem(b1->op, pos) < taArrayItem(b1->cl, pos - 1) &&
-            taArrayItem(b1->cl, pos) > taBodyMidpoint(b1, pos - 1)) return (taTRUE);
+        info->candle[pos - 1].color == taBLACKCNDL &&
+        info->candle[pos].shape != taDOJI &&
+        info->candle[pos - 1].shape == taLARGE &&
+        taArrayItem(b1->op, pos) < taArrayItem(b1->cl, pos - 1) &&
+        taArrayItem(b1->cl, pos) > taBodyMidpoint(b1, pos - 1)) return (taTRUE);
     else return (taFALSE);
 }
 
@@ -685,20 +680,20 @@ int DLL_EXPORT taRising3Method(taBars *b1, struct taCandleInfo *info, int pos)
     /* bullish pattern */
     if (pos < 4) return (taFALSE);
     if (info->candle[pos].color == taWHITECNDL &&
-            info->candle[pos - 1].color == taBLACKCNDL &&
-            info->candle[pos - 2].color == taBLACKCNDL &&
-            info->candle[pos - 3].color == taBLACKCNDL &&
-            info->candle[pos - 4].color == taWHITECNDL &&
-            info->candle[pos].shape == taLARGE &&
-            info->candle[pos - 1].shape == taSMALL &&
-            info->candle[pos - 2].shape == taSMALL &&
-            info->candle[pos - 3].shape == taSMALL &&
-            info->candle[pos - 4].shape == taLARGE &&
-            taArrayItem(b1->cl, pos) > taArrayItem(b1->cl, pos - 4) &&
-            taArrayItem(b1->cl, pos - 4) > taArrayItem(b1->op, pos - 3) &&
-            taArrayItem(b1->cl, pos - 3) > taArrayItem(b1->cl, pos - 2) &&
-            taArrayItem(b1->cl, pos - 2) > taArrayItem(b1->cl, pos - 1) &&
-            taArrayItem(b1->cl, pos - 1) >= min(taArrayItem(b1->op, pos), taArrayItem(b1->op, pos - 4)))
+        info->candle[pos - 1].color == taBLACKCNDL &&
+        info->candle[pos - 2].color == taBLACKCNDL &&
+        info->candle[pos - 3].color == taBLACKCNDL &&
+        info->candle[pos - 4].color == taWHITECNDL &&
+        info->candle[pos].shape == taLARGE &&
+        info->candle[pos - 1].shape == taSMALL &&
+        info->candle[pos - 2].shape == taSMALL &&
+        info->candle[pos - 3].shape == taSMALL &&
+        info->candle[pos - 4].shape == taLARGE &&
+        taArrayItem(b1->cl, pos) > taArrayItem(b1->cl, pos - 4) &&
+        taArrayItem(b1->cl, pos - 4) > taArrayItem(b1->op, pos - 3) &&
+        taArrayItem(b1->cl, pos - 3) > taArrayItem(b1->cl, pos - 2) &&
+        taArrayItem(b1->cl, pos - 2) > taArrayItem(b1->cl, pos - 1) &&
+        taArrayItem(b1->cl, pos - 1) >= min(taArrayItem(b1->op, pos), taArrayItem(b1->op, pos - 4)))
         return (taTRUE);
     else return (taFALSE);
 }
@@ -707,10 +702,10 @@ int DLL_EXPORT taSeperatingLineBear(taBars *b1, struct taCandleInfo *info, int p
 {
     if (pos < 1) return (taFALSE);
     if (info->candle[pos].color == taBLACKCNDL &&
-            info->candle[pos - 1].color == taWHITECNDL &&
-            info->candle[pos].shape != taDOJI &&
-            info->candle[pos - 1].shape != taDOJI &&
-            taArrayItem(b1->op, pos) == taArrayItem(b1->op, pos - 1)) return (taTRUE);
+        info->candle[pos - 1].color == taWHITECNDL &&
+        info->candle[pos].shape != taDOJI &&
+        info->candle[pos - 1].shape != taDOJI &&
+        taArrayItem(b1->op, pos) == taArrayItem(b1->op, pos - 1)) return (taTRUE);
     else return (taFALSE);
 }
 
@@ -718,19 +713,19 @@ int DLL_EXPORT taSeperatingLineBull(taBars *b1, struct taCandleInfo *info, int p
 {
     if (pos < 1) return (taFALSE);
     if (info->candle[pos].color == taWHITECNDL &&
-            info->candle[pos - 1].color == taBLACKCNDL &&
-            info->candle[pos].shape != taDOJI &&
-            info->candle[pos - 1].shape != taDOJI &&
-            taArrayItem(b1->op, pos) == taArrayItem(b1->op, pos - 1)) return (taTRUE);
+        info->candle[pos - 1].color == taBLACKCNDL &&
+        info->candle[pos].shape != taDOJI &&
+        info->candle[pos - 1].shape != taDOJI &&
+        taArrayItem(b1->op, pos) == taArrayItem(b1->op, pos - 1)) return (taTRUE);
     else return (taFALSE);
 }
 
 int DLL_EXPORT taShootingStar(taBars *b1, struct taCandleInfo *info, int pos)
 {
     if (info->candle[pos].color == taWHITECNDL &&
-            info->candle[pos].shape == taSMALL &&
-            info->candle[pos].topshadow == taLARGE &&
-            info->candle[pos].botshadow == taSMALL) return (taTRUE);
+        info->candle[pos].shape == taSMALL &&
+        info->candle[pos].topshadow == taLARGE &&
+        info->candle[pos].botshadow == taSMALL) return (taTRUE);
     else return (taFALSE);
 }
 
@@ -739,12 +734,12 @@ int DLL_EXPORT taSideBySideWhiteGapDn(taBars *b1, struct taCandleInfo *info, int
 {
     if (pos < 1) return (taFALSE);
     if (info->candle[pos].color == taWHITECNDL &&
-            info->candle[pos - 1].color == taWHITECNDL &&
-            info->candle[pos].shape != taDOJI &&
-            info->candle[pos - 1].shape != taDOJI &&
-            info->candle[pos].shape == info->candle[pos - 1].shape &&
-            taBodyGapDn(b1, pos - 1) &&
-            taApproxEqual(taArrayItem(b1->cl, pos), taArrayItem(b1->cl, pos - 1), info->equalpct))
+        info->candle[pos - 1].color == taWHITECNDL &&
+        info->candle[pos].shape != taDOJI &&
+        info->candle[pos - 1].shape != taDOJI &&
+        info->candle[pos].shape == info->candle[pos - 1].shape &&
+        taBodyGapDn(b1, pos - 1) &&
+        taApproxEqual(taArrayItem(b1->cl, pos), taArrayItem(b1->cl, pos - 1), info->equalpct))
         return (taTRUE);
     else return (taFALSE);
 }
@@ -753,12 +748,12 @@ int DLL_EXPORT taSideBySideWhiteGapUp(taBars *b1, struct taCandleInfo *info, int
 {
     if (pos < 1) return (taFALSE);
     if (info->candle[pos].color == taWHITECNDL &&
-            info->candle[pos - 1].color == taWHITECNDL &&
-            info->candle[pos].shape != taDOJI &&
-            info->candle[pos - 1].shape != taDOJI &&
-            info->candle[pos].shape == info->candle[pos - 1].shape &&
-            taBodyGapUp(b1, pos - 1) &&
-            taApproxEqual(taArrayItem(b1->op, pos), taArrayItem(b1->op, pos - 1), info->equalpct))
+        info->candle[pos - 1].color == taWHITECNDL &&
+        info->candle[pos].shape != taDOJI &&
+        info->candle[pos - 1].shape != taDOJI &&
+        info->candle[pos].shape == info->candle[pos - 1].shape &&
+        taBodyGapUp(b1, pos - 1) &&
+        taApproxEqual(taArrayItem(b1->op, pos), taArrayItem(b1->op, pos - 1), info->equalpct))
         return (taTRUE);
     else return (taFALSE);
 }
@@ -767,10 +762,10 @@ int DLL_EXPORT taStalledPattern(taBars *b1, struct taCandleInfo *info, int pos)
 {
     if (pos < 1) return (taFALSE);
     if (info->candle[pos].color == taWHITECNDL &&
-            info->candle[pos - 1].color == taWHITECNDL &&
-            info->candle[pos].shape == taSMALL &&
-            info->candle[pos - 1].shape == taLARGE &&
-            taApproxEqual(taArrayItem(b1->op, pos), taArrayItem(b1->cl, pos - 1), info->equalpct))
+        info->candle[pos - 1].color == taWHITECNDL &&
+        info->candle[pos].shape == taSMALL &&
+        info->candle[pos - 1].shape == taLARGE &&
+        taApproxEqual(taArrayItem(b1->op, pos), taArrayItem(b1->cl, pos - 1), info->equalpct))
         return (taTRUE);
     else return (taFALSE);
 }
@@ -779,13 +774,13 @@ int DLL_EXPORT taTasukiDownsideGap(taBars *b1, struct taCandleInfo *info, int po
 {
     if (pos < 2) return (taFALSE);
     if (info->candle[pos].color == taWHITECNDL &&
-            info->candle[pos - 1].color == taBLACKCNDL &&
-            info->candle[pos - 2].color == taBLACKCNDL &&
-            info->candle[pos].shape == info->candle[pos - 1].shape &&
-            taArrayItem(b1->op, pos) > taArrayItem(b1->cl, pos - 1) &&
-            taArrayItem(b1->cl, pos) > taArrayItem(b1->op, pos - 1) &&
-            taArrayItem(b1->cl, pos) < taArrayItem(b1->cl, pos - 2) &&
-            taArrayItem(b1->op, pos - 1) < taArrayItem(b1->cl, pos - 2)) return (taTRUE);
+        info->candle[pos - 1].color == taBLACKCNDL &&
+        info->candle[pos - 2].color == taBLACKCNDL &&
+        info->candle[pos].shape == info->candle[pos - 1].shape &&
+        taArrayItem(b1->op, pos) > taArrayItem(b1->cl, pos - 1) &&
+        taArrayItem(b1->cl, pos) > taArrayItem(b1->op, pos - 1) &&
+        taArrayItem(b1->cl, pos) < taArrayItem(b1->cl, pos - 2) &&
+        taArrayItem(b1->op, pos - 1) < taArrayItem(b1->cl, pos - 2)) return (taTRUE);
     else return (taFALSE);
 }
 
@@ -793,13 +788,13 @@ int DLL_EXPORT taTasukiUpsideGap(taBars *b1, struct taCandleInfo *info, int pos)
 {
     if (pos < 2) return (taFALSE);
     if (info->candle[pos].color == taBLACKCNDL &&
-            info->candle[pos - 1].color == taWHITECNDL &&
-            info->candle[pos - 2].color == taWHITECNDL &&
-            info->candle[pos].shape == info->candle[pos - 1].shape &&
-            taArrayItem(b1->op, pos) < taArrayItem(b1->cl, pos - 1) &&
-            taArrayItem(b1->cl, pos) < taArrayItem(b1->op, pos - 1) &&
-            taArrayItem(b1->cl, pos) > taArrayItem(b1->cl, pos - 2) &&
-            taArrayItem(b1->op, pos - 1) > taArrayItem(b1->cl, pos - 2)) return (taTRUE);
+        info->candle[pos - 1].color == taWHITECNDL &&
+        info->candle[pos - 2].color == taWHITECNDL &&
+        info->candle[pos].shape == info->candle[pos - 1].shape &&
+        taArrayItem(b1->op, pos) < taArrayItem(b1->cl, pos - 1) &&
+        taArrayItem(b1->cl, pos) < taArrayItem(b1->op, pos - 1) &&
+        taArrayItem(b1->cl, pos) > taArrayItem(b1->cl, pos - 2) &&
+        taArrayItem(b1->op, pos - 1) > taArrayItem(b1->cl, pos - 2)) return (taTRUE);
     else return (taFALSE);
 }
 
@@ -807,16 +802,16 @@ int DLL_EXPORT taThreeGapsDown(taBars *b1, struct taCandleInfo *info, int pos)
 {
     if (pos < 2) return (taFALSE);
     if (taBodyGapDn(b1, pos) &&
-            taBodyGapDn(b1, pos - 1) &&
-            taBodyGapDn(b1, pos - 2)) return (taTRUE);
+        taBodyGapDn(b1, pos - 1) &&
+        taBodyGapDn(b1, pos - 2)) return (taTRUE);
     else return (taFALSE);
 }
 int DLL_EXPORT taThreeGapsUp(taBars *b1, struct taCandleInfo *info, int pos)
 {
     if (pos < 2) return (taFALSE);
     if (taBodyGapUp(b1, pos) &&
-            taBodyGapUp(b1, pos - 1) &&
-            taBodyGapUp(b1, pos - 2)) return (taTRUE);
+        taBodyGapUp(b1, pos - 1) &&
+        taBodyGapUp(b1, pos - 2)) return (taTRUE);
     else return (taFALSE);
 }
 
@@ -824,16 +819,16 @@ int DLL_EXPORT taThreeWhiteSoldiers(taBars *b1, struct taCandleInfo *info, int p
 {
     if (pos < 2) return (taFALSE);
     if (info->candle[pos].color == taWHITECNDL &&
-            info->candle[pos - 1].color == taWHITECNDL &&
-            info->candle[pos - 2].color == taWHITECNDL &&
-            info->candle[pos].topshadow == taSMALL &&
-            info->candle[pos - 1].topshadow == taSMALL &&
-            info->candle[pos - 2].topshadow == taSMALL &&
-            taArrayItem(b1->hi, pos) > taArrayItem(b1->hi, pos - 1) &&
-            taArrayItem(b1->hi, pos - 1) > taArrayItem(b1->hi, pos - 2) &&
-            taApproxEqual(taArrayItem(b1->hi, pos), taArrayItem(b1->cl, pos), info->equalpct) &&
-            taApproxEqual(taArrayItem(b1->hi, pos - 1), taArrayItem(b1->cl, pos - 1), info->equalpct) &&
-            taApproxEqual(taArrayItem(b1->hi, pos - 2), taArrayItem(b1->cl, pos - 2), info->equalpct))
+        info->candle[pos - 1].color == taWHITECNDL &&
+        info->candle[pos - 2].color == taWHITECNDL &&
+        info->candle[pos].topshadow == taSMALL &&
+        info->candle[pos - 1].topshadow == taSMALL &&
+        info->candle[pos - 2].topshadow == taSMALL &&
+        taArrayItem(b1->hi, pos) > taArrayItem(b1->hi, pos - 1) &&
+        taArrayItem(b1->hi, pos - 1) > taArrayItem(b1->hi, pos - 2) &&
+        taApproxEqual(taArrayItem(b1->hi, pos), taArrayItem(b1->cl, pos), info->equalpct) &&
+        taApproxEqual(taArrayItem(b1->hi, pos - 1), taArrayItem(b1->cl, pos - 1), info->equalpct) &&
+        taApproxEqual(taArrayItem(b1->hi, pos - 2), taArrayItem(b1->cl, pos - 2), info->equalpct))
         return (taTRUE);
     else return (taFALSE);
 }
@@ -842,9 +837,9 @@ int DLL_EXPORT taThrustingLine(taBars *b1, struct taCandleInfo *info, int pos)
 {
     if (pos < 1) return (taFALSE);
     if (info->candle[pos].color == taWHITECNDL &&
-            info->candle[pos - 1].color == taBLACKCNDL &&
-            taArrayItem(b1->cl, pos) > taArrayItem(b1->cl, pos - 1) &&
-            taArrayItem(b1->cl, pos) < taBodyMidpoint(b1, pos - 1)) return (taTRUE);
+        info->candle[pos - 1].color == taBLACKCNDL &&
+        taArrayItem(b1->cl, pos) > taArrayItem(b1->cl, pos - 1) &&
+        taArrayItem(b1->cl, pos) < taBodyMidpoint(b1, pos - 1)) return (taTRUE);
     else return (taFALSE);
 }
 
@@ -852,12 +847,12 @@ int DLL_EXPORT taUpsideGap2Crows(taBars *b1, struct taCandleInfo *info, int pos)
 {
     if (pos < 2) return (taFALSE);
     if (info->candle[pos].color == taBLACKCNDL &&
-            info->candle[pos - 1].color == taBLACKCNDL &&
-            info->candle[pos - 2].color == taWHITECNDL &&
-            info->candle[pos - 2].shape == taLARGE &&
-            taBodyGapUp(b1, pos - 1) &&
-            taArrayItem(b1->cl, pos) < taArrayItem(b1->cl, pos - 1) &&
-            taArrayItem(b1->op, pos) > taArrayItem(b1->op, pos - 1)) return (taTRUE);
+        info->candle[pos - 1].color == taBLACKCNDL &&
+        info->candle[pos - 2].color == taWHITECNDL &&
+        info->candle[pos - 2].shape == taLARGE &&
+        taBodyGapUp(b1, pos - 1) &&
+        taArrayItem(b1->cl, pos) < taArrayItem(b1->cl, pos - 1) &&
+        taArrayItem(b1->op, pos) > taArrayItem(b1->op, pos - 1)) return (taTRUE);
     else return (taFALSE);
 }
 

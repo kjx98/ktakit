@@ -10,8 +10,7 @@ int      taChrCnt(char *string, char chr)
     int      i1 = 0, cnt = 0;
 
     for (i1 = 0; string[i1]; i1++)
-        if (string[i1] == chr)
-            cnt++;
+        if (string[i1] == chr) cnt++;
     return (cnt);
 }
 
@@ -21,8 +20,7 @@ int      taChrsCnt(char *string, char *chrs)
 
     for (i2 = 0; chrs[i2] != '\0'; i2++)
         for (i1 = 0; string[i1] != '\0'; i1++)
-            if (string[i1] == chrs[i2])
-                cnt++;
+            if (string[i1] == chrs[i2]) cnt++;
     return (cnt);
 }
 
@@ -63,7 +61,6 @@ int      taStrNthChr(char *str, char chr, int n)
     int      i1, i2;
 
     for (i1 = 0, i2 = 0; i2 < n && str[i1] != '\0'; i1++)
-        if (str[i1] == chr)
-            i2++;
+        if (str[i1] == chr) i2++;
     return (i1 - 1);
 }

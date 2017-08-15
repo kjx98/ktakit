@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1502720286 source:/home/kjx/work/ktakit/source/taarray.c
+1502767483 source:/home/kjx/work/ktakit/source/taarray.c
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
@@ -8,19 +8,19 @@
 	<stdarg.h>
 	"ktakit.h"
 
-1502555430 /home/kjx/work/ktakit/include/ktakit.h
+1502767483 /home/kjx/work/ktakit/include/ktakit.h
 	"ktadefs.h"
 
-1477919637 /home/kjx/work/ktakit/include/ktadefs.h
+1487137295 /home/kjx/work/ktakit/include/ktadefs.h
 	"ktatypes.h"
 	"ktastd.h"
 
-1501594240 /home/kjx/work/ktakit/include/ktatypes.h
+1501578124 /home/kjx/work/ktakit/include/ktatypes.h
 	<windows.h>
 	<sys/types.h>
 	<limits.h>
 
-1501594240 /home/kjx/work/ktakit/include/ktastd.h
+1501578259 /home/kjx/work/ktakit/include/ktastd.h
 	<string.h>
 	<memory.h>
 	<stdio.h>
@@ -39,10 +39,10 @@
 	<share.h>
 	"memwatch.h"
 
-1477919637 /home/kjx/work/ktakit/include/memwatch.h
+1487137295 /home/kjx/work/ktakit/include/memwatch.h
 	<stdlib.h>
 
-1502719954 source:/home/kjx/work/ktakit/source/tacalc.c
+1502770582 source:/home/kjx/work/ktakit/source/tacalc.c
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
@@ -50,13 +50,13 @@
 	<ctype.h>
 	"ktakit.h"
 
-1502719992 source:/home/kjx/work/ktakit/source/tacandle.c
+1502780793 source:/home/kjx/work/ktakit/source/tacandle.c
 	<stdio.h>
 	<stdlib.h>
 	<math.h>
 	"ktakit.h"
 
-1502719818 source:/home/kjx/work/ktakit/source/tachart.c
+1502780186 source:/home/kjx/work/ktakit/source/tachart.c
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
@@ -65,13 +65,13 @@
 	"graphics.h"
 	"ktakit.h"
 
-1477919637 /home/kjx/work/ktakit/include/graphics.h
+1487137295 /home/kjx/work/ktakit/include/graphics.h
 	"../SDL_bgi/SDL_bgi.h"
 
-1477919637 /home/kjx/work/ktakit/SDL_bgi/SDL_bgi.h
+1487137295 /home/kjx/work/ktakit/SDL_bgi/SDL_bgi.h
 	<SDL2/SDL.h>
 
-1502592740 source:/home/kjx/work/ktakit/source/tacsi.c
+1502769791 source:/home/kjx/work/ktakit/source/tacsi.c
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
@@ -80,9 +80,9 @@
 	"ktakit.h"
 	"tacsi.h"
 
-1477919637 /home/kjx/work/ktakit/source/tacsi.h
+1487137295 /home/kjx/work/ktakit/source/tacsi.h
 
-1502719543 source:/home/kjx/work/ktakit/source/tact.c
+1502769733 source:/home/kjx/work/ktakit/source/tact.c
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
@@ -91,15 +91,15 @@
 	"ktakit.h"
 	"tact.h"
 
-1477919637 /home/kjx/work/ktakit/source/tact.h
+1487137295 /home/kjx/work/ktakit/source/tact.h
 
-1502719423 source:/home/kjx/work/ktakit/source/tadate.c
+1502769360 source:/home/kjx/work/ktakit/source/tadate.c
 	<stdio.h>
 	<stdlib.h>
 	<math.h>
 	"ktakit.h"
 
-1502719451 source:/home/kjx/work/ktakit/source/tadj.c
+1502769313 source:/home/kjx/work/ktakit/source/tadj.c
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
@@ -108,9 +108,9 @@
 	"ktakit.h"
 	"tadj.h"
 
-1477919637 /home/kjx/work/ktakit/source/tadj.h
+1487137295 /home/kjx/work/ktakit/source/tadj.h
 
-1502725624 source:/home/kjx/work/ktakit/source/tafile.c
+1502769174 source:/home/kjx/work/ktakit/source/tafile.c
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
@@ -118,14 +118,14 @@
 	<ctype.h>
 	"ktakit.h"
 
-1502725624 source:/home/kjx/work/ktakit/source/tafin.c
+1502767483 source:/home/kjx/work/ktakit/source/tafin.c
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
 	<math.h>
 	"ktakit.h"
 
-1502591639 source:/home/kjx/work/ktakit/source/tafs.c
+1502769103 source:/home/kjx/work/ktakit/source/tafs.c
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
@@ -134,9 +134,9 @@
 	"ktakit.h"
 	"tafs.h"
 
-1477919637 /home/kjx/work/ktakit/source/tafs.h
+1487137295 /home/kjx/work/ktakit/source/tafs.h
 
-1502555515 source:/home/kjx/work/ktakit/source/taio.c
+1502768946 source:/home/kjx/work/ktakit/source/taio.c
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
@@ -145,13 +145,13 @@
 	<stdarg.h>
 	"ktakit.h"
 
-1477919637 source:/home/kjx/work/ktakit/source/tastr.c
+1502768719 source:/home/kjx/work/ktakit/source/tastr.c
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
 	"ktakit.h"
 
-1502556777 source:/home/kjx/work/ktakit/source/tatc.c
+1502768692 source:/home/kjx/work/ktakit/source/tatc.c
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
@@ -160,9 +160,9 @@
 	"ktakit.h"
 	"tatc.h"
 
-1477919637 /home/kjx/work/ktakit/source/tatc.h
+1487137295 /home/kjx/work/ktakit/source/tatc.h
 
-1502725896 source:/home/kjx/work/ktakit/source/tatrade.c
+1502768559 source:/home/kjx/work/ktakit/source/tatrade.c
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
@@ -171,7 +171,7 @@
 	<ctype.h>
 	"ktakit.h"
 
-1502725812 source:/home/kjx/work/ktakit/source/tatt.c
+1502767823 source:/home/kjx/work/ktakit/source/tatt.c
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
@@ -180,9 +180,9 @@
 	"ktakit.h"
 	"tatt.h"
 
-1477919637 /home/kjx/work/ktakit/source/tatt.h
+1487137295 /home/kjx/work/ktakit/source/tatt.h
 
-1502725769 source:/home/kjx/work/ktakit/source/tatxt.c
+1502767729 source:/home/kjx/work/ktakit/source/tatxt.c
 	<stdio.h>
 	<stdlib.h>
 	<string.h>

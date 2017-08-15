@@ -8,8 +8,7 @@
 
 unsigned int DLL_EXPORT taDateTxtDif(char *date1, char *date2, int format1, int format2)
 {
-    return (abs(taDateTxtToJulian(date1, format1) -
-	     taDateTxtToJulian(date2, format2)));
+    return (abs(taDateTxtToJulian(date1, format1) - taDateTxtToJulian(date2, format2)));
 }
 
 unsigned int DLL_EXPORT taDateTxtToJulian(char *date, int format)

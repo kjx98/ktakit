@@ -29,8 +29,7 @@ int taDJfindfile(char *path, char *name, struct taDJinfo *info1)
     if (path[0] != '\0' && path[strlen(path) - 1] != ':' && path[strlen(path) - 1] != '\\')
         strcat(buffer, "\\");
     strcat(buffer, "mapinfo.dat");
-    if ((fp1 = fopen(buffer, "rb")) == NULL)
-        return (taErrFileOpen);
+    if ((fp1 = fopen(buffer, "rb")) == NULL) return (taErrFileOpen);
     if (fread((char *) &infohdr, sizeof(struct taDJinfohdr), 1, fp1) == 0)
     {
         fclose(fp1);
@@ -56,8 +55,7 @@ int taDJfindfile(char *path, char *name, struct taDJinfo *info1)
         }
     }
     fclose(fp1);
-    if (i1 == reccnt)
-        err = taErrFileNotFound;
+    if (i1 == reccnt) err = taErrFileNotFound;
     return (err);
 }
 
@@ -73,8 +71,7 @@ long DLL_EXPORT taDJfindrec(char *path, char *name, unsigned int date, unsigned 
     FILE    *fp1;
     struct taDJinfo info;
 
-    if (date == 0)
-        dt = 0;
+    if (date == 0) dt = 0;
     else
     {
         dt = date + taDJBASEDATE;
@@ -84,14 +81,12 @@ long DLL_EXPORT taDJfindrec(char *path, char *name, unsigned int date, unsigned 
     i2 = 1;
     while (name[(i1 = strcspn(name1, "+<>|=;\\/"))])
         name1[i1] = '0' + (i2++);
-    if ((err = taDJfindfile(path, name1, &info)))
-        return (err);
+    if ((err = taDJfindfile(path, name1, &info))) return (err);
     if (path[0] != '\0' && path[strlen(path) - 1] != ':' && path[strlen(path) - 1] != '\\')
         sprintf(buffer, "%s\\%s", path, name1);
     else
         sprintf(buffer, "%s%s", path, name1);
-    if ((fp1 = fopen(buffer, "rb")) == NULL)
-        return (taErrFileOpen);
+    if ((fp1 = fopen(buffer, "rb")) == NULL) return (taErrFileOpen);
 
     switch (info.content)
     {
@@ -142,8 +137,7 @@ long DLL_EXPORT taDJfindrec(char *path, char *name, unsigned int date, unsigned 
         guess = (low + high + 1) / 2;
         if (guess == lastguess)
         {
-            if (low == 0)
-                guess = 0;
+            if (low == 0) guess = 0;
             else
             {
                 recno = guess;
@@ -165,17 +159,13 @@ long DLL_EXPORT taDJfindrec(char *path, char *name, unsigned int date, unsigned 
             recno = guess;
             break;
         }
-        if (dt1 > dt)
-            high = guess;
-        if (dt1 < dt)
-            low = guess;
+        if (dt1 > dt) high = guess;
+        if (dt1 < dt) low = guess;
         lastguess = guess;
     }
     fclose(fp1);
-    if (actualdate)
-        *actualdate = dt1 - taDJBASEDATE;
-    if (err)
-        return (err);
+    if (actualdate) *actualdate = dt1 - taDJBASEDATE;
+    if (err) return (err);
     return (recno);
 }
 
@@ -191,25 +181,20 @@ int DLL_EXPORT taDJlist(char *path, char *outfile, int append)
     if (!stricmp(outfile, "STDOUT"))
     {
         out = stdout;
-        if (append)
-            page = 1;
+        if (append) page = 1;
     }
     else
 #endif
     {
-        if (append)
-            out = fopen(outfile, "at");
-        else
-            out = fopen(outfile, "wt");
-        if (out == NULL)
-            return (taErrFileOpen);
+        if (append) out = fopen(outfile, "at");
+        else out = fopen(outfile, "wt");
+        if (out == NULL) return (taErrFileOpen);
     }
     strcpy(buffer, path);
     if (path[0] != '\0' && path[strlen(path) - 1] != ':' && path[strlen(path) - 1] != '\\')
         strcat(buffer, "\\");
     strcat(buffer, "mapinfo.dat");
-    if ((fp1 = fopen(buffer, "rb")) == NULL)
-        return (taErrFileOpen);
+    if ((fp1 = fopen(buffer, "rb")) == NULL) return (taErrFileOpen);
     if (fread((char *) &info, sizeof(struct taDJinfo), 1, fp1) == 0)
         err = taErrFileRead;
     else
@@ -277,10 +262,8 @@ int DLL_EXPORT taDJread(taBars *b1, char *path, char *name, long start, int cnt,
         return (taErrFileOpen);
     if (cnt < 0)
     {
-        if (start > 0)
-            cnt = min((int) info.reccnt, 16000) - start;
-        else
-            cnt = min((int) info.reccnt, 16000);
+        if (start > 0) cnt = min((int) info.reccnt, 16000) - start;
+        else cnt = min((int) info.reccnt, 16000);
     }
 
     if (allocate)
@@ -358,8 +341,7 @@ int DLL_EXPORT taDJread(taBars *b1, char *path, char *name, long start, int cnt,
         return (0);
     }
     cnt = min(cnt, b1->datasize);
-    if (start < 0)
-        start = max(0, b1->reccnt - cnt);
+    if (start < 0) start = max(0, b1->reccnt - cnt);
 
     switch (info.content)
     {

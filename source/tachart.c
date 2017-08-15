@@ -12,46 +12,42 @@
 
 char *taChartPath = ".";
 
-int    taChartCoord(KFloat level, KFloat ystart, KFloat ystop, int y1, int y2);
-KFloat    taChartRoundMinMax(int y1, int y2, KFloat ymin, KFloat ymax,
+int     taChartCoord(KFloat level, KFloat ystart, KFloat ystop, int y1, int y2);
+KFloat  taChartRoundMinMax(int y1, int y2, KFloat ymin, KFloat ymax,
                             KFloat *ystart, KFloat *ystop, int fontheight);
 
 
 int DLL_EXPORT   taChart(taArray *pa1, taBars *pb1, int xstart, int xstop, int xwidth,
-                         KFloat ystart, KFloat ystop, int x1, int y1, int x2, int y2,
-                         int type, long color1, long color2, long style)
+                        KFloat ystart, KFloat ystop, int x1, int y1, int x2, int y2,
+                        int type, long color1, long color2, long style)
 {
-    int    err = 0, i1 = 0, pos, x3, y3, y4;
-    KFloat    yscale, xscale, halfxscale;
-    unsigned char fill[8];
-    taArray    a1;
-    taBars     b1;
+int     err = 0, i1 = 0, pos, x3, y3, y4;
+KFloat  yscale, xscale, halfxscale;
+unsigned char fill[8];
+taArray a1;
+taBars  b1;
 //struct videoconfig config;
 //struct xycoord points[4];
 #ifdef _MSC_VER
-    unsigned long linestyle1, linestyle2;
+unsigned long linestyle1, linestyle2;
 #endif
 
     a1 = *pa1;
     b1 = *pb1;
 
-    if (type == taCHART_LINE && taIsNoArray(a1) && !taIsNoBars(b1))
-        a1 = b1.cl;
+    if (type == taCHART_LINE && taIsNoArray(a1) && !taIsNoBars(b1)) a1 = b1.cl;
     if (type == taCHART_HILOCL || type == taCHART_OPHILOCL ||
         type == taCHART_CANDLE || type == taCHART_TRADES)
     {
-        if (taIsNoBars(b1))
-            return (taErrInvalidParm);
+        if (taIsNoBars(b1)) return (taErrInvalidParm);
         xstop = min(xstop, b1.size - 1);
     }
     if (type == taCHART_HIST || type == taCHART_LINE || type == taCHART_POINT)
     {
-        if (taIsNoArray(a1))
-            return (taErrInvalidParm);
+        if (taIsNoArray(a1)) return (taErrInvalidParm);
         xstop = min(xstop, a1.size - 1);
     }
-    if (ystop == ystart || xstop == xstart)
-        return (taErrInvalidParm);
+    if (ystop == ystart || xstop == xstart) return (taErrInvalidParm);
     xstop = min(xstop, xstart + xwidth - 1);
     xscale = (KFloat)(x2 - x1 + 1) / xwidth;
     yscale = (KFloat)(y2 - y1) / (ystop - ystart);
@@ -83,10 +79,8 @@ int DLL_EXPORT   taChart(taArray *pa1, taBars *pb1, int xstart, int xstop, int x
         break;
 
     case taCHART_CANDLE:
-        if (fmod(xscale, 2))
-            i1 = 3;
-        else
-            i1 = 2;
+        if (fmod(xscale, 2)) i1 = 3;
+        else i1 = 2;
         for (pos = xstart; pos <= xstop && pos < b1.size; pos++)
         {
             //x3 = (pos - xstart) * xscale + 1;
@@ -207,8 +201,7 @@ int DLL_EXPORT   taChart(taArray *pa1, taBars *pb1, int xstart, int xstop, int x
         for (pos = xstart; pos <= xstop && pos < a1.size; pos++)
         {
             i1 = (int) taArrayItem(a1, pos);
-            if (i1 == 0)
-                continue;
+            if (i1 == 0) continue;
             //x3 = (pos - xstart) * xscale + halfxscale + 1;
             x3 = (pos - xstart) * xscale + halfxscale + x1;
             y3 = y2 - (int) ((taArrayItem(b1.hi, pos) - ystart) * yscale + 2);
@@ -273,8 +266,7 @@ int DLL_EXPORT   taChartGrid(KFloat level, KFloat ystart, KFloat ystop,
 
     yscale = (y2 - y1) / (ystop - ystart);
     y3 = y2 - (level - ystart) * yscale;
-    if (y3 > y2 || y3 < y1)
-        return (0);
+    if (y3 > y2 || y3 < y1) return (0);
     setcolor((int)color);
     setlinestyle((int)style,0,0);
     moveto(x1, (int) y3);
@@ -300,8 +292,7 @@ int  DLL_EXPORT  taChartScreenInit(struct taChartScreen *screen, int linemax, in
     }
     memset(screen, 0, sizeof(struct taChartScreen));
     screen->chartline = (struct taChartLine *)malloc(linemax * sizeof(struct taChartLine));
-    if (screen->chartline == NULL)
-        return (taErrMalloc);
+    if (screen->chartline == NULL) return (taErrMalloc);
     screen->chartgrid = (struct taChartGrids *)malloc(gridmax * sizeof(struct taChartGrids));
     if (screen->chartgrid == NULL)
     {
@@ -337,10 +328,8 @@ int DLL_EXPORT taChartLineDef(struct taChartScreen *screen, int chartnum,
                               taArray *a1, taBars *b1, KFloat ystart, KFloat ystop,
                               int type, long color1, long color2, long style)
 {
-    if (screen->defined != taCHART_DEFINED)
-        return(taChartErrUndefined);
-    if (screen->linecnt >= screen->linemax)
-        return(taChartErrMaxlines);
+    if (screen->defined != taCHART_DEFINED) return(taChartErrUndefined);
+    if (screen->linecnt >= screen->linemax) return(taChartErrMaxlines);
 
     screen->chartline[screen->linecnt].chartnum = chartnum - 1;
     screen->chartline[screen->linecnt].a1 = *a1;
@@ -360,10 +349,8 @@ int DLL_EXPORT taChartGridDef(struct taChartScreen *screen,
                               int chartnum, KFloat value, KFloat ystart, KFloat ystop,
                               long color, long style)
 {
-    if (screen->defined != taCHART_DEFINED)
-        return(taChartErrUndefined);
-    if (screen->gridcnt >= screen->gridmax)
-        return(taChartErrMaxgrids);
+    if (screen->defined != taCHART_DEFINED) return(taChartErrUndefined);
+    if (screen->gridcnt >= screen->gridmax) return(taChartErrMaxgrids);
 
     screen->chartgrid[screen->gridcnt].chartnum = chartnum - 1;
     screen->chartgrid[screen->gridcnt].value = value;
@@ -442,8 +429,7 @@ int DLL_EXPORT   taChartSetup(struct taChartScreen *screen, struct taChartInfo *
         moveto(screen->x1, info->bottom + 1);
         lineto(screen->x2, info->bottom + 1);
     }
-    if (screen->datestyle)
-        info->bottom -= info->fontheight + 1;
+    if (screen->datestyle) info->bottom -= info->fontheight + 1;
 
     setcolor((int)screen->linecolor);
     rectangle(screen->x1, screen->y1, screen->x2, screen->y2);
@@ -490,10 +476,12 @@ int DLL_EXPORT   taChartSetup(struct taChartScreen *screen, struct taChartInfo *
         {
             if (!taIsNoBars(screen->chartline[i1].b1))
                 taBarStats(&screen->chartline[i1].b1, &screen->chartline[i1].ystart,
-                            &screen->chartline[i1].ystop, 0, screen->chartline[i1].b1.size - 1);
+                            &screen->chartline[i1].ystop, 0,
+                            screen->chartline[i1].b1.size - 1);
             else
                 taArrayStats(&screen->chartline[i1].a1, &screen->chartline[i1].ystart,
-                            &screen->chartline[i1].ystop, NULL, NULL, 0, screen->chartline[i1].a1.size - 1, 0);
+                            &screen->chartline[i1].ystop, NULL, NULL, 0,
+                            screen->chartline[i1].a1.size - 1, 0);
         }
         if (screen->chartline[i1].ystart != screen->chartline[i1].ystop)
             taChartRoundMinMax(info->subtop[screen->chartline[i1].chartnum],
@@ -533,8 +521,7 @@ int DLL_EXPORT   taChartSetup(struct taChartScreen *screen, struct taChartInfo *
         if (!taIsNoBars(screen->chartline[i1].b1))
         {
             info->xmax = max(info->xmax, screen->chartline[i1].b1.size);
-            if (taIsNoBars(info->masterbars))
-                info->masterbars = screen->chartline[i1].b1;
+            if (taIsNoBars(info->masterbars)) info->masterbars = screen->chartline[i1].b1;
         }
         else
             info->xmax = max(info->xmax, screen->chartline[i1].a1.size);
@@ -580,21 +567,17 @@ int  DLL_EXPORT  taChartPaint(struct taChartScreen *screen, struct taChartInfo *
             f1 = (taArrayItem(info->masterbars.dt, screen->xstop) - taArrayItem(info->masterbars.dt, screen->xstart))
                     / (screen->xstop - screen->xstart + 1);
             /* pixels_per_week = barwidth * bars_per_week */
-            if (info->xscale * (7 / f1) > info->fontwidth * 5)
-                i4 = 5;
-            else if (info->xscale * (30 / f1) > info->fontwidth * 9)
-                i4 = 4;
-            else if (info->xscale * (30 / f1) > info->fontwidth * 3)
-                i4 = 3;
-            else
-                i4 = 2;
+            if (info->xscale * (7 / f1) > info->fontwidth * 5) i4 = 5;
+            else if (info->xscale * (30 / f1) > info->fontwidth * 9) i4 = 4;
+            else if (info->xscale * (30 / f1) > info->fontwidth * 3) i4 = 3;
+            else i4 = 2;
         }
-        else
-            i4 = screen->datestyle;
+        else i4 = screen->datestyle;
         i2 = 13;
         buffer[0] = '\0';
         setcolor((int)screen->bgdcolor);
-        rectangle(info->left, info->bottom + 2, screen->x2 - 1, info->bottom + 1 + info->fontheight);
+        rectangle(info->left, info->bottom + 2, screen->x2 - 1,
+                    info->bottom + 1 + info->fontheight);
         for (i1 = 0; i1 < screen->xwidth && screen->xstart + i1 < screen->xstop; i1++)
         {
             switch (i4)
@@ -602,14 +585,14 @@ int  DLL_EXPORT  taChartPaint(struct taChartScreen *screen, struct taChartInfo *
             case 2:
             case 3:
             case 4:
-                taJulianToYMD(taArrayItem(info->masterbars.dt, i1 + screen->xstart), &yr, &mo, &da);
+                taJulianToYMD(taArrayItem(info->masterbars.dt, i1 + screen->xstart),
+                            &yr, &mo, &da);
                 if (i2 != mo)
                 {
                     if (mo == 1)
                     {
                         yr -= 1900;
-                        if (yr > 100)
-                            yr -= 100;
+                        if (yr > 100) yr -= 100;
                         sprintf(buffer, "%i", yr);
                     }
                     else
@@ -623,7 +606,8 @@ int  DLL_EXPORT  taChartPaint(struct taChartScreen *screen, struct taChartInfo *
                         taJulianDOW(taArrayItem(info->masterbars.dt, i1 + screen->xstart)) >
                         taJulianDOW(taArrayItem(info->masterbars.dt, i1 + screen->xstart + 1)))
                 {
-                    taJulianToYMD(taArrayItem(info->masterbars.dt, i1 + screen->xstart), &yr, &mo, &da);
+                    taJulianToYMD(taArrayItem(info->masterbars.dt, i1 + screen->xstart),
+                                &yr, &mo, &da);
                     sprintf(buffer, "%i%s", da, months[1][mo - 1]);
                 }
                 break;
@@ -669,8 +653,7 @@ int  DLL_EXPORT  taChartPaint(struct taChartScreen *screen, struct taChartInfo *
         if (screen->subchartsize[i1])
         {
             for (i2 = 0, i3 = 0; i2 < screen->gridcnt; i2++)
-                if (screen->chartgrid[i2].chartnum == i1)
-                    i3 = 1;
+                if (screen->chartgrid[i2].chartnum == i1) i3 = 1;
             if (!i3)
             {
                 f2 = taChartRoundMinMax(info->subtop[i1], info->subtop[i1 + 1] - 2,
@@ -762,8 +745,7 @@ KFloat    taChartRoundMinMax(int y1, int y2, KFloat ymin, KFloat ymax, KFloat *y
     KFloat    f1, factor = 1;
 
     i1 = (y2 - y1) / (3 * fontheight);
-    if (i1 == 0)
-        return (0);
+    if (i1 == 0) return (0);
     f1 = (ymax - ymin + 1) / i1;
 
     while (f1 > 100)
@@ -795,16 +777,12 @@ KFloat    taChartRoundMinMax(int y1, int y2, KFloat ymin, KFloat ymax, KFloat *y
     else
     {
         i1 = 50;
-        if (f1 <= 50)
-            f1 = 50;
-        else
-            f1 = floor((f1 + .5) / i1) * i1;
+        if (f1 <= 50) f1 = 50;
+        else f1 = floor((f1 + .5) / i1) * i1;
     }
     f1 *= factor;
-    if (ystart)
-        *ystart = floor(ymin / i1) * i1;
-    if (ystop)
-        *ystop = floor((ymax + i1 - .1) / i1) * i1;
+    if (ystart) *ystart = floor(ymin / i1) * i1;
+    if (ystop) *ystop = floor((ymax + i1 - .1) / i1) * i1;
     return (f1);
 }
 
@@ -832,10 +810,8 @@ int DLL_EXPORT   taChartDraw(struct taChartScreen *screen)
 #endif
 
     memset(&info, 0, sizeof(struct taChartInfo));
-    if (!screen->x2)
-        screen->x2 = getmaxx();
-    if (!screen->y2)
-        screen->y2 = getmaxy();
+    if (!screen->x2) screen->x2 = getmaxx();
+    if (!screen->y2) screen->y2 = getmaxy();
 #ifdef  OMMIT
 // registerbgifont() Not available in WinBGI
     strcpy(buffer, taChartPath);
@@ -878,48 +854,42 @@ int DLL_EXPORT   taChartDraw(struct taChartScreen *screen)
             break;
 
         case 'B':
-            if (screen->xstart == 0)
-                break;
+            if (screen->xstart == 0) break;
             screen->xstart = 0;
             screen->xstop = min(info.xmax - 1, screen->xwidth - 1);
             redraw = 1;
             break;
 
         case 'E':
-            if (screen->xstop == info.xmax - 1)
-                break;
+            if (screen->xstop == info.xmax - 1) break;
             screen->xstart = max(0, info.xmax - screen->xwidth);
             screen->xstop = info.xmax - 1;
             redraw = 1;
             break;
 
         case 'L':
-            if (screen->xstart == 0)
-                break;
+            if (screen->xstart == 0) break;
             screen->xstart = max(0, screen->xstart - screen->xwidth / 2);
             screen->xstop = min(info.xmax - 1, screen->xstart + screen->xwidth - 1);
             redraw = 1;
             break;
 
         case 'R':
-            if (screen->xstart == info.xmax - 1)
-                break;
+            if (screen->xstart == info.xmax - 1) break;
             screen->xstart = min(screen->xstart + screen->xwidth / 2, info.xmax - 2);
             screen->xstop = min(info.xmax - 1, screen->xstart + screen->xwidth - 1);
             redraw = 1;
             break;
 
         case 12:  /* Ctrl+L */
-            if (screen->xstart == 0)
-                break;
+            if (screen->xstart == 0) break;
             screen->xstart--;
             screen->xstop = min(info.xmax - 1, screen->xstart + screen->xwidth - 1);
             redraw = 1;
             break;
 
         case 18:  /* Ctrl+R */
-            if (screen->xstart == info.xmax - 2)
-                break;
+            if (screen->xstart == info.xmax - 2) break;
             screen->xstart++;
             screen->xstop = min(info.xmax - 1, screen->xstart + screen->xwidth - 1);
             redraw = 1;

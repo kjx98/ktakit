@@ -144,8 +144,7 @@ void DLL_EXPORT taFreeBars(taBars *b1)
 
 KFloat DLL_EXPORT taGetArrayItem(taArray *a1, unsigned int pos)
 {
-    if (pos >= a1->size)
-        return (0);
+    if (pos >= a1->size) return (0);
     if (a1->type == 0)
     {
         return (taArrayItemP(a1, pos));
@@ -158,10 +157,8 @@ KFloat DLL_EXPORT taGetArrayItem(taArray *a1, unsigned int pos)
 
 KFloat DLL_EXPORT taGetArrayItemM(taArray *a1, int element, unsigned int pos)
 {
-    if (pos >= a1->size)
-        return (0);
-    if (a1->type == 0)
-        return (taArrayItemPM(a1, element, pos));
+    if (pos >= a1->size) return (0);
+    if (a1->type == 0) return (taArrayItemPM(a1, element, pos));
     else
         return (taArrayItemPM(((taArrayI *)a1), element, pos));
 }
@@ -236,8 +233,7 @@ int DLL_EXPORT taReAllocBars(taBars *b1, size_t size)
 
 int DLL_EXPORT taReSizeBars(taBars *b1, size_t size)
 {
-    if (size > b1->datasize)
-        return (taErrMalloc);
+    if (size > b1->datasize) return (taErrMalloc);
     b1->size = size;
     b1->dt.size = size;
     b1->cl.size = size;
@@ -254,8 +250,7 @@ int DLL_EXPORT taReSizeBars(taBars *b1, size_t size)
 
 void DLL_EXPORT taSetArrayItem(taArray *a1, unsigned int pos, KFloat value)
 {
-    if (pos >= a1->size)
-        return;
+    if (pos >= a1->size) return;
     if (a1->type == 0)
         taArrayItemP(a1, pos) = value;
     else
@@ -265,8 +260,7 @@ void DLL_EXPORT taSetArrayItem(taArray *a1, unsigned int pos, KFloat value)
 
 void DLL_EXPORT taSetArrayItemM(taArray *a1, int element, unsigned int pos, KFloat value)
 {
-    if (pos >= a1->size)
-        return;
+    if (pos >= a1->size) return;
     if (a1->type == 0)
         taArrayItemPM(a1, element, pos) = value;
     else
@@ -295,8 +289,7 @@ int DLL_EXPORT taErrDesc(int err, char *buffer)
         "Max Grids Exceeded",
         "Unknown"
     };
-    if (err > 0 || err < -14)
-        err = -15;
+    if (err > 0 || err < -14) err = -15;
     strcpy(buffer, errdesc[-err]);
     return (strlen(buffer));
 }

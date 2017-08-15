@@ -314,18 +314,14 @@ int DLL_EXPORT taCTlist(char *path, char *outfile, int append)
     if (!stricmp(outfile, "STDOUT"))
     {
         out = stdout;
-        if (append)
-            page = 1;
+        if (append) page = 1;
     }
     else
 #endif
     {
-        if (append)
-            out = fopen(outfile, "at");
-        else
-            out = fopen(outfile, "wt");
-        if (out == NULL)
-            return (taErrFileOpen);
+        if (append) out = fopen(outfile, "at");
+        else out = fopen(outfile, "wt");
+        if (out == NULL) return (taErrFileOpen);
     }
 
     fprintf(out, "Number Freq Symbol           Name\n");
@@ -334,8 +330,7 @@ int DLL_EXPORT taCTlist(char *path, char *outfile, int append)
 
     strcpy(buffer, cwd);
     strcat(buffer, "master");
-    if ((fp1 = fopen(buffer, "rb")) == NULL)
-        err = taErrFileOpen;
+    if ((fp1 = fopen(buffer, "rb")) == NULL) err = taErrFileOpen;
     else if (fread((char *) &masthdr, sizeof(struct taCTmasthdr), 1, fp1) == 0)
     {
         fclose(fp1);
@@ -350,8 +345,7 @@ int DLL_EXPORT taCTlist(char *path, char *outfile, int append)
                 fclose(fp1);
                 break;
             }
-            if (!strncmp(data.name + 11, "<DIR>", 5))
-                continue;
+            if (!strncmp(data.name + 11, "<DIR>", 5)) continue;
             fprintf(out, "%6u %c    %-16.16s %s\n", data.filenbr, data.dataformat,
                     data.datasvcuse, data.name);
 #ifndef _WINDOWS
@@ -419,27 +413,22 @@ int DLL_EXPORT taCTread(taBars *b1, char *path, char *name, long start, int cnt,
     FILE    *fp1;
     struct taCTdathdr dathdr;
 
-    if ((err = taCTfindfile(path, name, b1, cols)))
-        return (err);
+    if ((err = taCTfindfile(path, name, b1, cols))) return (err);
     strcpy(cwd, path);
     if (cwd[0] != '\0' && cwd[strlen(cwd) - 1] != ':' && cwd[strlen(cwd) - 1] != '\\')
         strcat(cwd, "\\");
     strcpy(buffer, cwd);
     strcat(buffer, b1->name);
-    if ((fp1 = fopen(buffer, "rb")) == NULL)
-        return (taErrFileOpen);
+    if ((fp1 = fopen(buffer, "rb")) == NULL) return (taErrFileOpen);
     fread((char *) &dathdr, sizeof(struct taCTdathdr), 1, fp1);
     if (cnt < 0)
     {
-        if (start > 0)
-            cnt = min(dathdr.lastrec - 1, 16000) - start;
-        else
-            cnt = min(dathdr.lastrec - 1, 16000);
+        if (start > 0) cnt = min(dathdr.lastrec - 1, 16000) - start;
+        else cnt = min(dathdr.lastrec - 1, 16000);
     }
     if (allocate)
     {
-        if ((err = taAllocBars(b1, cnt)))
-            return (err);
+        if ((err = taAllocBars(b1, cnt))) return (err);
     }
     if (cnt == 0)
     {
@@ -448,16 +437,14 @@ int DLL_EXPORT taCTread(taBars *b1, char *path, char *name, long start, int cnt,
     }
     b1->reccnt = (long) dathdr.lastrec - 1;
     cnt = min(cnt, b1->datasize);
-    if (start < 0)
-        start = max(0, b1->reccnt - cnt);
+    if (start < 0) start = max(0, b1->reccnt - cnt);
     if (start > dathdr.lastrec - 2)
     {
         fclose(fp1);
         return (taErrRecordNotFound);
     }
     for (i2 = 0; i2 < 8; i2++)
-        if (cols[i2])
-            numfields++;
+        if (cols[i2]) numfields++;
     recno = start + 2;
     fseek(fp1, numfields * sizeof(float) * (start + 1), SEEK_SET);
     fields[0] = 0;

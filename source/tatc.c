@@ -34,8 +34,7 @@ long DLL_EXPORT taTCfindrec(char *path, char *name, unsigned int date, unsigned 
     FILE   *fp1;
     struct taTCrec rec;
 
-    if (date == 0)
-        dt = 0;
+    if (date == 0) dt = 0;
     else
     {
         taJulianToYMD(date, &year, &month, &day);
@@ -44,18 +43,15 @@ long DLL_EXPORT taTCfindrec(char *path, char *name, unsigned int date, unsigned 
 
     if (path[0] != '\0' || path[strlen(path) - 1] != ':' || path[strlen(path) - 1] != '\\')
         sprintf(buffer, "%s\\%s.NDX", path, name);
-    else
-        sprintf(buffer, "%s%s.NDX", path, name);
-    if ((fp1 = fopen(buffer, "rb")) == NULL)
-        return (taErrFileOpen);
+    else sprintf(buffer, "%s%s.NDX", path, name);
+    if ((fp1 = fopen(buffer, "rb")) == NULL) return (taErrFileOpen);
     fseek(fp1, -sizeof(struct taTCrec), SEEK_END);
     fread((char *) &rec, sizeof(struct taTCrec), 1, fp1);
     taMStoIEEE(&rec.dt, &rec.dt);
     if (dt > rec.dt)
     {
         fclose(fp1);
-        if (actualdate)
-            *actualdate = taTCDateToJulian(rec.dt);
+        if (actualdate) *actualdate = taTCDateToJulian(rec.dt);
         return (taErrRecordNotFound);
     }
 
@@ -66,8 +62,7 @@ long DLL_EXPORT taTCfindrec(char *path, char *name, unsigned int date, unsigned 
         guess = (low + high + 1) / 2;
         if (guess == lastguess)
         {
-            if (low == 0)
-                guess = 0;
+            if (low == 0) guess = 0;
             else
             {
                 recno = guess;
@@ -90,17 +85,13 @@ long DLL_EXPORT taTCfindrec(char *path, char *name, unsigned int date, unsigned 
             recno = guess;
             break;
         }
-        if (rec.dt > dt)
-            high = guess;
-        if (rec.dt < dt)
-            low = guess;
+        if (rec.dt > dt) high = guess;
+        if (rec.dt < dt) low = guess;
         lastguess = guess;
     }
     fclose(fp1);
-    if (actualdate)
-        *actualdate = taTCDateToJulian(rec.dt);
-    if (err)
-        return (err);
+    if (actualdate) *actualdate = taTCDateToJulian(rec.dt);
+    if (err) return (err);
     return (recno);
 }
 
@@ -117,26 +108,21 @@ int DLL_EXPORT taTClist(char *path, char *outfile, int append)
     if (!stricmp(outfile, "STDOUT"))
     {
         out = stdout;
-        if (append)
-            page = 1;
+        if (append) page = 1;
     }
     else
 #endif
     {
-        if (append)
-            out = fopen(outfile, "at");
-        else
-            out = fopen(outfile, "wt");
-        if (out == NULL)
-            return (taErrFileOpen);
+        if (append) out = fopen(outfile, "at");
+        else out = fopen(outfile, "wt");
+        if (out == NULL) return (taErrFileOpen);
     }
     strcpy(buffer, path);
     if (path[0] != '\0' || path[strlen(path) - 1] != ':' || path[strlen(path) - 1] != '\\')
         strcat(buffer, "\\");
     strcat(buffer, "basename");
 
-    if ((fp1 = fopen(buffer, "rt")) == NULL)
-        return (taErrFileOpen);
+    if ((fp1 = fopen(buffer, "rt")) == NULL) return (taErrFileOpen);
 
     fgets(symbol, 80, fp1);
     cnt = atol(symbol);             /* First entry holds count */
@@ -178,11 +164,9 @@ int DLL_EXPORT taTCread(taBars *b1, char *path, char *name, long start, int cnt,
 
     if (path[0] != '\0' || path[strlen(path) - 1] != ':' || path[strlen(path) - 1] != '\\')
         sprintf(buffer, "%s\\%s.NDX", path, name);
-    else
-        sprintf(buffer, "%s%s.NDX", path, name);
+    else sprintf(buffer, "%s%s.NDX", path, name);
 
-    if ((fp1 = fopen(buffer, "rb")) == NULL)
-        return (taErrFileOpen);
+    if ((fp1 = fopen(buffer, "rb")) == NULL) return (taErrFileOpen);
     if (fread((char *) &hdr, sizeof(struct taTChdr), 1, fp1) <= 0)
     {
         fclose(fp1);
@@ -195,15 +179,12 @@ int DLL_EXPORT taTCread(taBars *b1, char *path, char *name, long start, int cnt,
 
     if (cnt < 0)
     {
-        if (start > 0)
-            cnt = min(reccnt, 16000) - start;
-        else
-            cnt = min(reccnt, 16000);
+        if (start > 0) cnt = min(reccnt, 16000) - start;
+        else cnt = min(reccnt, 16000);
     }
     if (allocate)
     {
-        if ((err = taAllocBars(b1, cnt)))
-            return (err);
+        if ((err = taAllocBars(b1, cnt))) return (err);
     }
     b1->reccnt = reccnt;
     strcpy(b1->name, name);
@@ -229,8 +210,7 @@ int DLL_EXPORT taTCread(taBars *b1, char *path, char *name, long start, int cnt,
         return (0);
     }
     cnt = min(cnt, b1->datasize);
-    if (start < 0)
-        start = max(0, b1->reccnt - cnt);
+    if (start < 0) start = max(0, b1->reccnt - cnt);
     if (fseek(fp1, (start + 2) * sizeof(struct taTCrec), SEEK_SET))
     {
         fclose(fp1);

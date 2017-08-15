@@ -27,8 +27,7 @@ long DLL_EXPORT taFSfindrec(char *path, char *name, unsigned int date, unsigned 
     if (buffer[0] != '\0' && buffer[strlen(buffer) - 1] != ':' && buffer[strlen(buffer) - 1] != '\\')
         strcat(buffer, "\\");
     strcat(buffer, name);
-    if ((fp1 = fopen(buffer, "rb")) == NULL)
-        return (taErrFileOpen);
+    if ((fp1 = fopen(buffer, "rb")) == NULL) return (taErrFileOpen);
     fread((char *) &info, sizeof(struct taFSinfo), 1, fp1);
     if (info.version)
     {
@@ -43,8 +42,7 @@ long DLL_EXPORT taFSfindrec(char *path, char *name, unsigned int date, unsigned 
         guess = (low + high + 1) / 2;
         if (guess == lastguess)
         {
-            if (low == 0)
-                guess = 0;
+            if (low == 0) guess = 0;
             else
             {
                 recno = guess;
@@ -57,28 +55,22 @@ long DLL_EXPORT taFSfindrec(char *path, char *name, unsigned int date, unsigned 
             break;
         }
         fread((char *) &dt, sizeof(short), 1, fp1);
-        if (info.filetype == 'V')
-            fread((char *) &ti, sizeof(short), 1, fp1);
+        if (info.filetype == 'V') fread((char *) &ti, sizeof(short), 1, fp1);
         if ((dt == date && ti == time) || guess == 0)
         {
             recno = guess;
             break;
         }
-        if (dt > date || (dt == date && ti > time))
-            high = guess;
-        if (dt < date || (dt == date && ti < time))
-            low = guess;
+        if (dt > date || (dt == date && ti > time)) high = guess;
+        if (dt < date || (dt == date && ti < time)) low = guess;
         lastguess = guess;
     }
     fclose(fp1);
     if (dt < date || (dt == date && ti < time))
         err = taErrRecordNotFound;
-    if (actualdate)
-        *actualdate = dt;
-    if (actualtime)
-        *actualtime = ti;
-    if (err)
-        return (err);
+    if (actualdate) *actualdate = dt;
+    if (actualtime) *actualtime = ti;
+    if (err) return (err);
     return (recno);
 }
 
@@ -103,8 +95,7 @@ int DLL_EXPORT taFSread(taBars *b1, char *path, char *name, long start, int cnt,
         strcat(buffer, "\\");
     strcat(buffer, name);
 
-    if ((fp1 = fopen(buffer, "rb")) == NULL)
-        return (taErrFileOpen);
+    if ((fp1 = fopen(buffer, "rb")) == NULL) return (taErrFileOpen);
     fread((char *) &info, sizeof(struct taFSinfo), 1, fp1);
     if (info.version)
     {
@@ -124,16 +115,13 @@ int DLL_EXPORT taFSread(taBars *b1, char *path, char *name, long start, int cnt,
 
     if (cnt < 0)
     {
-        if (start > 0)
-            cnt = min(reccnt, 16000) - start;
-        else
-            cnt = min(reccnt, 16000);
+        if (start > 0) cnt = min(reccnt, 16000) - start;
+        else cnt = min(reccnt, 16000);
     }
 
     if (allocate)
     {
-        if ((err = taAllocBars(b1, cnt)))
-            return (err);
+        if ((err = taAllocBars(b1, cnt))) return (err);
     }
 
     b1->reccnt = reccnt;
@@ -161,8 +149,7 @@ int DLL_EXPORT taFSread(taBars *b1, char *path, char *name, long start, int cnt,
         return (0);
     }
     cnt = min(cnt, b1->datasize);
-    if (start < 0)
-        start = max(0, b1->reccnt - cnt);
+    if (start < 0) start = max(0, b1->reccnt - cnt);
     if (start > reccnt)
     {
         fclose(fp1);
@@ -270,8 +257,7 @@ int DLL_EXPORT taFSread(taBars *b1, char *path, char *name, long start, int cnt,
                 if (taArrayItem(b1->dt, i1) < voi32.date)
                 {
                     i1++;
-                    if (i1 > b1->size)
-                        done = 1;
+                    if (i1 > b1->size) done = 1;
                 }
                 else if (taArrayItem(b1->dt, i1) > voi32.date)
                 {
@@ -293,8 +279,7 @@ int DLL_EXPORT taFSread(taBars *b1, char *path, char *name, long start, int cnt,
                 if (taArrayItem(b1->dt, i1) < voi16.date)
                 {
                     i1++;
-                    if (i1 > cnt)
-                        done = 1;
+                    if (i1 > cnt) done = 1;
                 }
                 else if (taArrayItem(b1->dt, i1) > voi16.date)
                 {
@@ -328,8 +313,7 @@ int     taFSfracrec(struct taFSfracs *fracs, int record, char *path)
         strcat(buffer, "\\");
     strcat(buffer, "fsfracs.fil");
 
-    if ((fp1 = fopen(buffer, "rb")) == NULL)
-        return (-2);
+    if ((fp1 = fopen(buffer, "rb")) == NULL) return (-2);
     fread((char *) &tablehdr, sizeof(struct taFStablehdr), 1, fp1);
     if (tablehdr.version > 300)
         fseek(fp1, (long) ((1 + record) * tablehdr.recordlen), SEEK_SET);
