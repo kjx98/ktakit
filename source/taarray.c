@@ -32,7 +32,7 @@ int DLL_EXPORT taAllocArrayI(taArrayI *a1, size_t size)
     a1->width = 1;
     a1->element = 0;
     a1->type = 1;
-    if ((a1->data = (int *)calloc(size, sizeof(int))) == NULL)
+    if ((a1->data = (int *)calloc(size, sizeof(int32))) == NULL)
         return (taErrMalloc);
     return (0);
 }
@@ -81,7 +81,7 @@ int DLL_EXPORT taAllocBars(taBars *b1, size_t size)
         b1->cl.element = 4;
         b1->vol.element = 5;
         b1->turnov.element = 6;
-        b1->dt.data = (int *)b1->op.data;
+        b1->dt.data = (int32 *)b1->op.data;
         b1->dt.size = size;
         b1->dt.width = 16;
         b1->dt.element = 0;
@@ -101,7 +101,7 @@ int DLL_EXPORT taAllocBars(taBars *b1, size_t size)
         b1->cl.element = 5;
         b1->vol.element = 6;
         b1->turnov.element = 7;
-        b1->dt.data = (int *)b1->op.data;
+        b1->dt.data = (int32 *)b1->op.data;
         b1->dt.size = size;
         b1->dt.width = 10;
         b1->dt.element = 0;

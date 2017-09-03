@@ -67,7 +67,7 @@ typedef struct
 
 typedef struct
 {
- int	*data;
+ int32	*data;
  int	size;
  int    width;
  int    element;
