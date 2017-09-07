@@ -90,6 +90,17 @@ typedef struct
  char   name[32];
 } taBars;
 
+typedef struct
+{
+ taArrayI dt, ti;
+ taArray  bid, ask, bvol, avol, vol;
+ unsigned int    size;
+ int    datasize;
+ long   reccnt;
+ char   symbol[32];
+} taTicks;
+
+
 extern taArray  taNOARRAY;
 extern taArray *taNULLARRAY;
 extern taBars   taNOBARS;

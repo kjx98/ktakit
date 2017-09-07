@@ -8,19 +8,19 @@
 	<stdarg.h>
 	"ktakit.h"
 
-1504448131 /home/kjx/work/ktakit/include/ktakit.h
+1504774518 /home/kjx/work/ktakit/include/ktakit.h
 	"ktadefs.h"
 
-1477919637 /home/kjx/work/ktakit/include/ktadefs.h
+1487137295 /home/kjx/work/ktakit/include/ktadefs.h
 	"ktatypes.h"
 	"ktastd.h"
 
-1501594240 /home/kjx/work/ktakit/include/ktatypes.h
+1501578124 /home/kjx/work/ktakit/include/ktatypes.h
 	<windows.h>
 	<sys/types.h>
 	<limits.h>
 
-1501594240 /home/kjx/work/ktakit/include/ktastd.h
+1501578259 /home/kjx/work/ktakit/include/ktastd.h
 	<string.h>
 	<memory.h>
 	<stdio.h>
@@ -39,7 +39,7 @@
 	<share.h>
 	"memwatch.h"
 
-1477919637 /home/kjx/work/ktakit/include/memwatch.h
+1487137295 /home/kjx/work/ktakit/include/memwatch.h
 	<stdlib.h>
 
 1502770582 source:/home/kjx/work/ktakit/source/tacalc.c
@@ -118,7 +118,7 @@
 	<ctype.h>
 	"ktakit.h"
 
-1502725624 source:/home/kjx/work/ktakit/source/tafin.c
+1502767483 source:/home/kjx/work/ktakit/source/tafin.c
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
