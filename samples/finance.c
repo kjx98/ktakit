@@ -279,7 +279,7 @@ int      main(int argc, char *argv[])
     tvaluea.discrate = 7;
     tvaluea.numpayments = 11;
     pv = taPresentValueAnnuity(&tvaluea);
-    printf("P       : %9.3f\nDisc    : %4.2f\nPeriods : %3.2f\nCompound: %2d\nPV      : %7.3f\n",
+    printf("P       : %9.3f\nDisc    : %4.2f\nNumPayments: %2d\nPV      : %7.3f\n",
            tvaluea.principal, tvaluea.discrate, tvaluea.numpayments, pv);
 
     /* Yield to Maturity */

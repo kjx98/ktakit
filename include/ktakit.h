@@ -498,7 +498,7 @@ struct taTimeValueA
 {
  KFloat principal;
  KFloat discrate;
- KFloat numpayments;
+ int    numpayments;
 };
 
 struct taBondInfo
